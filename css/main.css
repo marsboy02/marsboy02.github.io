@@ -121,7 +121,6 @@ hr {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  width: 100%;
 }
 
 .element-cover-bg:before {
