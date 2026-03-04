@@ -1,19 +1,42 @@
 baseURL: https://marsboy02.github.io/
-languageCode: ko
-title: marsboy's blog
+title: "marsboy's blog"
 theme: gandanham
 
-menus:
-  main:
-    - name: Home
-      pageRef: /
-      weight: 10
-    - name: Posts
-      pageRef: /posts
-      weight: 20
-    - name: Tags
-      pageRef: /tags
-      weight: 30
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+
+languages:
+  en:
+    languageName: EN
+    weight: 1
+    menus:
+      main:
+        - name: About
+          pageRef: /about
+          weight: 10
+        - name: Posts
+          pageRef: /posts
+          weight: 20
+  ko:
+    languageName: KO
+    weight: 2
+    menus:
+      main:
+        - name: About
+          pageRef: /about
+          weight: 10
+        - name: Posts
+          pageRef: /posts
+          weight: 20
 
 pagination:
   pagerSize: 10
+
+params:
+  author: Hyeongjun
+  role: Software Engineer
+  profileImage: /images/profile.jpg
+  social:
+    github: "#"
+    linkedin: "#"
+    x: "#"

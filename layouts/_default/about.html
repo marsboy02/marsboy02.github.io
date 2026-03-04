@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="about-header">
+  {{ $img := site.Params.profileImage }}
+  {{ if and $img (fileExists (printf "static%s" $img)) }}
+    <img src="{{ $img }}" alt="{{ i18n "name" | default site.Params.author }}" class="profile-photo">
+  {{ else }}
+    <div class="profile-initials">{{ substr (site.Params.author | default "H") 0 1 }}</div>
+  {{ end }}
+  <div class="about-info">
+    <h1>{{ i18n "name" | default site.Params.author }}</h1>
+    <p class="role">{{ i18n "role" | default site.Params.role }}</p>
+  </div>
+</div>
+<div class="about-content">
+  {{ .Content }}
+</div>
+{{ end }}

@@ -1,0 +1,18 @@
+{{ define "main" }}
+<h1 class="section-title">{{ .Title }}</h1>
+{{ .Content }}
+<ul class="posts-list">
+  {{ range .Paginator.Pages }}
+  <li>
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">
+      {{ i18n "postedOn" }} {{ .Date | time.Format ":date_long" }}
+    </time>
+    {{ with .Summary }}
+      <div class="summary">{{ . }}</div>
+    {{ end }}
+  </li>
+  {{ end }}
+</ul>
+{{ partial "pagination.html" . }}
+{{ end }}
