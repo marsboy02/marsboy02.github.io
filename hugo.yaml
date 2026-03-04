@@ -1,0 +1,19 @@
+baseURL: https://marsboy02.github.io/
+languageCode: ko
+title: marsboy's blog
+theme: gandanham
+
+menus:
+  main:
+    - name: Home
+      pageRef: /
+      weight: 10
+    - name: Posts
+      pageRef: /posts
+      weight: 20
+    - name: Tags
+      pageRef: /tags
+      weight: 30
+
+pagination:
+  pagerSize: 10
