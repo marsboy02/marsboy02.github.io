@@ -4,7 +4,7 @@
   {{ if and $img (fileExists (printf "static%s" $img)) }}
     <img src="{{ $img }}" alt="{{ i18n "name" | default site.Params.author }}" class="profile-photo">
   {{ else }}
-    <div class="profile-initials">{{ substr (site.Params.author | default "H") 0 1 }}</div>
+    <div class="profile-initials">{{ substr (i18n "name" | default site.Params.author) 0 1 }}</div>
   {{ end }}
   <div class="about-info">
     <h1>{{ i18n "name" | default site.Params.author }}</h1>

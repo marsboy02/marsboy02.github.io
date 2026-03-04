@@ -33,10 +33,11 @@ pagination:
   pagerSize: 10
 
 params:
-  author: Hyeongjun
+  author: Hyeongjun Kang
   role: Software Engineer
   profileImage: /images/profile.jpg
   social:
-    github: "#"
-    linkedin: "#"
-    x: "#"
+    github: "https://github.com/marsboy02"
+    linkedin: "https://www.linkedin.com/in/hyeongjun-kang/"
+    x: "https://x.com/marsboy02"
+    instagram: "https://www.instagram.com/marsboy_photo"
