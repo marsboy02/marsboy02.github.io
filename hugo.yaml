@@ -29,6 +29,11 @@ languages:
           pageRef: /posts
           weight: 20
 
+markup:
+  highlight:
+    noClasses: false
+    guessSyntax: true
+
 pagination:
   pagerSize: 10
 
