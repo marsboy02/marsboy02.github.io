@@ -1,6 +1,6 @@
 {{- $image := .Page.Resources.GetMatch .Destination -}}
 {{- if $image -}}
-<img src="{{ $image.RelPermalink }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} style="max-width: 100%; height: auto;">
+<img src="{{ $image.RelPermalink }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} style="max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
 {{- else -}}
-<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} style="max-width: 100%; height: auto;">
+<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} style="max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
 {{- end -}}
