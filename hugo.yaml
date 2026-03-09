@@ -28,6 +28,17 @@ languages:
         - name: Posts
           pageRef: /posts
           weight: 20
+  ja:
+    languageName: JA
+    weight: 3
+    menus:
+      main:
+        - name: About
+          pageRef: /about
+          weight: 10
+        - name: Posts
+          pageRef: /posts
+          weight: 20
 
 markup:
   highlight:
