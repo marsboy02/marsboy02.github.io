@@ -424,6 +424,11 @@ header {
   text-decoration: none;
 }
 
+/* Comments */
+.comments {
+  margin-top: 3rem;
+}
+
 /* Pagination */
 .pagination {
   display: flex;
