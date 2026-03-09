@@ -1,7 +1,7 @@
 ---
 title: "웹 크롤러 & 스크래핑 실전 가이드"
 date: 2025-09-18
-draft: true
+draft: false
 tags: ["web-scraping", "python", "automation"]
 translationKey: "web-crawler-scraping-guide"
 summary: "크롤러와 스크래퍼의 개념부터 Python, Node.js, Kotlin으로 구현하는 방법, 그리고 학교 공지사항 봇을 K8s CronJob으로 운영한 실전 경험까지 다룹니다."

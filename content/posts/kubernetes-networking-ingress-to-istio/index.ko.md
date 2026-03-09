@@ -1,7 +1,7 @@
 ---
 title: "K8s 네트워킹 심화: Ingress에서 Istio Gateway까지"
 date: 2025-12-15
-draft: true
+draft: false
 tags: ["kubernetes", "networking", "istio", "devops"]
 translationKey: "kubernetes-networking-ingress-to-istio"
 summary: "Kubernetes의 Service 타입부터 Ingress, MetalLB, 그리고 Istio Gateway까지 — 네트워킹 계층의 발전 과정을 실전 경험과 함께 다룹니다."

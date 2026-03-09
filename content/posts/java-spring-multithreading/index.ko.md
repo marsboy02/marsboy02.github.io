@@ -1,7 +1,7 @@
 ---
 title: "Java & Spring의 멀티스레드 아키텍처"
 date: 2025-01-28
-draft: true
+draft: false
 tags: ["java", "spring", "multithreading", "backend"]
 translationKey: "java-spring-multithreading"
 summary: "Java의 'Write Once, Run Anywhere' 철학부터 Spring의 Tomcat 스레드풀과 HikariCP 커넥션풀 동작 원리, 그리고 Node.js와의 구조적 비교까지 다룹니다."

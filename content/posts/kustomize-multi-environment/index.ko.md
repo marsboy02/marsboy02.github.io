@@ -1,7 +1,7 @@
 ---
 title: "Kustomize로 멀티 환경 배포 관리하기"
 date: 2024-12-20
-draft: true
+draft: false
 tags: ["kubernetes", "kustomize", "devops", "gitops"]
 translationKey: "kustomize-multi-environment"
 summary: "Kustomize의 선언적 관리 방식과 Base/Overlay 구조를 이용해 dev/staging/prod 환경을 효율적으로 관리하는 방법을 다룹니다."

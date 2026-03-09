@@ -1,7 +1,7 @@
 ---
 title: "네트워크 기초: SSH, HTTPS, Webhook, REST API"
 date: 2024-07-07
-draft: true
+draft: false
 tags: ["networking", "ssh", "https", "rest-api"]
 translationKey: "network-fundamentals-ssh-https-rest"
 summary: "SSH의 동작 원리와 터널링, nginx를 이용한 HTTPS 설정, 그리고 REST API와 Webhook의 차이까지 — 개발자가 알아야 할 네트워크 기초를 다룹니다."

@@ -1,7 +1,7 @@
 ---
 title: "컴퓨터 아키텍처 이야기: 컴파일러, 인터프리터, 그리고 CPU"
 date: 2025-06-07
-draft: true
+draft: false
 tags: ["computer-science", "architecture", "compiler", "unicode"]
 translationKey: "computer-architecture-story"
 summary: "마인크래프트 모드에서 시작된 컴파일러 이야기부터 JIT 컴파일, ARM vs x86 아키텍처, 유니코드와 UTF-8까지 — 컴퓨터의 작동 원리를 이야기로 풀어봅니다."

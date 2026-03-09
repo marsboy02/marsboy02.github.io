@@ -1,7 +1,7 @@
 ---
 title: "Jenkins CI/CD 파이프라인 구축: Docker에서 프로덕션까지"
 date: 2024-11-20
-draft: true
+draft: false
 tags: ["jenkins", "ci-cd", "devops", "docker"]
 translationKey: "jenkins-cicd-pipeline"
 summary: "Jenkins에서 Docker를 사용하는 DinD vs DooD 개념부터, 온프레미스 Jenkins 구축, 파라미터를 활용한 유연한 파이프라인 설정까지 실전 CI/CD 구축 가이드입니다."

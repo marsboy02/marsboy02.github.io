@@ -1,7 +1,7 @@
 ---
 title: "Redis 깊이 이해하기: 기본부터 운영까지"
 date: 2024-12-16
-draft: true
+draft: false
 tags: ["redis", "database", "backend"]
 translationKey: "redis-deep-dive"
 summary: "Redis의 핵심 자료구조와 기본 명령어부터, maxmemory 설정과 Eviction 정책, 그리고 프로덕션 운영 팁까지 다룹니다."

@@ -1,7 +1,7 @@
 ---
 title: "AWS 비용 최적화 실전 가이드"
 date: 2025-05-21
-draft: true
+draft: false
 tags: ["aws", "cost-optimization", "cloud"]
 translationKey: "aws-cost-optimization"
 summary: "AWS 데이터 전송 비용의 함정부터 RI와 Savings Plans 비교, 재해 복구 전략까지 — 실무에서 겪은 AWS 비용 최적화 노하우를 공유합니다."

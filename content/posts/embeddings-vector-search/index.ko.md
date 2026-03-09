@@ -1,7 +1,7 @@
 ---
 title: "Embedding과 벡터 검색: 개념부터 시스템 구축까지"
 date: 2025-11-17
-draft: true
+draft: false
 tags: ["ai", "embeddings", "vector-database", "search"]
 translationKey: "embeddings-vector-search"
 summary: "텍스트와 이미지를 벡터로 변환하는 Embedding 개념부터, Milvus 벡터 데이터베이스, 검색 엔진 구축, 그리고 매칭/검색/추천 시스템의 차이까지 다룹니다."
