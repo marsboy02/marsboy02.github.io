@@ -395,6 +395,36 @@ header {
   display: inline-block;
 }
 
+/* Tables */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  overflow-x: auto;
+  display: block;
+}
+
+.post-content thead {
+  border-bottom: 2px solid var(--color-border);
+}
+
+.post-content th {
+  background: var(--color-bg-code);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+}
+
+.post-content td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.post-content tbody tr:hover {
+  background: var(--color-bg-code);
+}
+
 .post-content blockquote {
   border-left: 3px solid var(--color-border);
   margin-left: 0;
