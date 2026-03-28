@@ -1,0 +1,54 @@
+{{- $title := .Title -}}
+{{- $description := .Description | default .Summary | default site.Params.description | plainify | htmlUnescape | truncate 200 -}}
+{{- $permalink := .Permalink -}}
+{{- $siteName := site.Title -}}
+
+{{/* Resolve OG image: page images → site default */}}
+{{- $image := "" -}}
+{{- with .Params.images -}}
+  {{- $image = index . 0 -}}
+  {{- with $.Resources.GetMatch $image -}}
+    {{- $image = .Permalink -}}
+  {{- else -}}
+    {{- $image = $image | absURL -}}
+  {{- end -}}
+{{- else -}}
+  {{- with site.Params.images -}}
+    {{- $image = (index . 0) | absURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Locale mapping */}}
+{{- $locale := "en_US" -}}
+{{- if eq site.Language.Lang "ko" -}}
+  {{- $locale = "ko_KR" -}}
+{{- else if eq site.Language.Lang "ja" -}}
+  {{- $locale = "ja_JP" -}}
+{{- end -}}
+
+{{/* OpenGraph */}}
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $permalink }}">
+<meta property="og:site_name" content="{{ $siteName }}">
+<meta property="og:locale" content="{{ $locale }}">
+{{- if .IsHome }}
+<meta property="og:type" content="website">
+{{- else }}
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}
+{{- with $image }}
+<meta property="og:image" content="{{ . }}">
+{{- end }}
+
+{{/* Twitter Cards */}}
+<meta name="twitter:card" content="{{ if $image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{- with $image }}
+<meta name="twitter:image" content="{{ . }}">
+{{- end }}

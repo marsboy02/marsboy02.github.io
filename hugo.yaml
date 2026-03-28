@@ -49,6 +49,9 @@ pagination:
   pagerSize: 10
 
 params:
+  description: "Software Engineer marsboy's tech blog"
+  images:
+    - /images/og-default.jpg
   author: Hyeongjun Kang
   role: Software Engineer
   profileImage: /images/profile.jpg
