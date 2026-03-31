@@ -1,7 +1,7 @@
 ---
 title: "GitOps에서의 Secret 관리 전략"
 date: 2026-03-26
-draft: true
+draft: false
 tags: ["gitops", "kubernetes", "vault", "external-secrets", "devops", "security"]
 translationKey: "gitops-secret-management"
 summary: "GitOps 환경에서 Secret을 안전하게 관리하는 방법을 다룹니다. Sealed Secrets, SOPS, External Secrets Operator, CSI Driver를 비교하고, Vault + ESO + ArgoCD 조합의 실전 아키텍처와 베스트 프랙티스를 정리합니다."
