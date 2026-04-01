@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 190" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="850" height="190" fill="#f8fafc" rx="12"/>
+  <text x="425" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Table → Chain Mapping</text>
+
+  <rect x="40" y="42" width="770" height="140" rx="8" fill="white" stroke="#e2e8f0" filter="url(#s)"/>
+
+  <!-- Header -->
+  <rect x="40" y="42" width="130" height="28" fill="#f1f5f9" rx="8"/>
+  <text x="105" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">Table</text>
+  <rect x="170" y="42" width="125" height="28" fill="#f1f5f9"/>
+  <text x="232" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">PREROUTING</text>
+  <rect x="295" y="42" width="110" height="28" fill="#f1f5f9"/>
+  <text x="350" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">INPUT</text>
+  <rect x="405" y="42" width="120" height="28" fill="#f1f5f9"/>
+  <text x="465" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">FORWARD</text>
+  <rect x="525" y="42" width="110" height="28" fill="#f1f5f9"/>
+  <text x="580" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">OUTPUT</text>
+  <rect x="635" y="42" width="175" height="28" fill="#f1f5f9" rx="8"/>
+  <text x="722" y="61" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">POSTROUTING</text>
+
+  <!-- raw -->
+  <text x="105" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#9d174d">raw</text>
+  <text x="232" y="92" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="350" y="92" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+  <text x="465" y="92" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+  <text x="580" y="92" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="722" y="92" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+  <!-- mangle -->
+  <text x="105" y="117" text-anchor="middle" font-size="12" font-weight="600" fill="#92400e">mangle</text>
+  <text x="232" y="117" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="350" y="117" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="465" y="117" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="580" y="117" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="722" y="117" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <!-- nat -->
+  <text x="105" y="142" text-anchor="middle" font-size="12" font-weight="600" fill="#15803d">nat</text>
+  <text x="232" y="142" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="350" y="142" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="465" y="142" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+  <text x="580" y="142" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="722" y="142" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <!-- filter -->
+  <text x="105" y="167" text-anchor="middle" font-size="12" font-weight="600" fill="#1e40af">filter</text>
+  <text x="232" y="167" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+  <text x="350" y="167" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="465" y="167" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="580" y="167" text-anchor="middle" font-size="15" fill="#22c55e">✓</text>
+  <text x="722" y="167" text-anchor="middle" font-size="12" fill="#e2e8f0">—</text>
+
+</svg>

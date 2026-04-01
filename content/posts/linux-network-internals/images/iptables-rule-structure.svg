@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 155" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="850" height="155" fill="#f8fafc" rx="12"/>
+  <text x="425" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Rule Structure Example</text>
+
+  <rect x="40" y="42" width="770" height="42" rx="8" fill="#1e293b" filter="url(#s)"/>
+  <text x="425" y="68" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="'SF Mono', 'Fira Code', monospace">iptables -A INPUT -p tcp -s 10.0.0.0/8 --dport 22 -j ACCEPT</text>
+
+  <rect x="40" y="94" width="770" height="51" rx="8" fill="white" stroke="#e2e8f0" filter="url(#s)"/>
+
+  <rect x="55" y="102" width="95" height="25" rx="4" fill="#dbeafe"/>
+  <text x="102" y="119" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">-A INPUT</text>
+  <text x="102" y="138" text-anchor="middle" font-size="9" fill="#64748b">Chain</text>
+
+  <rect x="165" y="102" width="75" height="25" rx="4" fill="#dcfce7"/>
+  <text x="202" y="119" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">-p tcp</text>
+  <text x="202" y="138" text-anchor="middle" font-size="9" fill="#64748b">Protocol</text>
+
+  <rect x="255" y="102" width="140" height="25" rx="4" fill="#dcfce7"/>
+  <text x="325" y="119" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">-s 10.0.0.0/8</text>
+  <text x="325" y="138" text-anchor="middle" font-size="9" fill="#64748b">Source IP</text>
+
+  <rect x="410" y="102" width="110" height="25" rx="4" fill="#dcfce7"/>
+  <text x="465" y="119" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">--dport 22</text>
+  <text x="465" y="138" text-anchor="middle" font-size="9" fill="#64748b">Dest Port</text>
+
+  <rect x="535" y="102" width="115" height="25" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="592" y="119" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">-j ACCEPT</text>
+  <text x="592" y="138" text-anchor="middle" font-size="9" fill="#64748b">Target</text>
+
+  <line x1="165" y1="128" x2="520" y2="128" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="700" y="119" font-size="10" fill="#64748b">Match Conditions</text>
+</svg>

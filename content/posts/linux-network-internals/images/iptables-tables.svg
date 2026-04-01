@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 130" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="850" height="130" fill="#f8fafc" rx="12"/>
+  <text x="425" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">iptables Tables — What kind of operation?</text>
+
+  <rect x="40" y="50" width="170" height="55" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#s)"/>
+  <text x="125" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#1e40af">filter</text>
+  <text x="125" y="94" text-anchor="middle" font-size="10" fill="#3b82f6">Allow / Block</text>
+
+  <rect x="240" y="50" width="170" height="55" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5" filter="url(#s)"/>
+  <text x="325" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#15803d">nat</text>
+  <text x="325" y="94" text-anchor="middle" font-size="10" fill="#16a34a">Address Translation</text>
+
+  <rect x="440" y="50" width="170" height="55" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" filter="url(#s)"/>
+  <text x="525" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#92400e">mangle</text>
+  <text x="525" y="94" text-anchor="middle" font-size="10" fill="#a16207">Header Modification</text>
+
+  <rect x="640" y="50" width="170" height="55" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5" filter="url(#s)"/>
+  <text x="725" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#9d174d">raw</text>
+  <text x="725" y="94" text-anchor="middle" font-size="10" fill="#db2777">Skip conntrack</text>
+</svg>

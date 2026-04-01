@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 530" font-family="'Inter', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#334155"/></marker>
+  </defs>
+
+  <rect width="860" height="530" fill="#f8fafc" rx="12"/>
+  <text x="430" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Packet Journey: curl https://api.example.com</text>
+
+  <!-- L7 -->
+  <rect x="40" y="48" width="780" height="52" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="70" font-size="12" font-weight="700" fill="#1e40af">L7 Application</text>
+  <text x="65" y="89" font-size="11" fill="#3b82f6">curl builds HTTP request → passes to kernel via socket()</text>
+  <rect x="660" y="57" width="140" height="34" rx="4" fill="white" stroke="#93c5fd"/>
+  <text x="730" y="79" text-anchor="middle" font-size="9" fill="#64748b" font-family="monospace">GET / HTTP/1.1</text>
+
+  <line x1="430" y1="100" x2="430" y2="114" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- TLS -->
+  <rect x="40" y="117" width="780" height="52" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="139" font-size="12" font-weight="700" fill="#5b21b6">L6-5 TLS / Session</text>
+  <text x="65" y="158" font-size="11" fill="#7c3aed">TLS handshake → AES-GCM encryption → unreadable externally</text>
+  <rect x="660" y="126" width="140" height="34" rx="4" fill="white" stroke="#a78bfa"/>
+  <text x="730" y="148" text-anchor="middle" font-size="9" fill="#64748b" font-family="monospace">🔒 encrypted</text>
+
+  <line x1="430" y1="169" x2="430" y2="183" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- TCP -->
+  <rect x="40" y="186" width="780" height="52" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="208" font-size="12" font-weight="700" fill="#15803d">L4 Transport (TCP)</text>
+  <text x="65" y="227" font-size="11" fill="#16a34a">TCP header: Src:52341 → Dst:443, Seq, Ack, Checksum</text>
+  <rect x="660" y="195" width="140" height="34" rx="4" fill="#dcfce7" stroke="#86efac"/>
+  <text x="730" y="217" text-anchor="middle" font-size="9" fill="#15803d">[TCP][TLS data]</text>
+
+  <line x1="430" y1="238" x2="430" y2="252" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- IP -->
+  <rect x="40" y="255" width="780" height="52" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="277" font-size="12" font-weight="700" fill="#92400e">L3 Network (IP + Routing)</text>
+  <text x="65" y="296" font-size="11" fill="#a16207">IP header + routing table lookup → outgoing interface (en0 or utun)</text>
+  <rect x="660" y="264" width="140" height="34" rx="4" fill="#fef3c7" stroke="#fcd34d"/>
+  <text x="730" y="286" text-anchor="middle" font-size="9" fill="#92400e">[IP][TCP][TLS]</text>
+
+  <line x1="430" y1="307" x2="430" y2="321" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Netfilter -->
+  <rect x="40" y="324" width="780" height="48" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="345" font-size="12" font-weight="700" fill="#dc2626">L3 Netfilter Hooks</text>
+  <text x="65" y="363" font-size="11" fill="#ef4444">iptables rules: OUTPUT → POSTROUTING (SNAT / MASQUERADE)</text>
+
+  <line x1="430" y1="372" x2="430" y2="386" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- L2 -->
+  <rect x="40" y="389" width="780" height="52" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="411" font-size="12" font-weight="700" fill="#3730a3">L2 Data Link (Ethernet)</text>
+  <text x="65" y="430" font-size="11" fill="#4f46e5">ARP → gateway MAC → Ethernet header (Dst/Src MAC) + FCS</text>
+  <rect x="620" y="398" width="180" height="34" rx="4" fill="#e0e7ff" stroke="#a5b4fc"/>
+  <text x="710" y="420" text-anchor="middle" font-size="9" fill="#3730a3">[Eth][IP][TCP][TLS][FCS]</text>
+
+  <line x1="430" y1="441" x2="430" y2="455" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- L1 -->
+  <rect x="40" y="458" width="780" height="48" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" filter="url(#s)"/>
+  <text x="65" y="479" font-size="12" font-weight="700" fill="#334155">L1 Physical</text>
+  <text x="65" y="497" font-size="11" fill="#64748b">NIC converts frame → electric / Wi-Fi signal, TSO/TXCSUM offload</text>
+
+</svg>
