@@ -257,7 +257,7 @@ Bridge는 여러 물리(또는 가상) 인터페이스를 하나의 L2 브로드
 
 애플리케이션이 네트워크로 데이터를 보낼 때, 데이터는 한 덩어리로 나가지 않는다. 레이어를 내려갈수록 IP 헤더(20B), TCP 헤더(20B) 등이 붙기 때문에, L2에서 정한 최대 전송 단위인 MTU(보통 1500B)를 초과하지 않으려면 데이터를 미리 쪼개야 한다.
 
-이때 TCP가 사용하는 단위가 **MSS(Maximum Segment Size)**다. MSS = MTU - IP 헤더 - TCP 헤더이므로, 표준 환경에서는 1500 - 20 - 20 = 1460바이트가 된다. 애플리케이션이 소켓에 아무리 큰 데이터를 써도, TCP가 MSS 크기로 잘라서 내려보낸다.
+이때 TCP가 사용하는 단위가 **MSS**(Maximum Segment Size)다. MSS = MTU - IP 헤더 - TCP 헤더이므로, 표준 환경에서는 1500 - 20 - 20 = 1460바이트가 된다. 애플리케이션이 소켓에 아무리 큰 데이터를 써도, TCP가 MSS 크기로 잘라서 내려보낸다.
 
 ### macOS vs Linux
 
@@ -277,7 +277,7 @@ macOS XNU 커널                    Linux 커널
 
 앞서 커널 네트워크 스택의 구조를 봤다. 애플리케이션이 소켓에 데이터를 쓰면, TCP/UDP(L4)를 거쳐 IP 레이어(L3)에 도달한다. 바로 이 IP 레이어에서 커널이 가장 먼저 하는 일이 라우팅 테이블 조회다 — "이 패킷을 어떤 인터페이스로, 어디를 향해 내보낼 것인가?"를 결정하는 것이다.
 
-라우팅 테이블은 커널이 관리하는 경로 정보 데이터베이스다. 목적지 IP 주소를 보고 가장 구체적으로 일치하는 경로를 선택하는데, 이 알고리즘을 **Longest Prefix Match(LPM)**라고 한다.
+라우팅 테이블은 커널이 관리하는 경로 정보 데이터베이스다. 목적지 IP 주소를 보고 가장 구체적으로 일치하는 경로를 선택하는데, 이 알고리즘을 **Longest Prefix Match**(LPM)라고 한다.
 
 ### 라우팅 테이블 확인
 
@@ -369,7 +369,7 @@ default            192.168.20.1       UGScg                 en0
 
 ### iptables의 역할
 
-iptables는 커널의 Netfilter에게 "이런 패킷이 오면 이렇게 처리해"라고 **규칙을 등록해주는 유저스페이스 도구(userspace tool)**다. 실제 패킷 처리는 커널 안의 Netfilter가 수행한다. 규칙이 한번 등록되면 iptables 프로세스가 종료돼도 규칙은 커널에 남아있다.
+iptables는 커널의 Netfilter에게 "이런 패킷이 오면 이렇게 처리해"라고 **규칙을 등록해주는 유저스페이스 도구**(userspace tool)다. 실제 패킷 처리는 커널 안의 Netfilter가 수행한다. 규칙이 한번 등록되면 iptables 프로세스가 종료돼도 규칙은 커널에 남아있다.
 
 ```
 iptables (유저스페이스 CLI)
@@ -463,7 +463,7 @@ iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
 
 ## iptables의 구조: 테이블, 체인, 규칙
 
-iptables는 **테이블(Table) > 체인(Chain) > 규칙(Rule)**의 3단 계층 구조를 가진다.
+iptables는 테이블(Table) > 체인(Chain) > 규칙(Rule)의 3단 계층 구조를 가진다.
 
 ### 테이블 (Table)
 
@@ -494,7 +494,7 @@ iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
 
 ### 체인 (Chain)
 
-체인은 "특정 훅에서, 특정 테이블의 규칙들을 순서대로 담아둔 목록"이다. 하나의 훅에서 여러 테이블의 체인이 **고정된 순서(raw → mangle → nat → filter)**로 실행된다. 어떤 테이블이 어떤 훅(체인)에서 동작하는지는 아래 매핑 표와 같다.
+체인은 "특정 훅에서, 특정 테이블의 규칙들을 순서대로 담아둔 목록"이다. 하나의 훅에서 여러 테이블의 체인이 고정된 순서(raw → mangle → nat → filter)로 실행된다. 어떤 테이블이 어떤 훅(체인)에서 동작하는지는 아래 매핑 표와 같다.
 
 ![테이블-체인 매핑](images/iptables-chain-mapping.svg)
 
@@ -513,7 +513,7 @@ iptables -A INPUT -p tcp -j WEB_TRAFFIC
 
 ### 규칙 (Rule)
 
-규칙은 **매칭 조건(Match)**과 **타겟(Target)**으로 구성된다. 체인 안의 규칙은 위에서 아래로 순서대로 평가되며, 종료 타겟에 매칭되면 즉시 결정된다.
+규칙은 **매칭 조건**(Match)과 **타겟**(Target)으로 구성된다. 체인 안의 규칙은 위에서 아래로 순서대로 평가되며, 종료 타겟에 매칭되면 즉시 결정된다.
 
 ![규칙 구조 예시](images/iptables-rule-structure.svg)
 
@@ -540,7 +540,7 @@ iptables -A INPUT -p tcp --dport 22 -j LOG --log-prefix "SSH attempt: "
 iptables -A INPUT -p tcp --dport 22 -s !10.0.0.0/8 -j DROP
 ```
 
-어떤 규칙에도 매칭되지 않으면 체인의 **기본 정책(Policy)**이 적용된다:
+어떤 규칙에도 매칭되지 않으면 체인의 **기본 정책**(Policy)이 적용된다:
 
 ```bash
 iptables -P INPUT DROP    # INPUT 체인 기본 정책을 DROP으로
