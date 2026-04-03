@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="320" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Cross-Node Pod Communication Problem</text>
+
+  <!-- ============ Node 1 (Left) ============ -->
+  <rect x="30" y="60" width="190" height="220" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="125" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="#2980b9">Node 1</text>
+  <text x="125" y="98" text-anchor="middle" font-size="11" font-weight="400" fill="#475569">192.168.1.10</text>
+
+  <!-- Pod A -->
+  <rect x="52" y="112" width="146" height="46" rx="7" fill="#ffffff" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="125" y="133" text-anchor="middle" font-size="13" font-weight="600" fill="#2980b9">Pod A</text>
+  <text x="125" y="150" text-anchor="middle" font-size="11" fill="#475569">10.42.0.11</text>
+
+  <!-- Pod B -->
+  <rect x="52" y="200" width="146" height="46" rx="7" fill="#ffffff" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="125" y="221" text-anchor="middle" font-size="13" font-weight="600" fill="#2980b9">Pod B</text>
+  <text x="125" y="238" text-anchor="middle" font-size="11" fill="#475569">10.42.0.12</text>
+
+  <!-- ============ Physical Network (Center) ============ -->
+  <rect x="285" y="100" width="230" height="140" rx="10" fill="#fff8ee" stroke="#f39c12" stroke-width="1.5" filter="url(#s)"/>
+  <text x="400" y="126" text-anchor="middle" font-size="13" font-weight="700" fill="#d68910">Physical Network</text>
+
+  <!-- Router icon (stylized box) -->
+  <rect x="362" y="140" width="76" height="44" rx="6" fill="#f39c12" stroke="#d68910" stroke-width="1.5" filter="url(#s)"/>
+  <text x="400" y="157" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Router /</text>
+  <text x="400" y="173" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Switch</text>
+
+  <!-- Speech bubble: Unknown destination -->
+  <rect x="299" y="198" width="202" height="34" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.2"/>
+  <polygon points="380,198 394,198 387,188" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.2"/>
+  <text x="400" y="214" text-anchor="middle" font-size="10" font-weight="600" fill="#e74c3c">10.42.1.15? Unknown</text>
+  <text x="400" y="228" text-anchor="middle" font-size="10" font-weight="600" fill="#e74c3c">destination!</text>
+
+  <!-- ============ Node 2 (Right) ============ -->
+  <rect x="580" y="60" width="190" height="220" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="675" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="#2980b9">Node 2</text>
+  <text x="675" y="98" text-anchor="middle" font-size="11" font-weight="400" fill="#475569">192.168.1.20</text>
+
+  <!-- Pod C -->
+  <rect x="602" y="112" width="146" height="46" rx="7" fill="#ffffff" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="675" y="133" text-anchor="middle" font-size="13" font-weight="600" fill="#2980b9">Pod C</text>
+  <text x="675" y="150" text-anchor="middle" font-size="11" fill="#475569">10.42.1.15</text>
+
+  <!-- Pod D -->
+  <rect x="602" y="200" width="146" height="46" rx="7" fill="#ffffff" stroke="#2980b9" stroke-width="1.5" filter="url(#s)"/>
+  <text x="675" y="221" text-anchor="middle" font-size="13" font-weight="600" fill="#2980b9">Pod D</text>
+  <text x="675" y="238" text-anchor="middle" font-size="11" fill="#475569">10.42.1.16</text>
+
+  <!-- ============ Packet flow: Pod A -> Router ============ -->
+  <!-- Arrow from Pod A to router -->
+  <line x1="220" y1="135" x2="360" y2="158" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <!-- Packet label -->
+  <rect x="228" y="118" width="118" height="22" rx="5" fill="#fde8e8" stroke="#e74c3c" stroke-width="1"/>
+  <text x="287" y="133" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">dst: 10.42.1.15</text>
+
+  <!-- Red X on router -->
+  <circle cx="440" cy="135" r="15" fill="#e74c3c"/>
+  <line x1="432" y1="127" x2="448" y2="143" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="448" y1="127" x2="432" y2="143" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ============ Dashed/faded arrow: Router -> Node 2 (failed path) ============ -->
+  <line x1="440" y1="158" x2="598" y2="135" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-gray)"/>
+
+</svg>

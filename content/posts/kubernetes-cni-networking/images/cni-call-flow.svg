@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" width="700" height="520">
+  <defs>
+    <filter id="s">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <!-- Arrow marker for forward arrows -->
+    <marker id="arrow-fwd" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#475569"/>
+    </marker>
+    <!-- Arrow marker for self-loop arrows -->
+    <marker id="arrow-self" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <!-- Arrow marker for return arrows (dashed) -->
+    <marker id="arrow-ret" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="520" fill="#f8fafc" rx="12" filter="url(#s)"/>
+
+  <!-- Title -->
+  <text x="350" y="36" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="18" font-weight="700" fill="#0f172a">CNI Call Flow: Pod Creation</text>
+
+  <!-- Participant boxes -->
+  <!-- kubelet: x=110 center -->
+  <rect x="52" y="54" width="116" height="36" rx="8" fill="#e8f4f8" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="110" y="77" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2980b9">kubelet</text>
+
+  <!-- containerd: x=350 center -->
+  <rect x="282" y="54" width="136" height="36" rx="8" fill="#eaf7ee" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="350" y="77" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="13" font-weight="600" fill="#27ae60">containerd</text>
+
+  <!-- CNI Plugin: x=580 center -->
+  <rect x="516" y="54" width="120" height="36" rx="8" fill="#fff3e0" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="576" y="77" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="13" font-weight="600" fill="#f39c12">CNI Plugin</text>
+
+  <!-- Lifelines -->
+  <line x1="110" y1="90" x2="110" y2="490" stroke="#2980b9" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  <line x1="350" y1="90" x2="350" y2="490" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  <line x1="576" y1="90" x2="576" y2="490" stroke="#f39c12" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+
+  <!-- Step 1: kubelet → containerd: CreatePod (CRI) -->
+  <!-- y=130 -->
+  <line x1="116" y1="130" x2="342" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow-fwd)"/>
+  <rect x="152" y="116" width="148" height="22" rx="4" fill="#f8fafc" opacity="0.85"/>
+  <text x="226" y="131" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#1e293b">CreatePod (CRI)</text>
+
+  <!-- Step 2: containerd → containerd: Create pause container (netns) -->
+  <!-- self arrow y=168 -->
+  <path d="M350 168 Q420 168 420 185 Q420 202 350 202" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-self)"/>
+  <rect x="356" y="172" width="182" height="22" rx="4" fill="#f8fafc" opacity="0.88"/>
+  <text x="447" y="187" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#475569">Create pause container (netns)</text>
+
+  <!-- Step 3: containerd → containerd: Read /etc/cni/net.d/ -->
+  <!-- self arrow y=220 -->
+  <path d="M350 220 Q420 220 420 237 Q420 254 350 254" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-self)"/>
+  <rect x="356" y="224" width="162" height="22" rx="4" fill="#f8fafc" opacity="0.88"/>
+  <text x="437" y="239" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#475569">Read /etc/cni/net.d/</text>
+
+  <!-- Step 4: containerd → CNI Plugin: exec ADD (stdin: JSON config) -->
+  <!-- y=276 -->
+  <line x1="356" y1="276" x2="570" y2="276" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow-fwd)"/>
+  <rect x="370" y="262" width="186" height="22" rx="4" fill="#f8fafc" opacity="0.85"/>
+  <text x="463" y="277" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#1e293b">exec ADD (stdin: JSON config)</text>
+
+  <!-- Step 5: CNI Plugin → CNI Plugin: Create veth pair, Assign IP, Set routes -->
+  <!-- self arrow y=314 -->
+  <path d="M576 314 Q646 314 646 334 Q646 354 576 354" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-self)"/>
+  <rect x="424" y="318" width="220" height="32" rx="4" fill="#f8fafc" opacity="0.88"/>
+  <text x="534" y="331" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#475569">Create veth pair,</text>
+  <text x="534" y="345" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#475569">Assign IP, Set routes</text>
+
+  <!-- Step 6: CNI Plugin → containerd: Return JSON result (IP, interface) -->
+  <!-- y=376, return arrow dashed -->
+  <line x1="570" y1="376" x2="356" y2="376" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-ret)"/>
+  <rect x="370" y="362" width="192" height="22" rx="4" fill="#f8fafc" opacity="0.85"/>
+  <text x="466" y="377" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#1e293b">Return JSON result (IP, interface)</text>
+
+  <!-- Step 7: containerd → containerd: App containers join netns -->
+  <!-- self arrow y=406 -->
+  <path d="M350 406 Q420 406 420 420 Q420 434 350 434" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-self)"/>
+  <rect x="356" y="410" width="178" height="22" rx="4" fill="#f8fafc" opacity="0.88"/>
+  <text x="445" y="425" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#475569">App containers join netns</text>
+
+  <!-- Step 8: containerd → kubelet: Pod Ready -->
+  <!-- y=460, return arrow dashed -->
+  <line x1="344" y1="460" x2="116" y2="460" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-ret)"/>
+  <rect x="152" y="446" width="100" height="22" rx="4" fill="#f8fafc" opacity="0.85"/>
+  <text x="202" y="461" text-anchor="middle" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#1e293b">Pod Ready</text>
+
+</svg>

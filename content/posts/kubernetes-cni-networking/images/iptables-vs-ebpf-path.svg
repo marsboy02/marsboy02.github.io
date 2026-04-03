@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow-org" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrow-ebpf" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="340" fill="#f8fafc" rx="12" filter="url(#s)"/>
+
+  <!-- Title -->
+  <text x="410" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Packet Processing: iptables vs. eBPF (Cilium)</text>
+
+  <!-- ===== TOP PATH: iptables (Traditional) ===== -->
+  <!-- Section label -->
+  <text x="16" y="72" font-size="12" font-weight="700" fill="#e74c3c">iptables (Traditional)</text>
+
+  <!-- Background tint for top path -->
+  <rect x="12" y="80" width="796" height="88" rx="10" fill="#fff3e0" stroke="#f39c12" stroke-width="1" opacity="0.6"/>
+
+  <!-- Box 1: NIC -->
+  <rect x="24" y="96" width="72" height="56" rx="8" fill="#ffffff" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="60" y="121" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">NIC</text>
+  <text x="60" y="138" text-anchor="middle" font-size="10" fill="#64748b">ingress</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="97" y1="124" x2="126" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 2: sk_buff -->
+  <rect x="127" y="96" width="80" height="56" rx="8" fill="#ffffff" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="167" y="121" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">sk_buff</text>
+  <text x="167" y="138" text-anchor="middle" font-size="10" fill="#64748b">allocation</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="208" y1="124" x2="236" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 3: PREROUTING -->
+  <rect x="237" y="96" width="112" height="56" rx="8" fill="#f39c12" fill-opacity="0.18" stroke="#f39c12" stroke-width="1.8" filter="url(#s)"/>
+  <text x="293" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">netfilter</text>
+  <text x="293" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">PREROUTING</text>
+  <text x="293" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="#e74c3c">O(n)</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="350" y1="124" x2="378" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 4: Routing Decision -->
+  <rect x="379" y="96" width="104" height="56" rx="8" fill="#ffffff" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="431" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#0f172a">Routing</text>
+  <text x="431" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#0f172a">Decision</text>
+  <text x="431" y="147" text-anchor="middle" font-size="10" fill="#64748b">FIB lookup</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="484" y1="124" x2="512" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 5: FORWARD -->
+  <rect x="513" y="96" width="100" height="56" rx="8" fill="#f39c12" fill-opacity="0.18" stroke="#f39c12" stroke-width="1.8" filter="url(#s)"/>
+  <text x="563" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">netfilter</text>
+  <text x="563" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">FORWARD</text>
+  <text x="563" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="#e74c3c">O(n)</text>
+
+  <!-- Arrow 5→6 -->
+  <line x1="614" y1="124" x2="642" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 6: POSTROUTING -->
+  <rect x="643" y="96" width="112" height="56" rx="8" fill="#f39c12" fill-opacity="0.18" stroke="#f39c12" stroke-width="1.8" filter="url(#s)"/>
+  <text x="699" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">netfilter</text>
+  <text x="699" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#c0700a">POSTROUTING</text>
+  <text x="699" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="#e74c3c">O(n)</text>
+
+  <!-- Arrow 6→7 -->
+  <line x1="756" y1="124" x2="774" y2="124" stroke="#e74c3c" stroke-width="1.8" marker-end="url(#arrow-org)"/>
+
+  <!-- Box 7: NIC out -->
+  <rect x="775" y="96" width="40" height="56" rx="8" fill="#ffffff" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="795" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#0f172a">NIC</text>
+  <text x="795" y="134" text-anchor="middle" font-size="10" fill="#64748b">egress</text>
+
+  <!-- "Bypassed by eBPF" overlay bracket on netfilter boxes -->
+  <!-- Translucent highlight bar over PREROUTING + FORWARD + POSTROUTING -->
+  <rect x="234" y="88" width="524" height="72" rx="8" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3" opacity="0.55"/>
+  <text x="496" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#e74c3c" opacity="0.85">Bypassed by eBPF</text>
+
+  <!-- ===== BOTTOM PATH: eBPF (Cilium) ===== -->
+  <!-- Section label -->
+  <text x="16" y="210" font-size="12" font-weight="700" fill="#27ae60">eBPF (Cilium)</text>
+
+  <!-- Background tint for bottom path -->
+  <rect x="12" y="218" width="500" height="88" rx="10" fill="#eaf7ee" stroke="#27ae60" stroke-width="1" opacity="0.7"/>
+
+  <!-- Box 1: NIC -->
+  <rect x="24" y="234" width="72" height="56" rx="8" fill="#ffffff" stroke="#27ae60" stroke-width="1.5" filter="url(#s)"/>
+  <text x="60" y="259" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">NIC</text>
+  <text x="60" y="276" text-anchor="middle" font-size="10" fill="#64748b">ingress</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="97" y1="262" x2="126" y2="262" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-ebpf)"/>
+
+  <!-- Box 2: XDP/TC Hook -->
+  <rect x="127" y="234" width="104" height="56" rx="8" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="1.8" filter="url(#s)"/>
+  <text x="179" y="259" text-anchor="middle" font-size="12" font-weight="600" fill="#1a7a45">XDP / TC</text>
+  <text x="179" y="276" text-anchor="middle" font-size="11" font-weight="600" fill="#1a7a45">Hook</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="232" y1="262" x2="260" y2="262" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-ebpf)"/>
+
+  <!-- Box 3: eBPF Map Lookup -->
+  <rect x="261" y="234" width="116" height="56" rx="8" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="1.8" filter="url(#s)"/>
+  <text x="319" y="257" text-anchor="middle" font-size="11" font-weight="600" fill="#1a7a45">eBPF Map</text>
+  <text x="319" y="272" text-anchor="middle" font-size="11" font-weight="600" fill="#1a7a45">Lookup</text>
+  <text x="319" y="285" text-anchor="middle" font-size="10" font-weight="700" fill="#27ae60">O(1)</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="378" y1="262" x2="406" y2="262" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-ebpf)"/>
+
+  <!-- Box 4: Direct Redirect -->
+  <rect x="407" y="234" width="96" height="56" rx="8" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="1.8" filter="url(#s)"/>
+  <text x="455" y="257" text-anchor="middle" font-size="11" font-weight="600" fill="#1a7a45">Direct</text>
+  <text x="455" y="272" text-anchor="middle" font-size="11" font-weight="600" fill="#1a7a45">Redirect</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="504" y1="262" x2="526" y2="262" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-ebpf)"/>
+
+  <!-- Box 5: Target veth -->
+  <rect x="527" y="234" width="84" height="56" rx="8" fill="#ffffff" stroke="#27ae60" stroke-width="1.5" filter="url(#s)"/>
+  <text x="569" y="259" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">Target</text>
+  <text x="569" y="276" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">veth</text>
+
+  <!-- "Faster / Fewer hops" callout -->
+  <text x="650" y="255" font-size="11" font-weight="700" fill="#27ae60">Fewer hops.</text>
+  <text x="650" y="271" font-size="11" font-weight="700" fill="#27ae60">No kernel</text>
+  <text x="650" y="287" font-size="11" font-weight="700" fill="#27ae60">netfilter traversal.</text>
+
+  <!-- Separator line between paths -->
+  <line x1="16" y1="200" x2="804" y2="200" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,6"/>
+</svg>

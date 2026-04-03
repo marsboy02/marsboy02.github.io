@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="760" height="380" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="38" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Docker Default Networking vs Kubernetes Flat Network Model</text>
+
+  <!-- VS divider -->
+  <line x1="380" y1="58" x2="380" y2="362" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="354" y="196" width="52" height="28" rx="14" fill="#0f172a"/>
+  <text x="380" y="215" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">vs</text>
+
+  <!-- ========== LEFT SIDE: Docker Default ========== -->
+  <text x="190" y="72" text-anchor="middle" font-size="14" font-weight="600" fill="#e74c3c">Docker Default</text>
+
+  <!-- Container box -->
+  <rect x="110" y="86" width="160" height="56" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="190" y="109" text-anchor="middle" font-size="14" font-weight="600" fill="#e74c3c">Container</text>
+  <text x="190" y="130" text-anchor="middle" font-size="11" font-weight="400" fill="#7f8c8d">IP: 172.17.0.2</text>
+
+  <!-- Arrow: Container -> SNAT -->
+  <line x1="190" y1="142" x2="190" y2="170" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- SNAT box -->
+  <rect x="143" y="170" width="94" height="38" rx="6" fill="#f39c12" stroke="#d68910" stroke-width="1.5" filter="url(#s)"/>
+  <text x="190" y="194" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">SNAT</text>
+
+  <!-- Arrow: SNAT -> Host -->
+  <line x1="190" y1="208" x2="190" y2="236" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Host box -->
+  <rect x="110" y="236" width="160" height="56" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="190" y="259" text-anchor="middle" font-size="14" font-weight="600" fill="#e74c3c">Host</text>
+  <text x="190" y="279" text-anchor="middle" font-size="11" font-weight="400" fill="#7f8c8d">IP: 192.168.1.10</text>
+
+  <!-- Arrow: Host -> Receiver -->
+  <line x1="190" y1="292" x2="190" y2="318" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Receiver box (Docker) -->
+  <rect x="94" y="318" width="192" height="46" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="190" y="338" text-anchor="middle" font-size="12" font-weight="600" fill="#c0392b">Receiver sees:</text>
+  <text x="190" y="356" text-anchor="middle" font-size="11" font-weight="400" fill="#7f8c8d">src = 192.168.1.10 (Host IP)</text>
+
+  <!-- Red X badge -->
+  <circle cx="304" cy="103" r="14" fill="#e74c3c"/>
+  <text x="304" y="109" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">✕</text>
+
+  <!-- ========== RIGHT SIDE: Kubernetes ========== -->
+  <text x="570" y="72" text-anchor="middle" font-size="14" font-weight="600" fill="#27ae60">Kubernetes</text>
+
+  <!-- Pod box -->
+  <rect x="490" y="86" width="160" height="56" rx="8" fill="#eaf7ee" stroke="#27ae60" stroke-width="1.5" filter="url(#s)"/>
+  <text x="570" y="109" text-anchor="middle" font-size="14" font-weight="600" fill="#27ae60">Pod</text>
+  <text x="570" y="130" text-anchor="middle" font-size="11" font-weight="400" fill="#7f8c8d">IP: 10.42.0.11</text>
+
+  <!-- Arrow: Pod -> Receiver (direct, no NAT) -->
+  <line x1="570" y1="142" x2="570" y2="226" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="584" y="188" text-anchor="start" font-size="10" font-weight="400" fill="#27ae60">No NAT</text>
+
+  <!-- Receiver box (Kubernetes) -->
+  <rect x="476" y="226" width="188" height="46" rx="8" fill="#eaf7ee" stroke="#27ae60" stroke-width="1.5" filter="url(#s)"/>
+  <text x="570" y="246" text-anchor="middle" font-size="12" font-weight="600" fill="#27ae60">Receiver sees:</text>
+  <text x="570" y="264" text-anchor="middle" font-size="11" font-weight="400" fill="#7f8c8d">src = 10.42.0.11 (Pod IP)</text>
+
+  <!-- Green checkmark badge -->
+  <circle cx="456" cy="103" r="14" fill="#27ae60"/>
+  <text x="456" y="109" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">✓</text>
+
+</svg>

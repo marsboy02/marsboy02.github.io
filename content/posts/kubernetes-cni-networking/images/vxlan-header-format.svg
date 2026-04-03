@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="700" height="200" fill="#f8fafc" rx="12"/>
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">VXLAN Header (8 bytes)</text>
+
+  <!-- Bit ruler -->
+  <text x="50" y="56" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94a3b8">0</text>
+  <text x="200" y="56" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">8</text>
+  <text x="350" y="56" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">16</text>
+  <text x="500" y="56" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94a3b8" text-anchor="middle">24</text>
+  <text x="646" y="56" font-family="'SF Mono', 'Fira Code', monospace" font-size="9" fill="#94a3b8" text-anchor="end">31</text>
+
+  <!-- Tick marks -->
+  <line x1="50" y1="60" x2="650" y2="60" stroke="#cbd5e1" stroke-width="1"/>
+  <line x1="50" y1="58" x2="50" y2="62" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="200" y1="58" x2="200" y2="62" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="350" y1="58" x2="350" y2="62" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="500" y1="58" x2="500" y2="62" stroke="#94a3b8" stroke-width="1"/>
+  <line x1="650" y1="58" x2="650" y2="62" stroke="#94a3b8" stroke-width="1"/>
+
+  <!-- Row 1: Flags (8 bits) + Reserved (24 bits) -->
+  <!-- Flags -->
+  <rect x="50" y="66" width="150" height="44" rx="0" fill="#e8f4f8" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="125" y="90" text-anchor="middle" font-size="13" font-weight="600" fill="#2980b9">Flags</text>
+  <text x="125" y="104" text-anchor="middle" font-size="10" fill="#64748b">8 bits</text>
+
+  <!-- Reserved (24) -->
+  <rect x="200" y="66" width="450" height="44" rx="0" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="425" y="90" text-anchor="middle" font-size="13" font-weight="600" fill="#94a3b8">Reserved</text>
+  <text x="425" y="104" text-anchor="middle" font-size="10" fill="#94a3b8">24 bits</text>
+
+  <!-- Row 2: VNI (24 bits) + Reserved (8 bits) -->
+  <!-- VNI -->
+  <rect x="50" y="110" width="450" height="44" rx="0" fill="#f3e8ff" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="275" y="134" text-anchor="middle" font-size="13" font-weight="700" fill="#8e44ad">VNI (VXLAN Network Identifier)</text>
+  <text x="275" y="148" text-anchor="middle" font-size="10" fill="#64748b">24 bits — up to ~16.7M logical networks</text>
+
+  <!-- Reserved (8) -->
+  <rect x="500" y="110" width="150" height="44" rx="0" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="575" y="134" text-anchor="middle" font-size="13" font-weight="600" fill="#94a3b8">Reserved</text>
+  <text x="575" y="148" text-anchor="middle" font-size="10" fill="#94a3b8">8 bits</text>
+
+  <!-- Total size annotation -->
+  <text x="350" y="182" text-anchor="middle" font-size="11" fill="#64748b">Total: 64 bits (8 bytes)</text>
+</svg>

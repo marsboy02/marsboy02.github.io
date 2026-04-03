@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 220" width="820" height="220">
+  <defs>
+    <filter id="s">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="220" rx="12" fill="#f8fafc" filter="url(#s)"/>
+
+  <!-- Title -->
+  <text x="410" y="30" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="18" font-weight="700" fill="#0f172a">VXLAN Packet Encapsulation</text>
+
+  <!-- Bar definitions: x, width, color, label line1, label line2, annotation -->
+  <!-- Scale: ~6.14px per byte, bars start at x=30, y=55, height=60 -->
+  <!-- Widths (rounded, total=760):
+       Outer Ethernet 14B -> 93px   x=30
+       Outer IP       20B -> 133px  x=123
+       Outer UDP       8B ->  53px  x=256
+       VXLAN Header    8B ->  53px  x=309
+       Inner Ethernet 14B ->  93px  x=362
+       Inner IP       20B -> 133px  x=455
+       Payload        ~30B-> 200px  x=588
+  -->
+
+  <!-- Bar 1: Outer Ethernet -->
+  <rect x="30" y="55" width="93" height="60" fill="#555555" rx="3"/>
+  <text x="76.5" y="81" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Outer</text>
+  <text x="76.5" y="95" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Ethernet</text>
+  <text x="76.5" y="109" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">14B</text>
+
+  <!-- Bar 2: Outer IP -->
+  <rect x="123" y="55" width="133" height="60" fill="#2980b9" rx="3"/>
+  <text x="189.5" y="81" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Outer IP</text>
+  <text x="189.5" y="95" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">20B</text>
+  <text x="189.5" y="128" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#1a5276">Node1 → Node2</text>
+
+  <!-- Bar 3: Outer UDP -->
+  <rect x="256" y="55" width="53" height="60" fill="#3498db" rx="3"/>
+  <text x="282.5" y="78" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Outer</text>
+  <text x="282.5" y="92" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">UDP</text>
+  <text x="282.5" y="106" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">8B</text>
+  <text x="282.5" y="128" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#1a6fa3">dst: 8472</text>
+
+  <!-- Bar 4: VXLAN Header -->
+  <rect x="309" y="55" width="53" height="60" fill="#8e44ad" rx="3"/>
+  <text x="335.5" y="78" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">VXLAN</text>
+  <text x="335.5" y="92" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Hdr</text>
+  <text x="335.5" y="106" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">8B</text>
+  <text x="335.5" y="128" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#6c3483">VNI=1</text>
+
+  <!-- Bar 5: Inner Ethernet -->
+  <rect x="362" y="55" width="93" height="60" fill="#f39c12" rx="3"/>
+  <text x="408.5" y="81" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Inner</text>
+  <text x="408.5" y="95" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Ethernet</text>
+  <text x="408.5" y="109" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">14B</text>
+
+  <!-- Bar 6: Inner IP -->
+  <rect x="455" y="55" width="133" height="60" fill="#27ae60" rx="3"/>
+  <text x="521.5" y="81" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Inner IP</text>
+  <text x="521.5" y="95" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">20B</text>
+  <text x="521.5" y="128" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#1a7141">Pod A → Pod C</text>
+
+  <!-- Bar 7: Payload -->
+  <rect x="588" y="55" width="202" height="60" fill="#2ecc71" rx="3"/>
+  <text x="689" y="88" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Payload</text>
+  <text x="689" y="102" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#ffffff">(variable)</text>
+
+  <!-- Bracket 1: "What physical network sees" covering bars 1-4 (x=30 to x=362) -->
+  <!-- Bracket line -->
+  <line x1="30" y1="148" x2="362" y2="148" stroke="#555555" stroke-width="1.5"/>
+  <line x1="30" y1="143" x2="30" y2="148" stroke="#555555" stroke-width="1.5"/>
+  <line x1="362" y1="143" x2="362" y2="148" stroke="#555555" stroke-width="1.5"/>
+  <text x="196" y="163" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#555555">What physical network sees</text>
+
+  <!-- Bracket 2: "Original packet" covering bars 5-7 (x=362 to x=790) -->
+  <line x1="362" y1="148" x2="790" y2="148" stroke="#27ae60" stroke-width="1.5"/>
+  <line x1="362" y1="143" x2="362" y2="148" stroke="#27ae60" stroke-width="1.5"/>
+  <line x1="790" y1="143" x2="790" y2="148" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="576" y="163" text-anchor="middle" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#27ae60">Original packet</text>
+
+  <!-- Outer frame label -->
+  <text x="30" y="195" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#64748b">Outer frame (tunnel)</text>
+  <text x="790" y="195" text-anchor="end" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-size="10" fill="#64748b">Inner frame (original)</text>
+</svg>
