@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 540" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+  </defs>
+
+  <rect width="780" height="540" fill="#f8fafc" rx="12"/>
+  <text x="390" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Istio Full Dependency Overview</text>
+
+  <!-- User CRDs (top) -->
+  <rect x="200" y="52" width="380" height="52" rx="10" fill="#7c3aed" filter="url(#s)"/>
+  <text x="390" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="white">User Config (Istio CRDs)</text>
+  <text x="390" y="92" text-anchor="middle" font-size="9" fill="#ddd6fe">VirtualService · DestinationRule · AuthorizationPolicy · PeerAuthentication</text>
+
+  <line x1="390" y1="104" x2="390" y2="128" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- K8s API Server -->
+  <rect x="280" y="134" width="220" height="40" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" filter="url(#s)"/>
+  <text x="390" y="159" text-anchor="middle" font-size="12" font-weight="600" fill="#475569">Kubernetes API Server</text>
+
+  <line x1="390" y1="174" x2="390" y2="198" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="406" y="191" font-size="8" fill="#64748b">watch</text>
+
+  <!-- istiod -->
+  <rect x="180" y="204" width="420" height="80" rx="12" fill="#2563eb" filter="url(#s)"/>
+  <text x="390" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="white">istiod (Control Plane)</text>
+
+  <!-- istiod sub-functions -->
+  <rect x="200" y="242" width="110" height="28" rx="6" fill="#1d4ed8"/>
+  <text x="255" y="261" text-anchor="middle" font-size="9" fill="white">xDS Config Push</text>
+  <rect x="322" y="242" width="120" height="28" rx="6" fill="#1d4ed8"/>
+  <text x="382" y="261" text-anchor="middle" font-size="9" fill="white">CA (Cert Issue)</text>
+  <rect x="454" y="242" width="130" height="28" rx="6" fill="#1d4ed8"/>
+  <text x="519" y="261" text-anchor="middle" font-size="9" fill="white">Webhook (Inject)</text>
+
+  <!-- Arrows from istiod down -->
+  <line x1="255" y1="284" x2="255" y2="320" stroke="#2563eb" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="270" y="306" font-size="8" fill="#2563eb">xDS gRPC</text>
+  <line x1="382" y1="284" x2="382" y2="320" stroke="#2563eb" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="397" y="306" font-size="8" fill="#2563eb">SDS certs</text>
+  <line x1="519" y1="284" x2="519" y2="320" stroke="#2563eb" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="534" y="306" font-size="8" fill="#2563eb">inject</text>
+
+  <!-- Envoy -->
+  <rect x="140" y="326" width="500" height="64" rx="10" fill="#059669" filter="url(#s)"/>
+  <text x="390" y="352" text-anchor="middle" font-size="14" font-weight="700" fill="white">Envoy Sidecars (istio-proxy)</text>
+
+  <!-- Envoy capabilities -->
+  <rect x="160" y="358" width="80" height="22" rx="4" fill="#047857"/>
+  <text x="200" y="374" text-anchor="middle" font-size="8" fill="white">Routing</text>
+  <rect x="250" y="358" width="64" height="22" rx="4" fill="#047857"/>
+  <text x="282" y="374" text-anchor="middle" font-size="8" fill="white">mTLS</text>
+  <rect x="324" y="358" width="70" height="22" rx="4" fill="#047857"/>
+  <text x="359" y="374" text-anchor="middle" font-size="8" fill="white">Metrics</text>
+  <rect x="404" y="358" width="60" height="22" rx="4" fill="#047857"/>
+  <text x="434" y="374" text-anchor="middle" font-size="8" fill="white">Retry</text>
+  <rect x="474" y="358" width="70" height="22" rx="4" fill="#047857"/>
+  <text x="509" y="374" text-anchor="middle" font-size="8" fill="white">L7 AuthZ</text>
+  <rect x="554" y="358" width="70" height="22" rx="4" fill="#047857"/>
+  <text x="589" y="374" text-anchor="middle" font-size="8" fill="white">Tracing</text>
+
+  <line x1="390" y1="390" x2="390" y2="414" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="406" y="407" font-size="8" fill="#64748b">REDIRECT</text>
+
+  <!-- iptables / eBPF -->
+  <rect x="200" y="420" width="380" height="44" rx="10" fill="#d97706" filter="url(#s)"/>
+  <text x="390" y="440" text-anchor="middle" font-size="13" font-weight="700" fill="white">iptables / eBPF</text>
+  <text x="390" y="456" text-anchor="middle" font-size="9" fill="#fef3c7">Transparent traffic redirect: App ↔ Envoy</text>
+
+  <line x1="390" y1="464" x2="390" y2="488" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Linux Kernel -->
+  <rect x="140" y="494" width="500" height="36" rx="10" fill="#dc2626" filter="url(#s)"/>
+  <text x="390" y="517" text-anchor="middle" font-size="13" font-weight="700" fill="white">Linux Kernel — netfilter · conntrack · veth · VXLAN</text>
+
+
+</svg>

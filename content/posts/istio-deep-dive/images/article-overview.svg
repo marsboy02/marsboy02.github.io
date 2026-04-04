@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563eb"/><stop offset="100%" style="stop-color:#3b82f6"/></linearGradient>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#059669"/><stop offset="100%" style="stop-color:#10b981"/></linearGradient>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#d97706"/><stop offset="100%" style="stop-color:#f59e0b"/></linearGradient>
+    <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#dc2626"/><stop offset="100%" style="stop-color:#ef4444"/></linearGradient>
+  </defs>
+
+  <rect width="760" height="480" fill="#f8fafc" rx="12"/>
+  <text x="380" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Istio Stack — From Kernel to User Config</text>
+
+  <!-- Layer 1: User Config (top) -->
+  <rect x="180" y="58" width="400" height="58" rx="10" fill="url(#g1)" filter="url(#s)"/>
+  <text x="380" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="white">User Config</text>
+  <text x="380" y="102" text-anchor="middle" font-size="11" fill="#ddd6fe">VirtualService · DestinationRule · AuthorizationPolicy</text>
+
+  <!-- Arrow -->
+  <line x1="380" y1="116" x2="380" y2="140" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="396" y="133" font-size="9" fill="#64748b">kubectl apply</text>
+
+  <!-- Layer 2: istiod (Control Plane) -->
+  <rect x="130" y="146" width="500" height="72" rx="10" fill="url(#g2)" filter="url(#s)"/>
+  <text x="380" y="172" text-anchor="middle" font-size="14" font-weight="700" fill="white">istiod — Control Plane</text>
+  <text x="240" y="200" text-anchor="middle" font-size="10" fill="#bfdbfe">Pilot (xDS Push)</text>
+  <text x="380" y="200" text-anchor="middle" font-size="10" fill="#bfdbfe">Citadel (Cert CA)</text>
+  <text x="520" y="200" text-anchor="middle" font-size="10" fill="#bfdbfe">Webhook (Inject)</text>
+
+  <!-- Arrows: xDS + SDS -->
+  <line x1="280" y1="218" x2="280" y2="254" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="296" y="240" font-size="9" fill="#64748b">xDS gRPC</text>
+  <line x1="480" y1="218" x2="480" y2="254" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="496" y="240" font-size="9" fill="#64748b">SDS (certs)</text>
+
+  <!-- Layer 3: Envoy (Data Plane) -->
+  <rect x="130" y="260" width="500" height="58" rx="10" fill="url(#g3)" filter="url(#s)"/>
+  <text x="380" y="284" text-anchor="middle" font-size="14" font-weight="700" fill="white">Envoy Sidecars — Data Plane</text>
+  <text x="380" y="304" text-anchor="middle" font-size="11" fill="#a7f3d0">Routing · mTLS · Metrics · Retry · Circuit Breaker</text>
+
+  <!-- Arrow -->
+  <line x1="380" y1="318" x2="380" y2="342" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="396" y="335" font-size="9" fill="#64748b">iptables REDIRECT</text>
+
+  <!-- Layer 4: CNI -->
+  <rect x="130" y="348" width="500" height="50" rx="10" fill="url(#g4)" filter="url(#s)"/>
+  <text x="380" y="370" text-anchor="middle" font-size="14" font-weight="700" fill="white">CNI — Network Infrastructure</text>
+  <text x="380" y="388" text-anchor="middle" font-size="11" fill="#fef3c7">Flannel / Calico / Cilium — Pod IP, Routing, L3/L4 Policy</text>
+
+  <!-- Arrow -->
+  <line x1="380" y1="398" x2="380" y2="418" stroke="#475569" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Layer 5: Kernel -->
+  <rect x="130" y="424" width="500" height="44" rx="10" fill="url(#g5)" filter="url(#s)"/>
+  <text x="380" y="451" text-anchor="middle" font-size="14" font-weight="700" fill="white">Linux Kernel — netfilter · conntrack · veth · VXLAN</text>
+
+</svg>

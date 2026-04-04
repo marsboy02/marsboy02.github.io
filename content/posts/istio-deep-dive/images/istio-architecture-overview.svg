@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+    <marker id="ab" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+  </defs>
+
+  <rect width="800" height="520" fill="#f8fafc" rx="12"/>
+  <text x="400" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Istio Architecture: Control Plane + Data Plane</text>
+
+  <!-- Control Plane region -->
+  <rect x="230" y="52" width="340" height="110" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,3" filter="url(#s)"/>
+  <text x="400" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">CONTROL PLANE</text>
+
+  <!-- istiod box -->
+  <rect x="270" y="82" width="260" height="64" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="400" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="white">istiod</text>
+  <text x="310" y="132" text-anchor="middle" font-size="9" fill="#bfdbfe">Pilot</text>
+  <text x="400" y="132" text-anchor="middle" font-size="9" fill="#bfdbfe">Citadel</text>
+  <text x="490" y="132" text-anchor="middle" font-size="9" fill="#bfdbfe">Galley</text>
+
+  <!-- Data Plane region -->
+  <rect x="40" y="220" width="720" height="280" rx="12" fill="#f0fdf4" stroke="#059669" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="400" y="244" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">DATA PLANE</text>
+
+  <!-- Pod A -->
+  <rect x="70" y="260" width="180" height="120" rx="10" fill="white" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="160" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">Pod A</text>
+  <rect x="88" y="292" width="144" height="32" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <text x="160" y="313" text-anchor="middle" font-size="11" fill="#059669">App Container</text>
+  <rect x="88" y="332" width="144" height="32" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
+  <text x="160" y="353" text-anchor="middle" font-size="11" fill="#2563eb">Envoy (istio-proxy)</text>
+
+  <!-- Pod B -->
+  <rect x="310" y="260" width="180" height="120" rx="10" fill="white" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="400" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">Pod B</text>
+  <rect x="328" y="292" width="144" height="32" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <text x="400" y="313" text-anchor="middle" font-size="11" fill="#059669">App Container</text>
+  <rect x="328" y="332" width="144" height="32" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
+  <text x="400" y="353" text-anchor="middle" font-size="11" fill="#2563eb">Envoy (istio-proxy)</text>
+
+  <!-- Pod C -->
+  <rect x="550" y="260" width="180" height="120" rx="10" fill="white" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="640" y="282" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">Pod C</text>
+  <rect x="568" y="292" width="144" height="32" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <text x="640" y="313" text-anchor="middle" font-size="11" fill="#059669">App Container</text>
+  <rect x="568" y="332" width="144" height="32" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
+  <text x="640" y="353" text-anchor="middle" font-size="11" fill="#2563eb">Envoy (istio-proxy)</text>
+
+  <!-- xDS arrows from istiod to each Envoy (drawn after Data Plane so they appear on top) -->
+  <line x1="310" y1="162" x2="160" y2="332" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <line x1="400" y1="162" x2="400" y2="332" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+  <line x1="490" y1="162" x2="640" y2="332" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ab)"/>
+
+  <!-- xDS + SDS label on the right, dotted line reaching the middle arrow -->
+  <rect x="660" y="186" width="90" height="22" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="705" y="202" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">xDS + SDS</text>
+  <line x1="660" y1="197" x2="400" y2="197" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- mTLS arrows between Envoys -->
+  <line x1="232" y1="348" x2="328" y2="348" stroke="#f59e0b" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="472" y1="348" x2="568" y2="348" stroke="#f59e0b" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="252" y="394" width="60" height="20" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="282" y="408" text-anchor="middle" font-size="9" font-weight="600" fill="#d97706">mTLS</text>
+  <rect x="492" y="394" width="60" height="20" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="522" y="408" text-anchor="middle" font-size="9" font-weight="600" fill="#d97706">mTLS</text>
+
+  <!-- iptables labels -->
+  <text x="160" y="430" text-anchor="middle" font-size="9" fill="#64748b">iptables intercept</text>
+  <text x="400" y="430" text-anchor="middle" font-size="9" fill="#64748b">iptables intercept</text>
+  <text x="640" y="430" text-anchor="middle" font-size="9" fill="#64748b">iptables intercept</text>
+
+  <!-- K8s API arrow -->
+  <rect x="610" y="80" width="140" height="40" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1" filter="url(#s)"/>
+  <text x="680" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">K8s API Server</text>
+  <line x1="610" y1="100" x2="530" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="570" y="96" font-size="8" fill="#94a3b8">watch</text>
+
+  <!-- Network line at bottom -->
+  <line x1="60" y1="470" x2="740" y2="470" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="400" y="490" text-anchor="middle" font-size="10" fill="#94a3b8">CNI Network (Flannel / Calico / Cilium)</text>
+
+</svg>

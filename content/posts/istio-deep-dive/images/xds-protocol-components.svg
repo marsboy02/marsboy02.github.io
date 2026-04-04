@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+  </defs>
+
+  <rect width="780" height="460" fill="#f8fafc" rx="12"/>
+  <text x="390" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">xDS Protocol: From Listener to Endpoint</text>
+
+  <!-- istiod source -->
+  <rect x="20" y="180" width="120" height="60" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="80" y="206" text-anchor="middle" font-size="13" font-weight="700" fill="white">istiod</text>
+  <text x="80" y="226" text-anchor="middle" font-size="9" fill="#bfdbfe">xDS Generator</text>
+
+  <!-- Arrow from istiod -->
+  <line x1="140" y1="210" x2="322" y2="210" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+  <text x="230" y="224" font-size="8" fill="#64748b">gRPC</text>
+
+  <!-- LDS -->
+  <rect x="186" y="60" width="120" height="80" rx="10" fill="#7c3aed" filter="url(#s)"/>
+  <text x="246" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="white">LDS</text>
+  <text x="246" y="110" text-anchor="middle" font-size="9" fill="#ddd6fe">Listener</text>
+  <text x="246" y="126" text-anchor="middle" font-size="8" fill="#c4b5fd">Which ports to listen</text>
+
+  <!-- RDS -->
+  <rect x="330" y="60" width="120" height="80" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="390" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="white">RDS</text>
+  <text x="390" y="110" text-anchor="middle" font-size="9" fill="#bfdbfe">Route</text>
+  <text x="390" y="126" text-anchor="middle" font-size="8" fill="#93c5fd">How to route traffic</text>
+
+  <!-- CDS -->
+  <rect x="474" y="60" width="120" height="80" rx="10" fill="#059669" filter="url(#s)"/>
+  <text x="534" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="white">CDS</text>
+  <text x="534" y="110" text-anchor="middle" font-size="9" fill="#a7f3d0">Cluster</text>
+  <text x="534" y="126" text-anchor="middle" font-size="8" fill="#6ee7b7">Upstream groups</text>
+
+  <!-- EDS -->
+  <rect x="618" y="60" width="120" height="80" rx="10" fill="#d97706" filter="url(#s)"/>
+  <text x="678" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="white">EDS</text>
+  <text x="678" y="110" text-anchor="middle" font-size="9" fill="#fef3c7">Endpoint</text>
+  <text x="678" y="126" text-anchor="middle" font-size="8" fill="#fde68a">Actual Pod IP:Port</text>
+
+  <!-- SDS (below, separate) -->
+  <rect x="186" y="310" width="120" height="80" rx="10" fill="#dc2626" filter="url(#s)"/>
+  <text x="246" y="340" text-anchor="middle" font-size="14" font-weight="700" fill="white">SDS</text>
+  <text x="246" y="360" text-anchor="middle" font-size="9" fill="#fecaca">Secret</text>
+  <text x="246" y="376" text-anchor="middle" font-size="8" fill="#fca5a5">mTLS certs &amp; keys</text>
+
+  <!-- Flow arrows LDS → RDS → CDS → EDS -->
+  <line x1="306" y1="100" x2="330" y2="100" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="450" y1="100" x2="474" y2="100" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="594" y1="100" x2="618" y2="100" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- istiod to each xDS -->
+  <line x1="140" y1="195" x2="200" y2="140" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="140" y1="200" x2="346" y2="140" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="140" y1="205" x2="490" y2="140" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="140" y1="210" x2="634" y2="140" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="140" y1="220" x2="186" y2="340" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Canary example -->
+  <rect x="330" y="170" width="408" height="110" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.5" filter="url(#s)"/>
+  <text x="534" y="194" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">Example: Canary Deployment (reviews service)</text>
+
+  <rect x="346" y="206" width="90" height="26" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="391" y="224" text-anchor="middle" font-size="9" fill="#2563eb">90% → v1</text>
+
+  <rect x="446" y="206" width="90" height="26" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="491" y="224" text-anchor="middle" font-size="9" fill="#d97706">10% → v2</text>
+
+  <text x="346" y="258" font-size="9" fill="#475569">RDS: weighted route split</text>
+  <text x="346" y="272" font-size="9" fill="#475569">CDS: reviews|v1, reviews|v2 clusters</text>
+
+  <!-- ADS label -->
+  <rect x="330" y="310" width="408" height="80" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="1.5"/>
+  <text x="534" y="336" text-anchor="middle" font-size="12" font-weight="700" fill="#059669">ADS (Aggregated Discovery Service)</text>
+  <text x="534" y="358" text-anchor="middle" font-size="10" fill="#166534">All xDS types in a single gRPC stream</text>
+  <text x="534" y="374" text-anchor="middle" font-size="9" fill="#64748b">Ensures ordering: Cluster arrives before Route references it</text>
+
+  <!-- Envoy at bottom -->
+  <rect x="330" y="410" width="408" height="36" rx="8" fill="#059669" filter="url(#s)"/>
+  <text x="534" y="433" text-anchor="middle" font-size="12" font-weight="600" fill="white">Envoy applies config via hot reload — no restart needed</text>
+
+  <line x1="534" y1="390" x2="534" y2="410" stroke="#059669" stroke-width="1.5" marker-end="url(#a)"/>
+
+</svg>

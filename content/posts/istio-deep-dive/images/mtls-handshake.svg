@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#059669"/></marker>
+    <marker id="adr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#dc2626"/></marker>
+  </defs>
+
+  <rect width="600" height="480" fill="#f8fafc" rx="12"/>
+  <text x="300" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">mTLS Handshake (Mutual TLS)</text>
+
+  <!-- Client -->
+  <rect x="60" y="52" width="130" height="44" rx="10" fill="#059669" filter="url(#s)"/>
+  <text x="125" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="white">Client</text>
+  <text x="125" y="88" text-anchor="middle" font-size="9" fill="#a7f3d0">Envoy (Pod A)</text>
+
+  <!-- Server -->
+  <rect x="410" y="52" width="130" height="44" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="475" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="white">Server</text>
+  <text x="475" y="88" text-anchor="middle" font-size="9" fill="#bfdbfe">Envoy (Pod B)</text>
+
+  <!-- Lifelines -->
+  <line x1="125" y1="96" x2="125" y2="460" stroke="#059669" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+  <line x1="475" y1="96" x2="475" y2="460" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+
+  <!-- Step 1: ClientHello -->
+  <line x1="133" y1="120" x2="467" y2="120" stroke="#2563eb" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="300" y="114" text-anchor="middle" font-size="10" font-weight="600" fill="#0f172a">ClientHello</text>
+
+  <!-- Step 2: ServerHello -->
+  <line x1="467" y1="156" x2="133" y2="156" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="300" y="150" text-anchor="middle" font-size="10" font-weight="600" fill="#0f172a">ServerHello</text>
+
+  <!-- Step 3: Server Certificate -->
+  <line x1="467" y1="188" x2="133" y2="188" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="300" y="182" text-anchor="middle" font-size="10" font-weight="600" fill="#0f172a">Certificate</text>
+  <text x="490" y="182" font-size="8" fill="#64748b">server cert</text>
+
+  <!-- Step 4: CertificateRequest (the key difference!) -->
+  <line x1="467" y1="220" x2="133" y2="220" stroke="#dc2626" stroke-width="2.5" marker-end="url(#adr)"/>
+  <text x="300" y="214" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">CertificateRequest</text>
+  <text x="300" y="236" text-anchor="middle" font-size="9" fill="#dc2626">"Show me YOUR certificate too"</text>
+
+  <!-- Step 5: Client Certificate (the key difference!) -->
+  <line x1="133" y1="264" x2="467" y2="264" stroke="#dc2626" stroke-width="2.5" marker-end="url(#adr)"/>
+  <text x="300" y="258" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Certificate</text>
+  <text x="300" y="280" text-anchor="middle" font-size="9" fill="#dc2626">Client proves its identity</text>
+
+  <!-- Step 6: Key Exchange -->
+  <line x1="133" y1="308" x2="467" y2="308" stroke="#2563eb" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="300" y="302" text-anchor="middle" font-size="10" font-weight="600" fill="#0f172a">Key Exchange</text>
+
+  <!-- Server verification -->
+  <rect x="350" y="324" width="200" height="48" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <text x="450" y="342" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">Server verifies client:</text>
+  <text x="450" y="356" text-anchor="middle" font-size="8" fill="#1e40af">Trusted CA? Valid SPIFFE ID?</text>
+
+  <!-- Encrypted communication -->
+  <line x1="133" y1="396" x2="467" y2="396" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="467" y1="406" x2="133" y2="406" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <rect x="220" y="386" width="160" height="30" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="300" y="406" text-anchor="middle" font-size="10" font-weight="700" fill="#d97706">Encrypted</text>
+
+  <!-- Key point -->
+  <text x="300" y="450" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">Both sides prove their identity</text>
+  <text x="300" y="468" text-anchor="middle" font-size="9" fill="#64748b">Mutual = mutual authentication</text>
+
+</svg>

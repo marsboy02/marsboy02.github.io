@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#dc2626"/></marker>
+    <marker id="ai" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+  </defs>
+
+  <rect width="780" height="440" fill="#f8fafc" rx="12"/>
+  <text x="390" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">iptables Traffic Intercept Inside a Pod</text>
+
+  <!-- Pod boundary -->
+  <rect x="40" y="48" width="700" height="380" rx="12" fill="white" stroke="#059669" stroke-width="2" filter="url(#s)"/>
+  <text x="390" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#059669">Pod Network Namespace</text>
+
+  <!-- App Container -->
+  <rect x="300" y="86" width="180" height="50" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="390" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="#059669">App Container</text>
+
+  <!-- Envoy Outbound -->
+  <rect x="80" y="310" width="180" height="60" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" filter="url(#s)"/>
+  <text x="170" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Envoy Outbound</text>
+  <text x="170" y="355" text-anchor="middle" font-size="11" fill="#64748b">:15001</text>
+
+  <!-- Envoy Inbound -->
+  <rect x="520" y="310" width="180" height="60" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" filter="url(#s)"/>
+  <text x="610" y="335" text-anchor="middle" font-size="12" font-weight="600" fill="#2563eb">Envoy Inbound</text>
+  <text x="610" y="355" text-anchor="middle" font-size="11" fill="#64748b">:15006</text>
+
+  <!-- OUTBOUND PATH (left side, red) -->
+  <!-- App sends outbound traffic -->
+  <line x1="340" y1="136" x2="200" y2="180" stroke="#dc2626" stroke-width="2" marker-end="url(#ao)"/>
+  <text x="240" y="152" font-size="9" fill="#dc2626" font-weight="600">connect()</text>
+
+  <!-- OUTPUT hook -->
+  <rect x="108" y="182" width="184" height="48" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5" filter="url(#s)"/>
+  <text x="200" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">OUTPUT hook</text>
+  <text x="200" y="220" text-anchor="middle" font-size="9" fill="#991b1b">ISTIO_OUTPUT chain</text>
+
+  <!-- OUTPUT to Envoy outbound REDIRECT -->
+  <line x1="200" y1="230" x2="170" y2="310" stroke="#dc2626" stroke-width="2" marker-end="url(#ao)"/>
+  <text x="143" y="274" font-size="9" fill="#dc2626" font-weight="600">REDIRECT :15001</text>
+
+  <!-- INBOUND PATH (right side, blue) -->
+  <!-- External traffic in -->
+  <rect x="580" y="86" width="120" height="36" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="640" y="109" text-anchor="middle" font-size="10" fill="#475569">External Traffic</text>
+
+  <line x1="640" y1="122" x2="610" y2="180" stroke="#2563eb" stroke-width="2" marker-end="url(#ai)"/>
+
+  <!-- PREROUTING hook -->
+  <rect x="500" y="182" width="200" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" filter="url(#s)"/>
+  <text x="600" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">PREROUTING hook</text>
+  <text x="600" y="220" text-anchor="middle" font-size="9" fill="#1e40af">ISTIO_INBOUND chain</text>
+
+  <!-- PREROUTING to Envoy inbound REDIRECT -->
+  <line x1="600" y1="230" x2="610" y2="310" stroke="#2563eb" stroke-width="2" marker-end="url(#ai)"/>
+  <text x="628" y="274" font-size="9" fill="#2563eb" font-weight="600">REDIRECT :15006</text>
+
+  <!-- Envoy outbound to network -->
+  <line x1="170" y1="370" x2="170" y2="420" stroke="#059669" stroke-width="2" marker-end="url(#a)"/>
+  <text x="186" y="400" font-size="9" fill="#059669" font-weight="600">To Network</text>
+
+  <!-- Envoy inbound to app (localhost) -->
+  <line x1="610" y1="370" x2="460" y2="136" stroke="#059669" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a)"/>
+  <text x="556" y="400" font-size="9" fill="#059669" font-weight="600">localhost → App</text>
+
+
+</svg>

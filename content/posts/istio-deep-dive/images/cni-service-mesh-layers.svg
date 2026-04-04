@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="800" height="440" fill="#f8fafc" rx="12"/>
+  <text x="400" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">CNI vs Service Mesh: Different Layers</text>
+
+  <!-- L7: Service Mesh layer -->
+  <rect x="60" y="56" width="680" height="110" rx="12" fill="#2563eb" filter="url(#s)"/>
+  <text x="100" y="82" font-size="11" font-weight="600" fill="#bfdbfe">L7 — SERVICE MESH (Istio)</text>
+  <rect x="80" y="92" width="130" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="145" y="112" text-anchor="middle" font-size="10" fill="white">HTTP Routing</text>
+  <rect x="222" y="92" width="100" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="272" y="112" text-anchor="middle" font-size="10" fill="white">mTLS</text>
+  <rect x="334" y="92" width="120" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="394" y="112" text-anchor="middle" font-size="10" fill="white">Circuit Breaker</text>
+  <rect x="466" y="92" width="80" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="506" y="112" text-anchor="middle" font-size="10" fill="white">Retry</text>
+  <rect x="558" y="92" width="80" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="598" y="112" text-anchor="middle" font-size="10" fill="white">Tracing</text>
+  <rect x="650" y="92" width="74" height="30" rx="6" fill="#1d4ed8"/>
+  <text x="687" y="112" text-anchor="middle" font-size="10" fill="white">L7 AuthZ</text>
+  <text x="400" y="152" text-anchor="middle" font-size="9" fill="#93c5fd">Envoy sidecars / ztunnel + waypoint proxy</text>
+
+  <!-- L3/L4: CNI layer -->
+  <rect x="60" y="180" width="680" height="100" rx="12" fill="#059669" filter="url(#s)"/>
+  <text x="100" y="206" font-size="11" font-weight="600" fill="#a7f3d0">L3/L4 — CNI (Flannel / Calico / Cilium)</text>
+  <rect x="80" y="218" width="120" height="30" rx="6" fill="#047857"/>
+  <text x="140" y="238" text-anchor="middle" font-size="10" fill="white">Pod IP Assign</text>
+  <rect x="212" y="218" width="130" height="30" rx="6" fill="#047857"/>
+  <text x="277" y="238" text-anchor="middle" font-size="10" fill="white">Cross-node Route</text>
+  <rect x="354" y="218" width="130" height="30" rx="6" fill="#047857"/>
+  <text x="419" y="238" text-anchor="middle" font-size="10" fill="white">NetworkPolicy</text>
+  <rect x="496" y="218" width="130" height="30" rx="6" fill="#047857"/>
+  <text x="561" y="238" text-anchor="middle" font-size="10" fill="white">Packet Forwarding</text>
+  <text x="400" y="268" text-anchor="middle" font-size="9" fill="#6ee7b7">veth pair · bridge · VXLAN · eBPF</text>
+
+  <!-- Combination chart -->
+  <text x="400" y="314" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Common Combinations</text>
+
+  <!-- Flannel + Istio -->
+  <rect x="60" y="334" width="210" height="90" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.5" filter="url(#s)"/>
+  <rect x="60" y="334" width="210" height="28" rx="10" fill="#f1f5f9"/>
+  <text x="165" y="353" text-anchor="middle" font-size="11" font-weight="700" fill="#475569">Flannel + Istio</text>
+  <text x="72" y="378" font-size="9" fill="#475569">Simplest combo. L3 overlay only.</text>
+  <text x="72" y="394" font-size="9" fill="#475569">No NetworkPolicy from CNI.</text>
+  <text x="72" y="410" font-size="9" fill="#64748b">Good for: k3s, dev clusters</text>
+
+  <!-- Calico + Istio -->
+  <rect x="295" y="334" width="210" height="90" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.5" filter="url(#s)"/>
+  <rect x="295" y="334" width="210" height="28" rx="10" fill="#f1f5f9"/>
+  <text x="400" y="353" text-anchor="middle" font-size="11" font-weight="700" fill="#475569">Calico + Istio</text>
+  <text x="307" y="378" font-size="9" fill="#475569">Layered security: L3/L4 + L7.</text>
+  <text x="307" y="394" font-size="9" fill="#475569">Calico handles NetworkPolicy.</text>
+  <text x="307" y="410" font-size="9" fill="#64748b">Good for: production, defense-in-depth</text>
+
+  <!-- Cilium + Istio -->
+  <rect x="530" y="334" width="210" height="90" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.5" filter="url(#s)"/>
+  <rect x="530" y="334" width="210" height="28" rx="10" fill="#f1f5f9"/>
+  <text x="635" y="353" text-anchor="middle" font-size="11" font-weight="700" fill="#475569">Cilium + Istio</text>
+  <text x="542" y="378" font-size="9" fill="#475569">eBPF kernel-level networking.</text>
+  <text x="542" y="394" font-size="9" fill="#475569">Disable socket LB in Pod ns!</text>
+  <text x="542" y="410" font-size="9" fill="#64748b">Good for: performance, observability</text>
+
+</svg>

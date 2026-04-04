@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 500" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+    <marker id="at" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#0f766e"/></marker>
+  </defs>
+
+  <rect width="820" height="500" fill="#f8fafc" rx="12"/>
+  <text x="410" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Istio Ambient Mesh — No Sidecars</text>
+
+  <!-- istiod -->
+  <rect x="320" y="52" width="180" height="48" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="410" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="white">istiod</text>
+
+  <!-- xDS arrows down -->
+  <line x1="370" y1="100" x2="200" y2="148" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <line x1="450" y1="100" x2="620" y2="148" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="266" y="118" font-size="8" fill="#2563eb">xDS</text>
+  <text x="548" y="118" font-size="8" fill="#2563eb">xDS</text>
+
+  <!-- Node 1 -->
+  <rect x="40" y="140" width="340" height="340" rx="12" fill="white" stroke="#94a3b8" stroke-width="1.5" filter="url(#s)"/>
+  <text x="210" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">Worker Node 1</text>
+
+  <!-- Node 2 -->
+  <rect x="440" y="140" width="340" height="340" rx="12" fill="white" stroke="#94a3b8" stroke-width="1.5" filter="url(#s)"/>
+  <text x="610" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">Worker Node 2</text>
+
+  <!-- ztunnel on Node 1 -->
+  <rect x="60" y="178" width="300" height="52" rx="8" fill="#0f766e" filter="url(#s)"/>
+  <text x="210" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="white">ztunnel (DaemonSet)</text>
+  <text x="210" y="218" text-anchor="middle" font-size="9" fill="#99f6e4">Rust · L4 · mTLS · Per-workload certs</text>
+
+  <!-- ztunnel on Node 2 -->
+  <rect x="460" y="178" width="300" height="52" rx="8" fill="#0f766e" filter="url(#s)"/>
+  <text x="610" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="white">ztunnel (DaemonSet)</text>
+  <text x="610" y="218" text-anchor="middle" font-size="9" fill="#99f6e4">Rust · L4 · mTLS · Per-workload certs</text>
+
+  <!-- Pods on Node 1 (NO sidecars) -->
+  <rect x="70" y="252" width="120" height="50" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="130" y="275" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Pod A</text>
+  <text x="130" y="293" text-anchor="middle" font-size="8" fill="#64748b">App only, no sidecar</text>
+
+  <rect x="210" y="252" width="120" height="50" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="270" y="275" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Pod B</text>
+  <text x="270" y="293" text-anchor="middle" font-size="8" fill="#64748b">App only, no sidecar</text>
+
+  <!-- Pods on Node 2 -->
+  <rect x="470" y="252" width="120" height="50" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="530" y="275" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Pod C</text>
+  <text x="530" y="293" text-anchor="middle" font-size="8" fill="#64748b">App only, no sidecar</text>
+
+  <rect x="610" y="252" width="120" height="50" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="670" y="275" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Pod D</text>
+  <text x="670" y="293" text-anchor="middle" font-size="8" fill="#64748b">App only, no sidecar</text>
+
+  <!-- ztunnel intercept arrows -->
+  <line x1="130" y1="252" x2="150" y2="230" stroke="#0f766e" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="270" y1="252" x2="250" y2="230" stroke="#0f766e" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="530" y1="252" x2="550" y2="230" stroke="#0f766e" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="670" y1="252" x2="650" y2="230" stroke="#0f766e" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- mTLS tunnel between ztunnels -->
+  <line x1="360" y1="204" x2="460" y2="204" stroke="#0f766e" stroke-width="3" marker-end="url(#at)"/>
+  <rect x="378" y="190" width="66" height="18" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="411" y="203" text-anchor="middle" font-size="8" font-weight="600" fill="#d97706">mTLS</text>
+
+  <!-- Waypoint proxy (optional, on Node 2) -->
+  <rect x="490" y="326" width="210" height="52" rx="8" fill="#7c3aed" filter="url(#s)"/>
+  <text x="595" y="348" text-anchor="middle" font-size="12" font-weight="700" fill="white">Waypoint Proxy</text>
+  <text x="595" y="366" text-anchor="middle" font-size="9" fill="#ddd6fe">Envoy · L7 · Optional per-namespace</text>
+
+  <rect x="530" y="384" width="140" height="18" rx="4" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="600" y="397" text-anchor="middle" font-size="8" fill="#7c3aed">HTTP routing, L7 AuthzPolicy</text>
+
+  <!-- Activation label -->
+  <rect x="70" y="326" width="260" height="48" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="200" y="346" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">Activation</text>
+  <text x="200" y="364" text-anchor="middle" font-size="9" font-weight="400" fill="#64748b" font-family="'SF Mono', 'Fira Code', monospace">kubectl label ns &lt;ns&gt; istio.io/dataplane-mode=ambient</text>
+
+  <!-- Benefits -->
+  <rect x="70" y="400" width="260" height="68" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <text x="82" y="420" font-size="9" fill="#166534">✓ Up to 70% less CPU/memory</text>
+  <text x="82" y="436" font-size="9" fill="#166534">✓ No app Pod restart on mesh upgrade</text>
+  <text x="82" y="452" font-size="9" fill="#166534">✓ L4 mesh free, L7 opt-in per namespace</text>
+
+</svg>

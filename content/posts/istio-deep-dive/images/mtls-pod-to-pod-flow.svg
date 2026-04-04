@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#059669"/></marker>
+    <marker id="adr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#dc2626"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#f59e0b"/></marker>
+  </defs>
+
+  <rect width="720" height="620" fill="#f8fafc" rx="12"/>
+  <text x="360" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">mTLS in Action: Pod A (productpage) → Pod B (reviews)</text>
+
+  <!-- Pod A App -->
+  <rect x="20" y="50" width="100" height="36" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="70" y="73" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">App (A)</text>
+
+  <!-- Pod A Envoy -->
+  <rect x="160" y="50" width="120" height="36" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" filter="url(#s)"/>
+  <text x="220" y="73" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">Envoy (A)</text>
+
+  <!-- Pod B Envoy -->
+  <rect x="440" y="50" width="120" height="36" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" filter="url(#s)"/>
+  <text x="500" y="73" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">Envoy (B)</text>
+
+  <!-- Pod B App -->
+  <rect x="600" y="50" width="100" height="36" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#s)"/>
+  <text x="650" y="73" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">App (B)</text>
+
+  <!-- Lifelines -->
+  <line x1="70" y1="86" x2="70" y2="600" stroke="#059669" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.3"/>
+  <line x1="220" y1="86" x2="220" y2="600" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.3"/>
+  <line x1="500" y1="86" x2="500" y2="600" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.3"/>
+  <line x1="650" y1="86" x2="650" y2="600" stroke="#059669" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.3"/>
+
+  <!-- Step 1: App sends plaintext HTTP -->
+  <line x1="78" y1="110" x2="212" y2="110" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="145" y="104" text-anchor="middle" font-size="9" font-weight="600" fill="#059669">HTTP (plaintext)</text>
+  <text x="145" y="124" text-anchor="middle" font-size="8" fill="#64748b">GET reviews:8080/api</text>
+
+  <!-- iptables redirect note -->
+  <rect x="140" y="134" width="160" height="22" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="220" y="149" text-anchor="middle" font-size="8" fill="#64748b">iptables REDIRECT → :15001</text>
+
+  <!-- Step 2: Envoy checks xDS -->
+  <rect x="140" y="166" width="160" height="36" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <circle cx="140" cy="184" r="10" fill="#2563eb"/><text x="140" y="188" text-anchor="middle" font-size="8" font-weight="700" fill="white">1</text>
+  <text x="225" y="180" text-anchor="middle" font-size="8" font-weight="600" fill="#2563eb">Check destination</text>
+  <text x="225" y="194" text-anchor="middle" font-size="8" fill="#1e40af">reviews → mTLS STRICT</text>
+
+  <!-- Step 3: ClientHello -->
+  <line x1="228" y1="220" x2="492" y2="220" stroke="#2563eb" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="360" y="214" text-anchor="middle" font-size="9" font-weight="600" fill="#0f172a">ClientHello</text>
+
+  <!-- Step 4: ServerHello + Cert -->
+  <line x1="492" y1="248" x2="228" y2="248" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="360" y="242" text-anchor="middle" font-size="9" font-weight="600" fill="#0f172a">ServerHello + Certificate</text>
+  <text x="360" y="262" text-anchor="middle" font-size="7" fill="#64748b">SAN: spiffe://cluster.local/ns/default/sa/reviews</text>
+
+  <!-- Step 5: CertificateRequest -->
+  <line x1="492" y1="280" x2="228" y2="280" stroke="#dc2626" stroke-width="2" marker-end="url(#adr)"/>
+  <text x="360" y="274" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">CertificateRequest</text>
+
+  <!-- Step 6: Envoy A verifies -->
+  <rect x="140" y="294" width="160" height="36" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <circle cx="140" cy="312" r="10" fill="#059669"/><text x="140" y="316" text-anchor="middle" font-size="8" font-weight="700" fill="white">4</text>
+  <text x="225" y="308" text-anchor="middle" font-size="8" font-weight="600" fill="#059669">Verify server cert</text>
+  <text x="225" y="322" text-anchor="middle" font-size="8" fill="#166534">CA signature + SPIFFE ID</text>
+
+  <!-- Step 7: Client cert -->
+  <line x1="228" y1="348" x2="492" y2="348" stroke="#dc2626" stroke-width="2" marker-end="url(#adr)"/>
+  <text x="360" y="342" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">Client Certificate</text>
+  <text x="360" y="362" text-anchor="middle" font-size="7" fill="#64748b">SAN: spiffe://cluster.local/ns/default/sa/productpage</text>
+
+  <!-- Step 8: Envoy B verifies -->
+  <rect x="420" y="372" width="160" height="48" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <circle cx="580" cy="396" r="10" fill="#2563eb"/><text x="580" y="400" text-anchor="middle" font-size="8" font-weight="700" fill="white">5</text>
+  <text x="500" y="388" text-anchor="middle" font-size="8" font-weight="600" fill="#2563eb">Verify client cert</text>
+  <text x="500" y="402" text-anchor="middle" font-size="8" fill="#1e40af">CA + SPIFFE ID</text>
+  <text x="500" y="414" text-anchor="middle" font-size="8" fill="#1e40af">+ AuthorizationPolicy</text>
+
+  <!-- Encrypted channel -->
+  <line x1="228" y1="440" x2="492" y2="440" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="492" y1="450" x2="228" y2="450" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <rect x="300" y="432" width="120" height="26" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="360" y="450" text-anchor="middle" font-size="9" font-weight="700" fill="#d97706">Encrypted</text>
+
+  <!-- Step 9: Encrypted request -->
+  <line x1="228" y1="480" x2="492" y2="480" stroke="#f59e0b" stroke-width="2" marker-end="url(#ao)"/>
+  <text x="360" y="474" text-anchor="middle" font-size="9" font-weight="600" fill="#d97706">Encrypted HTTP request</text>
+
+  <!-- Step 10: Envoy B decrypts and forwards to app -->
+  <rect x="420" y="494" width="160" height="22" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="580" cy="505" r="10" fill="#2563eb"/><text x="580" y="509" text-anchor="middle" font-size="8" font-weight="700" fill="white">6</text>
+  <text x="500" y="509" text-anchor="middle" font-size="8" fill="#64748b">Decrypt → localhost</text>
+
+  <line x1="508" y1="524" x2="642" y2="524" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="575" y="538" text-anchor="middle" font-size="9" fill="#059669">HTTP (plaintext)</text>
+
+  <!-- Step 11: Response back -->
+  <line x1="642" y1="552" x2="508" y2="552" stroke="#059669" stroke-width="1.5" marker-end="url(#ag)"/>
+  <line x1="492" y1="564" x2="228" y2="564" stroke="#f59e0b" stroke-width="2" marker-end="url(#ao)"/>
+  <text x="360" y="558" text-anchor="middle" font-size="9" font-weight="600" fill="#d97706">Encrypted HTTP response</text>
+
+  <line x1="212" y1="584" x2="78" y2="584" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="145" y="578" text-anchor="middle" font-size="9" fill="#059669">HTTP (plaintext)</text>
+
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="560" height="200" fill="#f8fafc" rx="12"/>
+
+  <!-- Service Mesh layer (top) -->
+  <rect x="30" y="20" width="500" height="76" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="280" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="white">Service Mesh (Istio)</text>
+  <text x="280" y="66" text-anchor="middle" font-size="10" fill="#bfdbfe">L7: HTTP routing, mTLS, circuit breaker,</text>
+  <text x="280" y="82" text-anchor="middle" font-size="10" fill="#bfdbfe">retry, distributed tracing, L7 AuthzPolicy</text>
+
+  <!-- CNI layer (bottom) -->
+  <rect x="30" y="106" width="500" height="76" rx="10" fill="#059669" filter="url(#s)"/>
+  <text x="280" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="white">CNI (Cilium / Calico / Flannel)</text>
+  <text x="280" y="152" text-anchor="middle" font-size="10" fill="#a7f3d0">L3/L4: Pod IP allocation, inter-node routing,</text>
+  <text x="280" y="168" text-anchor="middle" font-size="10" fill="#a7f3d0">NetworkPolicy, packet forwarding</text>
+
+</svg>

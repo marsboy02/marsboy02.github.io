@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 370" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker>
+  </defs>
+
+  <rect width="780" height="370" fill="#f8fafc" rx="12"/>
+  <text x="390" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">xDS: The Standard Interface Between Control &amp; Data Plane</text>
+
+  <!-- Central Envoy -->
+  <rect x="290" y="160" width="200" height="80" rx="14" fill="#059669" filter="url(#s)"/>
+  <text x="390" y="196" text-anchor="middle" font-size="16" font-weight="700" fill="white">Envoy Proxy</text>
+  <text x="390" y="218" text-anchor="middle" font-size="10" fill="#a7f3d0">CNCF Graduated · by Lyft</text>
+
+  <!-- xDS interface ring -->
+  <ellipse cx="390" cy="200" rx="170" ry="70" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+  <rect x="338" y="130" width="104" height="22" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="390" y="145" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">xDS API (gRPC)</text>
+
+  <!-- Control Plane 1: Istio -->
+  <rect x="40" y="40" width="180" height="64" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="130" y="68" text-anchor="middle" font-size="13" font-weight="700" fill="white">Istio (istiod)</text>
+  <text x="130" y="88" text-anchor="middle" font-size="9" fill="#bfdbfe">Full Service Mesh</text>
+  <line x1="200" y1="104" x2="310" y2="170" stroke="#2563eb" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Control Plane 2: AWS App Mesh -->
+  <rect x="560" y="40" width="180" height="64" rx="10" fill="#7c3aed" filter="url(#s)"/>
+  <text x="650" y="68" text-anchor="middle" font-size="13" font-weight="700" fill="white">AWS App Mesh</text>
+  <text x="650" y="88" text-anchor="middle" font-size="9" fill="#ddd6fe">AWS Managed</text>
+  <line x1="580" y1="104" x2="470" y2="170" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Control Plane 3: Consul Connect -->
+  <rect x="40" y="300" width="180" height="64" rx="10" fill="#dc2626" filter="url(#s)"/>
+  <text x="130" y="328" text-anchor="middle" font-size="13" font-weight="700" fill="white">Consul Connect</text>
+  <text x="130" y="348" text-anchor="middle" font-size="9" fill="#fecaca">HashiCorp</text>
+  <line x1="200" y1="310" x2="310" y2="230" stroke="#dc2626" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Control Plane 4: Gloo Edge -->
+  <rect x="560" y="300" width="180" height="64" rx="10" fill="#d97706" filter="url(#s)"/>
+  <text x="650" y="328" text-anchor="middle" font-size="13" font-weight="700" fill="white">Gloo Edge</text>
+  <text x="650" y="348" text-anchor="middle" font-size="9" fill="#fef3c7">Solo.io</text>
+  <line x1="580" y1="310" x2="470" y2="230" stroke="#d97706" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Alternative data planes from istiod -->
+  <rect x="280" y="290" width="220" height="54" rx="10" fill="#0f766e" filter="url(#s)"/>
+  <text x="390" y="314" text-anchor="middle" font-size="12" font-weight="700" fill="white">ztunnel (Rust, L4)</text>
+  <text x="390" y="332" text-anchor="middle" font-size="9" fill="#99f6e4">Ambient Mesh Data Plane</text>
+
+  <!-- istiod to ztunnel -->
+  <line x1="130" y1="104" x2="130" y2="180" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="130" y1="180" x2="130" y2="260" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="130" y1="260" x2="280" y2="310" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="170" y="272" font-size="8" fill="#2563eb">xDS</text>
+
+
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 460" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#059669"/></marker>
+  </defs>
+
+  <rect width="520" height="460" fill="#f8fafc" rx="12"/>
+  <text x="260" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Certificate Issuance via SDS</text>
+
+  <!-- Envoy -->
+  <rect x="50" y="52" width="140" height="44" rx="10" fill="#059669" filter="url(#s)"/>
+  <text x="120" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="white">Envoy</text>
+  <text x="120" y="88" text-anchor="middle" font-size="9" fill="#a7f3d0">istio-proxy</text>
+
+  <!-- istiod -->
+  <rect x="330" y="52" width="140" height="44" rx="10" fill="#2563eb" filter="url(#s)"/>
+  <text x="400" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="white">istiod</text>
+  <text x="400" y="88" text-anchor="middle" font-size="9" fill="#bfdbfe">CA + SDS Server</text>
+
+  <!-- Lifelines -->
+  <line x1="120" y1="96" x2="120" y2="440" stroke="#059669" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+  <line x1="400" y1="96" x2="400" y2="440" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+
+  <!-- Step 1: CSR generation -->
+  <rect x="30" y="110" width="180" height="40" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <circle cx="30" cy="130" r="12" fill="#059669"/><text x="30" y="135" text-anchor="middle" font-size="10" font-weight="700" fill="white">1</text>
+  <text x="125" y="127" text-anchor="middle" font-size="9" font-weight="600" fill="#059669">Generate CSR</text>
+  <text x="125" y="142" text-anchor="middle" font-size="8" fill="#166534">SPIFFE ID + public key</text>
+
+  <!-- Step 2: SDS Request -->
+  <line x1="128" y1="168" x2="392" y2="168" stroke="#2563eb" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="260" y="162" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">SDS Request (CSR)</text>
+  <text x="260" y="182" text-anchor="middle" font-size="8" fill="#64748b">"I am spiffe://cluster.local/ns/default/sa/reviews"</text>
+
+  <!-- Step 3: istiod verifies -->
+  <rect x="310" y="196" width="150" height="48" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <circle cx="310" cy="220" r="12" fill="#2563eb"/><text x="310" y="225" text-anchor="middle" font-size="10" font-weight="700" fill="white">2</text>
+  <text x="390" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">Verify Pod identity</text>
+  <text x="390" y="232" text-anchor="middle" font-size="8" fill="#1e40af">via K8s API Server</text>
+
+  <!-- Step 4: Sign cert -->
+  <rect x="310" y="260" width="150" height="48" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+  <circle cx="310" cy="284" r="12" fill="#2563eb"/><text x="310" y="289" text-anchor="middle" font-size="10" font-weight="700" fill="white">3</text>
+  <text x="390" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">Sign X.509 certificate</text>
+  <text x="390" y="296" text-anchor="middle" font-size="8" fill="#1e40af">SAN = SPIFFE ID</text>
+
+  <!-- Step 5: Return signed cert -->
+  <line x1="392" y1="326" x2="128" y2="326" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="260" y="320" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">Signed cert + private key + root CA</text>
+
+  <!-- Step 6: Load in memory -->
+  <rect x="30" y="346" width="180" height="40" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
+  <circle cx="30" cy="366" r="12" fill="#059669"/><text x="30" y="371" text-anchor="middle" font-size="10" font-weight="700" fill="white">4</text>
+  <text x="125" y="363" text-anchor="middle" font-size="9" font-weight="600" fill="#059669">Load cert in memory</text>
+  <text x="125" y="378" text-anchor="middle" font-size="8" fill="#166534">Never written to disk</text>
+
+  <!-- Auto-renewal -->
+  <rect x="80" y="406" width="360" height="36" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="260" y="429" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">Auto-renewal before expiry (default: 24h TTL)</text>
+
+</svg>
