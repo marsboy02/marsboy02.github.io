@@ -1,7 +1,7 @@
 ---
 title: "JavaScript & Node.js의 작동 원리: 싱글스레드의 비밀"
 date: 2025-01-31
-draft: false
+draft: true
 tags: ["javascript", "nodejs", "event-loop", "browser"]
 translationKey: "javascript-nodejs-internals"
 summary: "웹 브라우저의 역사부터 JavaScript 이벤트 루프의 동작 원리, Node.js의 스레딩 모델까지 — 싱글스레드 언어가 어떻게 비동기 처리를 해내는지 깊이 파헤칩니다."

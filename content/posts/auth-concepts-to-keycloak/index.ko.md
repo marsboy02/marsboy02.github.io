@@ -1,7 +1,7 @@
 ---
 title: "인증과 인가: 개념부터 Keycloak까지"
 date: 2026-01-12
-draft: false
+draft: true
 tags: ["authentication", "security", "keycloak", "jwt"]
 translationKey: "auth-concepts-to-keycloak"
 summary: "인증과 인가의 기본 개념, 세션 vs 토큰 기반 인증, JWT와 OAuth 2.0 표준, Spring Security 구현, 그리고 Keycloak SSO까지 — 인증 시스템의 전체 스펙트럼을 다룹니다."

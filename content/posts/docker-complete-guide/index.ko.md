@@ -1,7 +1,7 @@
 ---
 title: "Docker 완전 가이드: 기초부터 프로덕션까지"
 date: 2025-04-13
-draft: false
+draft: true
 tags: ["docker", "devops", "containers", "ci-cd"]
 translationKey: "docker-complete-guide"
 summary: "Docker의 기본 개념부터 Dockerfile 작성법, 멀티 스테이지 빌드, 환경 변수 관리, BuildKit과 CI/CD까지 — 컨테이너 기반 개발의 모든 것을 다루는 가이드입니다."

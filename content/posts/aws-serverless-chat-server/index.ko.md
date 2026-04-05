@@ -1,7 +1,7 @@
 ---
 title: "AWS Serverless로 실시간 채팅 서버 만들기"
 date: 2024-09-20
-draft: false
+draft: true
 tags: ["aws", "serverless", "websocket", "lambda"]
 translationKey: "aws-serverless-chat-server"
 summary: "WebSocket 프로토콜의 기본 개념부터 API Gateway, Lambda, DynamoDB를 활용한 서버리스 실시간 채팅 서버 구축까지 단계별로 다룹니다."

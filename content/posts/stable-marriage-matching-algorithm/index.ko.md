@@ -1,7 +1,7 @@
 ---
 title: "매칭 알고리즘: 안정 결혼 문제와 Gale-Shapley"
 date: 2024-06-09
-draft: false
+draft: true
 tags: ["algorithms", "matching", "competitive-programming"]
 translationKey: "stable-marriage-matching-algorithm"
 summary: "실제 소개팅 서비스를 만들며 마주한 매칭 문제를 시작으로, 안정 결혼 문제의 이론과 Gale-Shapley 알고리즘, Python 구현, 그리고 다양한 변형 문제까지 다룹니다."

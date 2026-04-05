@@ -1,7 +1,7 @@
 ---
 title: "라즈베리파이로 K8s 홈서버 구축하기"
 date: 2025-12-02
-draft: false
+draft: true
 tags: ["kubernetes", "raspberry-pi", "homelab", "tailscale"]
 translationKey: "raspberry-pi-k8s-homeserver"
 summary: "AWS 프리티어 종료 후 라즈베리파이로 K3s 클러스터를 구축하고, GitHub Actions CI/CD와 Tailscale VPN으로 어디서든 접근 가능한 홈서버를 만드는 과정을 다룹니다."

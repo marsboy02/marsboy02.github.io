@@ -1,7 +1,7 @@
 ---
 title: "AWS 프로덕션 배포: 프론트엔드부터 백엔드까지"
 date: 2024-10-21
-draft: false
+draft: true
 tags: ["aws", "deployment", "ecs", "cloudfront"]
 translationKey: "aws-production-deployment"
 summary: "S3 + CloudFront로 프론트엔드를, ECS + ALB로 백엔드를 배포하고, Route53으로 도메인을 연결하는 AWS 프로덕션 배포 전 과정을 다룹니다."

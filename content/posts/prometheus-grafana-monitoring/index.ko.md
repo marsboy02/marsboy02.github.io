@@ -1,7 +1,7 @@
 ---
 title: "Prometheus & Grafana로 모니터링 시스템 구축하기"
 date: 2025-09-06
-draft: false
+draft: true
 tags: ["monitoring", "prometheus", "grafana", "observability"]
 translationKey: "prometheus-grafana-monitoring"
 summary: "관측성의 세 가지 축부터 Prometheus 아키텍처, node-exporter와 Redis 모니터링, HPC 클러스터 대시보드까지 — 모니터링 시스템 구축의 A to Z를 다룹니다."
