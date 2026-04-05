@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="660" height="220" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="330" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">CPU Company Architecture Overview</text>
+
+  <!-- Table dimensions: 4 columns, 3 rows -->
+  <!-- Column widths: 140 + 160 + 160 + 160 = 620, starting at x=20 -->
+  <!-- Row heights: 50 each, starting at y=50 -->
+
+  <!-- Header row background -->
+  <rect x="20" y="50" width="140" height="50" rx="0" fill="#e8e8e8"/>
+  <rect x="160" y="50" width="160" height="50" rx="0" fill="#e8f4f8"/>
+  <rect x="320" y="50" width="160" height="50" rx="0" fill="#eaf7ee"/>
+  <rect x="480" y="50" width="160" height="50" rx="0" fill="#fde8e8"/>
+
+  <!-- Row 2 background -->
+  <rect x="20" y="100" width="140" height="50" rx="0" fill="#e8e8e8"/>
+  <rect x="160" y="100" width="160" height="50" rx="0" fill="white"/>
+  <rect x="320" y="100" width="160" height="50" rx="0" fill="white"/>
+  <rect x="480" y="100" width="160" height="50" rx="0" fill="white"/>
+
+  <!-- Row 3 background -->
+  <rect x="20" y="150" width="140" height="50" rx="0" fill="#e8e8e8"/>
+  <rect x="160" y="150" width="160" height="50" rx="0" fill="white"/>
+  <rect x="320" y="150" width="160" height="50" rx="0" fill="white"/>
+  <rect x="480" y="150" width="160" height="50" rx="0" fill="white"/>
+
+  <!-- Table border -->
+  <rect x="20" y="50" width="620" height="150" rx="6" fill="none" stroke="#ccc" stroke-width="1.5"/>
+
+  <!-- Vertical lines -->
+  <line x1="160" y1="50" x2="160" y2="200" stroke="#ccc" stroke-width="1"/>
+  <line x1="320" y1="50" x2="320" y2="200" stroke="#ccc" stroke-width="1"/>
+  <line x1="480" y1="50" x2="480" y2="200" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Horizontal lines -->
+  <line x1="20" y1="100" x2="640" y2="100" stroke="#ccc" stroke-width="1"/>
+  <line x1="20" y1="150" x2="640" y2="150" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Row 1: Header -->
+  <text x="90" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#555">Company</text>
+  <text x="240" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#2980b9">Intel</text>
+  <text x="400" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#27ae60">AMD</text>
+  <text x="560" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#e74c3c">Apple</text>
+
+  <!-- Row 2: Architecture -->
+  <text x="90" y="130" text-anchor="middle" font-size="14" font-weight="700" fill="#555">Architecture</text>
+  <text x="240" y="130" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">x86_64</text>
+  <text x="400" y="130" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">amd64</text>
+  <text x="560" y="130" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">arm64</text>
+
+  <!-- Row 3: Base ISA -->
+  <text x="90" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="#555">Base ISA</text>
+  <text x="240" y="180" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">AMD</text>
+  <text x="400" y="180" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">AMD</text>
+  <text x="560" y="180" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">ARM</text>
+</svg>

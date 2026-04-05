@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+            markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 7" refX="10" refY="3.5"
+            markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8e44ad"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="300" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Java: Write Once, Run Anywhere</text>
+
+  <!-- Stage 1: .java -->
+  <rect x="30" y="110" width="100" height="55" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="80" y="134" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">.java</text>
+  <text x="80" y="152" text-anchor="middle" font-size="10" fill="#555">Source Code</text>
+
+  <!-- Arrow 1 -->
+  <line x1="130" y1="137" x2="168" y2="137" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: javac -->
+  <rect x="170" y="110" width="100" height="55" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="220" y="132" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">javac</text>
+  <text x="220" y="150" text-anchor="middle" font-size="10" fill="#555">Java Compiler</text>
+
+  <!-- Arrow 2 -->
+  <line x1="270" y1="137" x2="308" y2="137" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: .class bytecode -->
+  <rect x="310" y="110" width="110" height="55" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="365" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">.class</text>
+  <text x="365" y="150" text-anchor="middle" font-size="10" fill="#555">Java Bytecode</text>
+
+  <!-- Arrow 3 -->
+  <line x1="420" y1="137" x2="468" y2="137" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: JVM (large, central) -->
+  <rect x="470" y="75" width="130" height="125" rx="10" fill="#8e44ad" stroke="none" filter="url(#s)"/>
+  <text x="535" y="118" text-anchor="middle" font-size="18" font-weight="700" fill="white">JVM</text>
+  <text x="535" y="140" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">Java Virtual</text>
+  <text x="535" y="154" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">Machine</text>
+  <text x="535" y="173" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(255,255,255,0.7)">Interprets +</text>
+  <text x="535" y="185" text-anchor="middle" font-size="10" font-weight="600" fill="rgba(255,255,255,0.7)">JIT Compiles</text>
+
+  <!-- Fan-out arrows from JVM to platforms -->
+  <!-- Arrow to Windows -->
+  <line x1="600" y1="105" x2="648" y2="72" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+  <!-- Arrow to macOS -->
+  <line x1="600" y1="137" x2="648" y2="137" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+  <!-- Arrow to Linux -->
+  <line x1="600" y1="170" x2="648" y2="203" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+
+  <!-- Platform: Windows -->
+  <rect x="650" y="45" width="95" height="50" rx="6" fill="#fde8e8" stroke="#e74c3c" stroke-width="2" filter="url(#s)"/>
+  <text x="697" y="67" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Windows</text>
+  <text x="697" y="83" text-anchor="middle" font-size="10" fill="#555">x86 Machine Code</text>
+
+  <!-- Platform: macOS -->
+  <rect x="650" y="112" width="95" height="50" rx="6" fill="#eaf7ee" stroke="#27ae60" stroke-width="2" filter="url(#s)"/>
+  <text x="697" y="134" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">macOS</text>
+  <text x="697" y="150" text-anchor="middle" font-size="10" fill="#555">ARM Machine Code</text>
+
+  <!-- Platform: Linux -->
+  <rect x="650" y="180" width="95" height="50" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="697" y="202" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Linux</text>
+  <text x="697" y="218" text-anchor="middle" font-size="10" fill="#555">x86 Machine Code</text>
+
+</svg>

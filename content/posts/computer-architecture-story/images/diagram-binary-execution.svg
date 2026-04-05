@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 200"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+            markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="200" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="410" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Binary Execution Process</text>
+
+  <!-- Stage 1: Binary File -->
+  <rect x="25" y="65" width="120" height="65" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="85" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Binary File</text>
+  <text x="85" y="108" text-anchor="middle" font-size="10" fill="#555">ELF / PE / Mach-O</text>
+  <text x="85" y="122" text-anchor="middle" font-size="10" fill="#888">compiled output</text>
+
+  <!-- Arrow 1 -->
+  <line x1="145" y1="97" x2="178" y2="97" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: OS Loader -->
+  <rect x="180" y="65" width="150" height="65" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="255" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">OS Loader</text>
+  <text x="255" y="106" text-anchor="middle" font-size="10" fill="#555">Format parsing</text>
+  <text x="255" y="120" text-anchor="middle" font-size="10" fill="#555">Memory loading + Relocation</text>
+
+  <!-- Arrow 2 -->
+  <line x1="330" y1="97" x2="363" y2="97" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Memory -->
+  <rect x="365" y="65" width="120" height="65" rx="6" fill="#eaf7ee" stroke="#27ae60" stroke-width="2" filter="url(#s)"/>
+  <text x="425" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Memory</text>
+  <text x="425" y="106" text-anchor="middle" font-size="10" fill="#555">Code loaded into</text>
+  <text x="425" y="120" text-anchor="middle" font-size="10" fill="#555">RAM address space</text>
+
+  <!-- Arrow 3 -->
+  <line x1="485" y1="97" x2="518" y2="97" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: CPU Instruction Decoder -->
+  <rect x="520" y="65" width="140" height="65" rx="6" fill="#fde8e8" stroke="#e74c3c" stroke-width="2" filter="url(#s)"/>
+  <text x="590" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">Instruction</text>
+  <text x="590" y="102" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">Decoder</text>
+  <text x="590" y="120" text-anchor="middle" font-size="10" fill="#555">Fetch → Decode</text>
+
+  <!-- Arrow 4 -->
+  <line x1="660" y1="97" x2="693" y2="97" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: Micro-ops / ALU -->
+  <rect x="695" y="65" width="100" height="65" rx="6" fill="#8e44ad" stroke="none" filter="url(#s)"/>
+  <text x="745" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="white">ALU</text>
+  <text x="745" y="106" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">Micro-ops</text>
+  <text x="745" y="120" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">Execute</text>
+
+  <!-- Bottom labels -->
+  <text x="85" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#2980b9">Disk</text>
+  <text x="255" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#f39c12">OS Kernel</text>
+  <text x="425" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#27ae60">RAM</text>
+  <text x="590" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#e74c3c">CPU Front-end</text>
+  <text x="745" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#8e44ad">CPU Back-end</text>
+
+  <!-- Bracket showing "interpretation" -->
+  <line x1="180" y1="175" x2="795" y2="175" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="490" y="192" text-anchor="middle" font-size="11" font-style="italic" fill="#888">Every binary goes through multiple stages of "interpretation"</text>
+</svg>

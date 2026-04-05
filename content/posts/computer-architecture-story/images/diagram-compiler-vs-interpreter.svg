@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 280"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="760" height="280" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Compiler vs Interpreter</text>
+
+  <!-- Left column: Compiler -->
+  <rect x="30" y="55" width="330" height="210" rx="8" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="195" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#2980b9">Compiler</text>
+  <text x="195" y="98" text-anchor="middle" font-size="11" fill="#555">C, C++, Go, Rust</text>
+
+  <!-- Compiler flow -->
+  <rect x="55" y="115" width="120" height="36" rx="6" fill="white" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="115" y="137" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Source Code</text>
+
+  <text x="195" y="138" text-anchor="middle" font-size="14" fill="#555">→</text>
+
+  <rect x="215" y="115" width="120" height="36" rx="6" fill="white" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="275" y="133" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Translate All</text>
+  <text x="275" y="147" text-anchor="middle" font-size="10" fill="#555">at once</text>
+
+  <text x="275" y="168" text-anchor="middle" font-size="12" fill="#555">↓</text>
+
+  <rect x="215" y="175" width="120" height="36" rx="6" fill="#2980b9" stroke="none"/>
+  <text x="275" y="197" text-anchor="middle" font-size="12" font-weight="600" fill="white">Executable</text>
+
+  <text x="85" y="185" font-size="11" fill="#27ae60" font-weight="600">+ Fast execution</text>
+  <text x="85" y="202" font-size="11" fill="#27ae60" font-weight="600">+ Early error detection</text>
+  <text x="85" y="230" font-size="11" fill="#e74c3c" font-weight="600">− Platform dependent</text>
+  <text x="85" y="247" font-size="11" fill="#e74c3c" font-weight="600">− Slow dev cycle</text>
+
+  <!-- Divider -->
+  <line x1="380" y1="60" x2="380" y2="260" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <rect x="367" y="145" width="26" height="26" rx="13" fill="#1a1a2e"/>
+  <text x="380" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="white">vs</text>
+
+  <!-- Right column: Interpreter -->
+  <rect x="400" y="55" width="330" height="210" rx="8" fill="#eaf7ee" stroke="#27ae60" stroke-width="2" filter="url(#s)"/>
+  <text x="565" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#27ae60">Interpreter</text>
+  <text x="565" y="98" text-anchor="middle" font-size="11" fill="#555">Python, JavaScript, Ruby</text>
+
+  <!-- Interpreter flow -->
+  <rect x="425" y="115" width="120" height="36" rx="6" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="485" y="137" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Source Code</text>
+
+  <text x="565" y="138" text-anchor="middle" font-size="14" fill="#555">→</text>
+
+  <rect x="585" y="115" width="120" height="36" rx="6" fill="white" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="645" y="133" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Translate Line</text>
+  <text x="645" y="147" text-anchor="middle" font-size="10" fill="#555">by line</text>
+
+  <text x="645" y="168" text-anchor="middle" font-size="12" fill="#555">↓</text>
+
+  <rect x="585" y="175" width="120" height="36" rx="6" fill="#27ae60" stroke="none"/>
+  <text x="645" y="193" text-anchor="middle" font-size="12" font-weight="600" fill="white">Execute</text>
+  <text x="645" y="205" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">immediately</text>
+
+  <text x="425" y="185" font-size="11" fill="#27ae60" font-weight="600">+ Fast development</text>
+  <text x="425" y="202" font-size="11" fill="#27ae60" font-weight="600">+ Platform independent</text>
+  <text x="425" y="230" font-size="11" fill="#e74c3c" font-weight="600">− Slower execution</text>
+  <text x="425" y="247" font-size="11" fill="#e74c3c" font-weight="600">− Late error detection</text>
+</svg>

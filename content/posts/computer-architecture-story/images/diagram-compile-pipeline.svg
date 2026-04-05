@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 200"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5"
+            markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="200" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="430" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">C Compilation Pipeline</text>
+
+  <!-- Stage 1: .c source -->
+  <rect x="20" y="70" width="80" height="50" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="60" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">.c</text>
+  <text x="60" y="108" text-anchor="middle" font-size="10" fill="#555">Source</text>
+
+  <!-- Arrow 1 -->
+  <line x1="100" y1="95" x2="128" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Preprocessor -->
+  <rect x="130" y="70" width="90" height="50" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="175" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Preprocessor</text>
+  <text x="175" y="108" text-anchor="middle" font-size="10" fill="#555">cpp</text>
+
+  <!-- Arrow 2 -->
+  <line x1="220" y1="95" x2="248" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: .i source -->
+  <rect x="250" y="70" width="80" height="50" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="290" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">.i</text>
+  <text x="290" y="108" text-anchor="middle" font-size="10" fill="#555">Expanded</text>
+
+  <!-- Arrow 3 -->
+  <line x1="330" y1="95" x2="358" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: C Compiler -->
+  <rect x="360" y="70" width="90" height="50" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="405" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">C Compiler</text>
+  <text x="405" y="108" text-anchor="middle" font-size="10" fill="#555">cc1</text>
+
+  <!-- Arrow 4 -->
+  <line x1="450" y1="95" x2="478" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: .s assembly -->
+  <rect x="480" y="70" width="80" height="50" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="520" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">.s</text>
+  <text x="520" y="108" text-anchor="middle" font-size="10" fill="#555">Assembly</text>
+
+  <!-- Arrow 5 -->
+  <line x1="560" y1="95" x2="588" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 6: Assembler -->
+  <rect x="590" y="70" width="80" height="50" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="2" filter="url(#s)"/>
+  <text x="630" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Assembler</text>
+  <text x="630" y="108" text-anchor="middle" font-size="10" fill="#555">as</text>
+
+  <!-- Arrow 6 -->
+  <line x1="670" y1="95" x2="698" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 7: .o object -->
+  <rect x="700" y="70" width="80" height="50" rx="6" fill="#e8f4f8" stroke="#2980b9" stroke-width="2" filter="url(#s)"/>
+  <text x="740" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">.o</text>
+  <text x="740" y="108" text-anchor="middle" font-size="10" fill="#555">Object</text>
+
+  <!-- Arrow 7: down then to Linker -->
+  <line x1="740" y1="120" x2="740" y2="155" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 8: Linker -->
+  <rect x="610" y="140" width="90" height="50" rx="6" fill="#eaf7ee" stroke="#27ae60" stroke-width="2" filter="url(#s)"/>
+  <text x="655" y="162" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Linker</text>
+  <text x="655" y="178" text-anchor="middle" font-size="10" fill="#555">ld</text>
+
+  <!-- Arrow from .o down to linker row, then left -->
+  <line x1="740" y1="155" x2="740" y2="165" stroke="none"/>
+  <line x1="700" y1="165" x2="710" y2="165" stroke="#555" stroke-width="1.5" marker-start="url(#arrow)"/>
+
+  <!-- Arrow 8 -->
+  <line x1="610" y1="165" x2="558" y2="165" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 9: Executable -->
+  <rect x="460" y="140" width="96" height="50" rx="6" fill="#fde8e8" stroke="#e74c3c" stroke-width="2" filter="url(#s)"/>
+  <text x="508" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">Executable</text>
+  <text x="508" y="178" text-anchor="middle" font-size="10" fill="#555">a.out / a.exe</text>
+</svg>

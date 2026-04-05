@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 310"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="760" height="310" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">CISC vs RISC</text>
+
+  <!-- Left: CISC / x86 -->
+  <rect x="30" y="55" width="330" height="240" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="2" filter="url(#s)"/>
+
+  <!-- CISC Header -->
+  <rect x="30" y="55" width="330" height="48" rx="8" fill="#e74c3c"/>
+  <rect x="30" y="79" width="330" height="24" fill="#e74c3c"/>
+  <text x="195" y="78" text-anchor="middle" font-size="16" font-weight="700" fill="white">CISC</text>
+  <text x="195" y="96" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.85)">Complex Instruction Set Computer</text>
+
+  <!-- CISC content -->
+  <text x="55" y="130" font-size="12" font-weight="600" fill="#1a1a2e">Architecture</text>
+  <text x="55" y="148" font-size="11" fill="#555">x86-64 (Intel, AMD)</text>
+
+  <line x1="50" y1="158" x2="340" y2="158" stroke="#f0d0d0" stroke-width="1"/>
+
+  <text x="55" y="178" font-size="12" font-weight="600" fill="#1a1a2e">Instructions</text>
+  <text x="55" y="196" font-size="11" fill="#555">Complex, variable length</text>
+  <text x="55" y="212" font-size="11" fill="#555">One instruction → multiple operations</text>
+
+  <line x1="50" y1="222" x2="340" y2="222" stroke="#f0d0d0" stroke-width="1"/>
+
+  <text x="55" y="242" font-size="12" font-weight="600" fill="#1a1a2e">Registers</text>
+  <text x="55" y="258" font-size="11" fill="#555">16 general purpose (RAX, RBX...)</text>
+
+  <line x1="50" y1="268" x2="340" y2="268" stroke="#f0d0d0" stroke-width="1"/>
+
+  <text x="55" y="285" font-size="11" font-weight="600" fill="#e74c3c">High performance, higher power draw</text>
+
+  <!-- Divider -->
+  <line x1="380" y1="60" x2="380" y2="290" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <rect x="367" y="165" width="26" height="26" rx="13" fill="#1a1a2e"/>
+  <text x="380" y="183" text-anchor="middle" font-size="11" font-weight="700" fill="white">vs</text>
+
+  <!-- Right: RISC / ARM -->
+  <rect x="400" y="55" width="330" height="240" rx="8" fill="#eaf7ee" stroke="#27ae60" stroke-width="2" filter="url(#s)"/>
+
+  <!-- RISC Header -->
+  <rect x="400" y="55" width="330" height="48" rx="8" fill="#27ae60"/>
+  <rect x="400" y="79" width="330" height="24" fill="#27ae60"/>
+  <text x="565" y="78" text-anchor="middle" font-size="16" font-weight="700" fill="white">RISC</text>
+  <text x="565" y="96" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.85)">Reduced Instruction Set Computer</text>
+
+  <!-- RISC content -->
+  <text x="425" y="130" font-size="12" font-weight="600" fill="#1a1a2e">Architecture</text>
+  <text x="425" y="148" font-size="11" fill="#555">ARM64 (Apple Silicon, Qualcomm)</text>
+
+  <line x1="420" y1="158" x2="710" y2="158" stroke="#d0e8d0" stroke-width="1"/>
+
+  <text x="425" y="178" font-size="12" font-weight="600" fill="#1a1a2e">Instructions</text>
+  <text x="425" y="196" font-size="11" fill="#555">Simple, fixed length</text>
+  <text x="425" y="212" font-size="11" fill="#555">One instruction → one operation</text>
+
+  <line x1="420" y1="222" x2="710" y2="222" stroke="#d0e8d0" stroke-width="1"/>
+
+  <text x="425" y="242" font-size="12" font-weight="600" fill="#1a1a2e">Registers</text>
+  <text x="425" y="258" font-size="11" fill="#555">31 general purpose (X0-X30)</text>
+
+  <line x1="420" y1="268" x2="710" y2="268" stroke="#d0e8d0" stroke-width="1"/>
+
+  <text x="425" y="285" font-size="11" font-weight="600" fill="#27ae60">Power efficient, simpler hardware</text>
+</svg>
