@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#F8F9FA"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Program → Process → CPU Execution</text>
+
+  <!-- Disk Box -->
+  <rect x="50" y="80" width="160" height="140" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <text x="130" y="106" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333333">Disk</text>
+  <!-- Disk icon (cylinder - improved) -->
+  <ellipse cx="130" cy="130" rx="40" ry="12" fill="#4A90D9" opacity="0.15" stroke="#4A90D9" stroke-width="1.5"/>
+  <rect x="90" y="130" width="80" height="40" fill="#4A90D9" opacity="0.1"/>
+  <line x1="90" y1="130" x2="90" y2="170" stroke="#4A90D9" stroke-width="1" opacity="0.5"/>
+  <line x1="170" y1="130" x2="170" y2="170" stroke="#4A90D9" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="130" cy="170" rx="40" ry="12" fill="#4A90D9" opacity="0.2" stroke="#4A90D9" stroke-width="1.5"/>
+  <!-- Disk label inside -->
+  <text x="130" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A90D9" font-weight="bold">Program</text>
+
+  <!-- Arrow: Disk -> Memory -->
+  <defs>
+    <marker id="arrowBlue" markerWidth="6" markerHeight="5" refX="5.5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#4A90D9"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="6" markerHeight="5" refX="5.5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#666666"/>
+    </marker>
+  </defs>
+  <line x1="212" y1="150" x2="290" y2="150" stroke="#4A90D9" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="251" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#4A90D9" font-weight="bold">Execute</text>
+
+  <!-- Memory Box -->
+  <rect x="295" y="80" width="200" height="160" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <text x="395" y="106" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333333">Memory</text>
+  <!-- Memory segments -->
+  <rect x="315" y="118" width="160" height="26" rx="4" fill="#4A90D9" opacity="0.25" stroke="#4A90D9" stroke-width="1"/>
+  <text x="395" y="136" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#333333">Code</text>
+  <rect x="315" y="148" width="160" height="26" rx="4" fill="#E8744F" opacity="0.25" stroke="#E8744F" stroke-width="1"/>
+  <text x="395" y="166" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#333333">Data</text>
+  <rect x="315" y="178" width="76" height="26" rx="4" fill="#50C878" opacity="0.25" stroke="#50C878" stroke-width="1"/>
+  <text x="353" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#333333">Heap</text>
+  <rect x="399" y="178" width="76" height="26" rx="4" fill="#E8744F" opacity="0.35" stroke="#E8744F" stroke-width="1"/>
+  <text x="437" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#333333">Stack</text>
+  <!-- Process label badge -->
+  <rect x="348" y="214" width="94" height="20" rx="10" fill="#4A90D9"/>
+  <text x="395" y="228" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="white">Process</text>
+
+  <!-- Arrow: Memory <-> CPU (bidirectional) -->
+  <line x1="497" y1="143" x2="575" y2="143" stroke="#666666" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <line x1="575" y1="157" x2="497" y2="157" stroke="#666666" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="536" y="136" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">read</text>
+  <text x="536" y="172" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">write</text>
+
+  <!-- CPU Box -->
+  <rect x="580" y="80" width="170" height="140" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <text x="665" y="106" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333333">CPU</text>
+  <!-- CPU chip icon (clean, no pins) -->
+  <rect x="620" y="118" width="90" height="80" rx="6" fill="#E8744F" opacity="0.15" stroke="#E8744F" stroke-width="1.5"/>
+  <rect x="636" y="132" width="58" height="52" rx="4" fill="#E8744F" opacity="0.3" stroke="#E8744F" stroke-width="1"/>
+  <!-- CPU core label -->
+  <text x="665" y="162" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#E8744F" font-weight="bold">Core</text>
+
+  <!-- Bottom labels -->
+  <text x="130" y="268" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666666">Static file</text>
+  <text x="395" y="268" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666666">Running instance</text>
+  <text x="665" y="268" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666666">Executes instructions</text>
+</svg>

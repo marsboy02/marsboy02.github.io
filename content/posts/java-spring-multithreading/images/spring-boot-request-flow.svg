@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#F8F9FA"/>
+
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#666666"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#4A90D9"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Spring Boot Request Processing Flow</text>
+
+  <!-- Client -->
+  <rect x="20" y="108" width="80" height="60" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <!-- Person icon -->
+  <circle cx="60" cy="122" r="10" fill="#4A90D9" opacity="0.7"/>
+  <path d="M44 148 Q60 136 76 148" fill="#4A90D9" opacity="0.5" stroke="#4A90D9" stroke-width="1"/>
+  <text x="60" y="162" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#333333">Client</text>
+
+  <!-- Arrow -->
+  <line x1="101" y1="138" x2="118" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- Tomcat Thread Pool -->
+  <rect x="120" y="88" width="120" height="100" rx="8" fill="#4A90D9" opacity="0.15" stroke="#4A90D9" stroke-width="2"/>
+  <text x="180" y="107" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#4A90D9">Tomcat</text>
+  <text x="180" y="120" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#4A90D9">Thread Pool</text>
+  <!-- Thread lines -->
+  <rect x="134" y="127" width="92" height="12" rx="3" fill="#4A90D9" opacity="0.4"/>
+  <text x="180" y="137" text-anchor="middle" font-family="sans-serif" font-size="9" fill="white">Thread</text>
+  <rect x="134" y="143" width="92" height="12" rx="3" fill="#4A90D9" opacity="0.4"/>
+  <text x="180" y="153" text-anchor="middle" font-family="sans-serif" font-size="9" fill="white">Thread</text>
+  <rect x="134" y="159" width="92" height="12" rx="3" fill="#4A90D9" opacity="0.25"/>
+  <text x="180" y="169" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">Thread</text>
+
+  <!-- Arrow -->
+  <line x1="241" y1="138" x2="258" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- DispatcherServlet -->
+  <rect x="260" y="108" width="100" height="60" rx="8" fill="#E8744F" opacity="0.2" stroke="#E8744F" stroke-width="2"/>
+  <text x="310" y="132" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#E8744F">Dispatcher</text>
+  <text x="310" y="146" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#E8744F">Servlet</text>
+  <text x="310" y="160" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#666666">routes request</text>
+
+  <!-- Arrow -->
+  <line x1="361" y1="138" x2="378" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- Spring MVC dashed box -->
+  <rect x="380" y="68" width="320" height="140" rx="8" fill="none" stroke="#50C878" stroke-width="2" stroke-dasharray="7 4"/>
+  <text x="540" y="62" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Spring MVC</text>
+
+  <!-- Controller -->
+  <rect x="392" y="108" width="88" height="60" rx="8" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1.5"/>
+  <text x="436" y="133" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Controller</text>
+  <text x="436" y="150" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#666666">@RestController</text>
+
+  <!-- Arrow -->
+  <line x1="481" y1="138" x2="494" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- Service -->
+  <rect x="496" y="108" width="80" height="60" rx="8" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1.5"/>
+  <text x="536" y="133" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Service</text>
+  <text x="536" y="150" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#666666">@Service</text>
+
+  <!-- Arrow -->
+  <line x1="577" y1="138" x2="590" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- Repository -->
+  <rect x="592" y="108" width="96" height="60" rx="8" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1.5"/>
+  <text x="640" y="133" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Repository</text>
+  <text x="640" y="150" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#666666">@Repository</text>
+
+  <!-- Arrow -->
+  <line x1="689" y1="138" x2="702" y2="138" stroke="#666666" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- DB -->
+  <rect x="704" y="108" width="76" height="60" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <!-- DB cylinder -->
+  <ellipse cx="742" cy="124" rx="24" ry="7" fill="#666666" opacity="0.2" stroke="#666666" stroke-width="1.2"/>
+  <rect x="718" y="124" width="48" height="24" fill="#666666" opacity="0.1" stroke="#666666" stroke-width="1.2"/>
+  <ellipse cx="742" cy="148" rx="24" ry="7" fill="#666666" opacity="0.15" stroke="#666666" stroke-width="1.2"/>
+  <text x="742" y="160" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="#333333">DB</text>
+
+  <!-- Response arrow back (curved path under) -->
+  <path d="M704 178 Q540 220 260 178" fill="none" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrBlue)"/>
+  <text x="490" y="218" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#4A90D9">Response</text>
+
+  <!-- Bottom labels -->
+  <text x="180" y="242" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">handles concurrency</text>
+  <text x="310" y="242" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">front controller</text>
+</svg>

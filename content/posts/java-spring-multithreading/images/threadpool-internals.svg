@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="360" viewBox="0 0 800 360">
+  <rect width="800" height="360" fill="#F8F9FA"/>
+
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#666666"/>
+    </marker>
+    <marker id="arrOrange" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#E8744F"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#50C878"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Thread Pool Internals</text>
+
+  <!-- Incoming requests (left) -->
+  <text x="60" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#666666">Requests</text>
+  <rect x="20" y="68" width="80" height="24" rx="4" fill="#4A90D9" opacity="0.7"/>
+  <text x="60" y="84" text-anchor="middle" font-family="sans-serif" font-size="10" fill="white">Request</text>
+  <rect x="20" y="98" width="80" height="24" rx="4" fill="#4A90D9" opacity="0.6"/>
+  <text x="60" y="114" text-anchor="middle" font-family="sans-serif" font-size="10" fill="white">Request</text>
+  <rect x="20" y="128" width="80" height="24" rx="4" fill="#4A90D9" opacity="0.5"/>
+  <text x="60" y="144" text-anchor="middle" font-family="sans-serif" font-size="10" fill="white">Request</text>
+  <!-- Arrows from requests -->
+  <line x1="101" y1="80" x2="142" y2="100" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="101" y1="110" x2="142" y2="118" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="101" y1="140" x2="142" y2="136" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Request Queue -->
+  <rect x="145" y="72" width="130" height="150" rx="8" fill="white" stroke="#4A90D9" stroke-width="2"/>
+  <text x="210" y="94" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#4A90D9">Request Queue</text>
+  <!-- Queue slots -->
+  <rect x="158" y="102" width="104" height="26" rx="3" fill="#4A90D9" opacity="0.25" stroke="#4A90D9" stroke-width="1"/>
+  <text x="210" y="119" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#333333">① req-A</text>
+  <rect x="158" y="132" width="104" height="26" rx="3" fill="#4A90D9" opacity="0.2" stroke="#4A90D9" stroke-width="1"/>
+  <text x="210" y="149" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#333333">② req-B</text>
+  <rect x="158" y="162" width="104" height="26" rx="3" fill="#4A90D9" opacity="0.12" stroke="#4A90D9" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <text x="210" y="179" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#AAAAAA">③ empty</text>
+  <!-- FIFO label -->
+  <text x="210" y="234" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">FIFO</text>
+
+  <!-- Arrow: queue -> thread pool -->
+  <line x1="276" y1="147" x2="308" y2="147" stroke="#666666" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="292" y="140" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#666666">pick up</text>
+
+  <!-- Thread Pool box -->
+  <rect x="310" y="52" width="260" height="240" rx="10" fill="white" stroke="#666666" stroke-width="2"/>
+  <text x="440" y="74" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#333333">Thread Pool</text>
+
+  <!-- Busy threads -->
+  <rect x="326" y="84" width="106" height="36" rx="6" fill="#E8744F" opacity="0.3" stroke="#E8744F" stroke-width="1.5"/>
+  <text x="379" y="103" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#E8744F">Thread-1  Busy</text>
+  <rect x="326" y="126" width="106" height="36" rx="6" fill="#E8744F" opacity="0.3" stroke="#E8744F" stroke-width="1.5"/>
+  <text x="379" y="145" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#E8744F">Thread-2  Busy</text>
+
+  <!-- Idle threads -->
+  <rect x="326" y="168" width="106" height="36" rx="6" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1.5"/>
+  <text x="379" y="187" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Thread-3  Idle</text>
+  <rect x="326" y="210" width="106" height="36" rx="6" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1.5"/>
+  <text x="379" y="229" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#50C878">Thread-4  Idle</text>
+  <rect x="326" y="252" width="106" height="28" rx="6" fill="#50C878" opacity="0.15" stroke="#50C878" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="379" y="270" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#50C878">Thread-5  Idle</text>
+
+  <!-- Arrow: queue picks idle thread -->
+  <line x1="276" y1="172" x2="324" y2="186" stroke="#50C878" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrGreen)"/>
+
+  <!-- Legend -->
+  <rect x="450" y="100" width="14" height="14" rx="2" fill="#E8744F" opacity="0.5"/>
+  <text x="470" y="112" font-family="sans-serif" font-size="10" fill="#333333">Busy</text>
+  <rect x="450" y="122" width="14" height="14" rx="2" fill="#50C878" opacity="0.5"/>
+  <text x="470" y="134" font-family="sans-serif" font-size="10" fill="#333333">Idle</text>
+
+  <!-- Result output -->
+  <rect x="590" y="108" width="100" height="50" rx="8" fill="white" stroke="#666666" stroke-width="2"/>
+  <text x="640" y="130" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#333333">Result</text>
+  <text x="640" y="148" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">Response</text>
+
+  <!-- Arrow: thread completes -> result -->
+  <line x1="571" y1="120" x2="588" y2="128" stroke="#E8744F" stroke-width="2" marker-end="url(#arrOrange)"/>
+
+  <!-- Return arc: thread returns to pool -->
+  <path d="M640 158 Q660 240 571 255" fill="none" stroke="#50C878" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arrGreen)"/>
+  <text x="686" y="218" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">returns</text>
+  <text x="686" y="230" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">to pool</text>
+
+  <!-- Lifecycle label at bottom -->
+  <text x="400" y="318" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666666">Lifecycle:  request → queue → thread picks up → completes → thread returns to pool</text>
+</svg>
