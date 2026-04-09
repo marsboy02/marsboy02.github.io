@@ -3,16 +3,16 @@ title: "About"
 layout: "about"
 ---
 
-Hi, I'm Hyeongjun Kang — someone who enjoys working hard behind the scenes.
+**"Did you think that I, Rohan Kishibe, draw manga for money or praise?!** I draw manga **so that people will read it!**"
 
-Rather than being in the spotlight, I'm drawn to supporting roles that help others shine. In games, I always picked the support class, and now I'm studying DevOps.
+This is a quote from Kishibe Rohan, a mangaka character from one of my favorite manga. It's his answer when asked why he's so obsessed with drawing manga despite already having plenty of wealth.
 
-The moments I enjoy most in software are similar: building environments where teammates can develop more comfortably, deploy more reliably, and work more productively. That's why I'm naturally drawn to topics like GitOps and IaC.
-
-I love helping others and building foundations that enable people to do their best work.
+As a software engineer, I strive to carry the same mindset. I dream of programming to help others. I have a deep interest in DevOps Engineering — helping teammates work more efficiently.
 
 Fun facts:
 
 - Top 10% support player in Overwatch
-- Regular blood donor with the Korean Red Cross
-- GopherCon Korea 2025 / PyCon Korea 2026 organizing committee member
+- Top 5% jungle player in League of Legends
+- Donor to UNICEF Korea and Korean Red Cross
+- GopherCon Korea 2025 & PyCon Korea 2026 organizing committee member
+- Various experiences building things that help others in fun ways
