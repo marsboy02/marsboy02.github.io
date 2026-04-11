@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520">
+  <rect width="820" height="520" fill="#F8F9FA"/>
+
+  <!-- Title -->
+  <text x="410" y="30" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Blocking / Non-Blocking vs Sync / Async</text>
+
+  <!-- Column Headers -->
+  <text x="255" y="60" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#E8744F">Blocking</text>
+  <text x="255" y="76" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">Caller waits, no control</text>
+  <text x="625" y="60" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#50C878">Non-Blocking</text>
+  <text x="625" y="76" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">Caller retains control</text>
+
+  <!-- Row Headers -->
+  <text x="52" y="195" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#4A90D9" transform="rotate(-90 52 195)">Sync</text>
+  <text x="36" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999999" transform="rotate(-90 36 195)">Caller checks result</text>
+  <text x="52" y="405" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#9B59B6" transform="rotate(-90 52 405)">Async</text>
+  <text x="36" y="405" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999999" transform="rotate(-90 36 405)">Callback notifies</text>
+
+  <!-- Grid lines -->
+  <line x1="70" y1="85" x2="800" y2="85" stroke="#DDDDDD" stroke-width="1"/>
+  <line x1="70" y1="295" x2="800" y2="295" stroke="#DDDDDD" stroke-width="1"/>
+  <line x1="440" y1="85" x2="440" y2="505" stroke="#DDDDDD" stroke-width="1" stroke-dasharray="4 3"/>
+  <rect x="70" y="85" width="730" height="420" fill="none" stroke="#DDDDDD" stroke-width="1" rx="4"/>
+
+  <!-- ===== Quadrant 1: Sync + Blocking (top-left) ===== -->
+  <!-- Left cell: x=70..440, center=255. Group: Caller(60)+gap(30)+Task(60)=150, start=255-75=180 -->
+  <text x="180" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Caller</text>
+  <text x="275" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Task</text>
+
+  <rect x="180" y="115" width="60" height="24" rx="3" fill="#4A90D9" opacity="0.3" stroke="#4A90D9" stroke-width="1"/>
+  <text x="210" y="131" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">call</text>
+
+  <line x1="240" y1="127" x2="268" y2="145" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="139" width="60" height="100" rx="3" fill="#E8744F" opacity="0.2" stroke="#E8744F" stroke-width="1"/>
+  <text x="300" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">working</text>
+  <text x="300" y="190" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">...</text>
+
+  <rect x="180" y="139" width="60" height="100" rx="3" fill="#E8744F" opacity="0.1" stroke="#E8744F" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="210" y="195" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">blocked</text>
+
+  <line x1="270" y1="239" x2="242" y2="250" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="180" y="245" width="60" height="24" rx="3" fill="#4A90D9" opacity="0.3" stroke="#4A90D9" stroke-width="1"/>
+  <text x="210" y="261" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">result</text>
+
+  <text x="255" y="285" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#E8744F">e.g. read() with blocking fd</text>
+
+  <!-- ===== Quadrant 2: Sync + Non-Blocking (top-right) ===== -->
+  <!-- Right cell: x=440..800, center=620. Group: Caller(60)+gap(35)+Task(55)=150, start=620-75=545 -->
+  <text x="545" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Caller</text>
+  <text x="655" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Task</text>
+
+  <rect x="545" y="115" width="60" height="24" rx="3" fill="#4A90D9" opacity="0.3" stroke="#4A90D9" stroke-width="1"/>
+  <text x="575" y="131" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">call</text>
+  <line x1="605" y1="127" x2="638" y2="127" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="640" y="115" width="55" height="130" rx="3" fill="#50C878" opacity="0.15" stroke="#50C878" stroke-width="1"/>
+  <text x="667" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">working</text>
+  <text x="667" y="190" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">...</text>
+
+  <rect x="545" y="145" width="60" height="20" rx="3" fill="#50C878" opacity="0.25" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="159" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#50C878">poll</text>
+  <line x1="605" y1="155" x2="640" y2="155" stroke="#CCCCCC" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="623" y="150" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#CC5555">not ready</text>
+
+  <rect x="545" y="175" width="60" height="20" rx="3" fill="#50C878" opacity="0.25" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="189" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#50C878">poll</text>
+  <line x1="605" y1="185" x2="640" y2="185" stroke="#CCCCCC" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="623" y="180" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#CC5555">not ready</text>
+
+  <rect x="545" y="205" width="60" height="20" rx="3" fill="#50C878" opacity="0.25" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="219" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#50C878">poll</text>
+  <line x1="605" y1="215" x2="640" y2="215" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="545" y="245" width="60" height="24" rx="3" fill="#4A90D9" opacity="0.3" stroke="#4A90D9" stroke-width="1"/>
+  <text x="575" y="261" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#4A90D9">result</text>
+  <line x1="640" y1="245" x2="607" y2="255" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="620" y="285" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#50C878">e.g. read() with O_NONBLOCK + busy wait</text>
+
+  <!-- ===== Quadrant 3: Async + Blocking (bottom-left) ===== -->
+  <text x="180" y="315" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Caller</text>
+  <text x="275" y="315" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Task</text>
+
+  <rect x="180" y="325" width="60" height="24" rx="3" fill="#9B59B6" opacity="0.3" stroke="#9B59B6" stroke-width="1"/>
+  <text x="210" y="341" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9B59B6">call + cb</text>
+  <line x1="240" y1="337" x2="268" y2="350" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="349" width="60" height="100" rx="3" fill="#E8744F" opacity="0.2" stroke="#E8744F" stroke-width="1"/>
+  <text x="300" y="395" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">working</text>
+  <text x="300" y="410" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">...</text>
+
+  <rect x="180" y="349" width="60" height="100" rx="3" fill="#E8744F" opacity="0.1" stroke="#E8744F" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="210" y="395" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#E8744F">blocked</text>
+  <text x="210" y="410" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#E8744F">(waiting cb)</text>
+
+  <line x1="270" y1="449" x2="242" y2="460" stroke="#9B59B6" stroke-width="1" marker-end="url(#arrow2)"/>
+  <rect x="180" y="455" width="60" height="24" rx="3" fill="#9B59B6" opacity="0.3" stroke="#9B59B6" stroke-width="1"/>
+  <text x="210" y="471" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9B59B6">callback</text>
+
+  <text x="255" y="497" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">e.g. select() blocking on multiple fds</text>
+
+  <!-- ===== Quadrant 4: Async + Non-Blocking (bottom-right) ===== -->
+  <text x="545" y="315" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Caller</text>
+  <text x="655" y="315" font-family="sans-serif" font-size="10" font-weight="bold" fill="#555555">Task</text>
+
+  <rect x="545" y="325" width="60" height="24" rx="3" fill="#9B59B6" opacity="0.3" stroke="#9B59B6" stroke-width="1"/>
+  <text x="575" y="341" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9B59B6">call + cb</text>
+  <line x1="605" y1="337" x2="638" y2="337" stroke="#999999" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="640" y="325" width="55" height="130" rx="3" fill="#50C878" opacity="0.15" stroke="#50C878" stroke-width="1"/>
+  <text x="667" y="385" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">working</text>
+  <text x="667" y="400" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">...</text>
+
+  <rect x="545" y="355" width="60" height="24" rx="3" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="371" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">other work</text>
+  <rect x="545" y="385" width="60" height="24" rx="3" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="401" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">other work</text>
+  <rect x="545" y="415" width="60" height="24" rx="3" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1"/>
+  <text x="575" y="431" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#50C878">other work</text>
+
+  <line x1="640" y1="455" x2="607" y2="460" stroke="#9B59B6" stroke-width="1" marker-end="url(#arrow2)"/>
+  <rect x="545" y="455" width="60" height="24" rx="3" fill="#9B59B6" opacity="0.3" stroke="#9B59B6" stroke-width="1"/>
+  <text x="575" y="471" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9B59B6">callback</text>
+
+  <text x="620" y="497" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#50C878">e.g. Node.js Event Loop + libuv</text>
+
+  <!-- Highlight box for Async + Non-Blocking -->
+  <rect x="442" y="297" width="356" height="206" fill="none" stroke="#50C878" stroke-width="2" rx="4" stroke-dasharray="6 3"/>
+  <text x="780" y="312" text-anchor="end" font-family="sans-serif" font-size="9" font-weight="bold" fill="#50C878">JavaScript</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#999999"/>
+    </marker>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9B59B6"/>
+    </marker>
+  </defs>
+</svg>

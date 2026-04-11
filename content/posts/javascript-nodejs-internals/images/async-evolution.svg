@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" fill="#F8F9FA"/>
+
+  <text x="400" y="28" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Evolution of Async Patterns</text>
+
+  <defs>
+    <marker id="aGr" markerWidth="6" markerHeight="5" refX="5.5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#999999"/>
+    </marker>
+  </defs>
+
+  <!-- Timeline arrow -->
+  <line x1="60" y1="70" x2="740" y2="70" stroke="#CCCCCC" stroke-width="2" marker-end="url(#aGr)"/>
+
+  <!-- Year markers -->
+  <line x1="150" y1="65" x2="150" y2="75" stroke="#CCCCCC" stroke-width="1.5"/>
+  <text x="150" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">ES1 (1997)</text>
+
+  <line x1="400" y1="65" x2="400" y2="75" stroke="#CCCCCC" stroke-width="1.5"/>
+  <text x="400" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">ES6 (2015)</text>
+
+  <line x1="620" y1="65" x2="620" y2="75" stroke="#CCCCCC" stroke-width="1.5"/>
+  <text x="620" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999999">ES2017</text>
+
+  <!-- ===== Callbacks ===== -->
+  <rect x="70" y="90" width="200" height="180" rx="10" fill="#E8744F" opacity="0.08" stroke="#E8744F" stroke-width="2"/>
+  <text x="170" y="115" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#E8744F">Callbacks</text>
+
+  <!-- Nested callback visualization -->
+  <rect x="90" y="130" width="160" height="22" rx="3" fill="#E8744F" opacity="0.15" stroke="#E8744F" stroke-width="1"/>
+  <text x="170" y="146" text-anchor="middle" font-family="monospace" font-size="9" fill="#E8744F">getData(callback)</text>
+
+  <rect x="105" y="158" width="140" height="22" rx="3" fill="#E8744F" opacity="0.2" stroke="#E8744F" stroke-width="1"/>
+  <text x="175" y="174" text-anchor="middle" font-family="monospace" font-size="9" fill="#E8744F">process(callback)</text>
+
+  <rect x="120" y="186" width="120" height="22" rx="3" fill="#E8744F" opacity="0.25" stroke="#E8744F" stroke-width="1"/>
+  <text x="180" y="202" text-anchor="middle" font-family="monospace" font-size="9" fill="#E8744F">save(callback)</text>
+
+  <rect x="135" y="214" width="100" height="22" rx="3" fill="#E8744F" opacity="0.3" stroke="#E8744F" stroke-width="1"/>
+  <text x="185" y="230" text-anchor="middle" font-family="monospace" font-size="9" fill="#E8744F">notify(cb)</text>
+
+  <text x="170" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#E8744F">Callback Hell</text>
+
+  <!-- Arrow -->
+  <line x1="275" y1="180" x2="295" y2="180" stroke="#999999" stroke-width="1.5" marker-end="url(#aGr)"/>
+
+  <!-- ===== Promises ===== -->
+  <rect x="300" y="90" width="200" height="180" rx="10" fill="#4A90D9" opacity="0.08" stroke="#4A90D9" stroke-width="2"/>
+  <text x="400" y="115" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4A90D9">Promises</text>
+
+  <!-- Flat chain visualization -->
+  <rect x="320" y="130" width="160" height="22" rx="3" fill="#4A90D9" opacity="0.15" stroke="#4A90D9" stroke-width="1"/>
+  <text x="400" y="146" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A90D9">getData()</text>
+
+  <rect x="320" y="158" width="160" height="22" rx="3" fill="#4A90D9" opacity="0.2" stroke="#4A90D9" stroke-width="1"/>
+  <text x="400" y="174" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A90D9">.then(process)</text>
+
+  <rect x="320" y="186" width="160" height="22" rx="3" fill="#4A90D9" opacity="0.25" stroke="#4A90D9" stroke-width="1"/>
+  <text x="400" y="202" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A90D9">.then(save)</text>
+
+  <rect x="320" y="214" width="160" height="22" rx="3" fill="#4A90D9" opacity="0.3" stroke="#4A90D9" stroke-width="1"/>
+  <text x="400" y="230" text-anchor="middle" font-family="monospace" font-size="9" fill="#4A90D9">.catch(handleError)</text>
+
+  <text x="400" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#4A90D9">Flat Chaining</text>
+
+  <!-- Arrow -->
+  <line x1="505" y1="180" x2="525" y2="180" stroke="#999999" stroke-width="1.5" marker-end="url(#aGr)"/>
+
+  <!-- ===== async/await ===== -->
+  <rect x="530" y="90" width="220" height="180" rx="10" fill="#50C878" opacity="0.08" stroke="#50C878" stroke-width="2"/>
+  <text x="640" y="115" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#50C878">async / await</text>
+
+  <!-- Sequential style visualization -->
+  <rect x="550" y="130" width="180" height="22" rx="3" fill="#50C878" opacity="0.15" stroke="#50C878" stroke-width="1"/>
+  <text x="640" y="146" text-anchor="middle" font-family="monospace" font-size="9" fill="#50C878">const data = await getData()</text>
+
+  <rect x="550" y="158" width="180" height="22" rx="3" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1"/>
+  <text x="640" y="174" text-anchor="middle" font-family="monospace" font-size="9" fill="#50C878">const result = await process(data)</text>
+
+  <rect x="550" y="186" width="180" height="22" rx="3" fill="#50C878" opacity="0.25" stroke="#50C878" stroke-width="1"/>
+  <text x="640" y="202" text-anchor="middle" font-family="monospace" font-size="9" fill="#50C878">await save(result)</text>
+
+  <rect x="550" y="214" width="180" height="22" rx="3" fill="#50C878" opacity="0.3" stroke="#50C878" stroke-width="1"/>
+  <text x="640" y="230" text-anchor="middle" font-family="monospace" font-size="9" fill="#50C878">try/catch for errors</text>
+
+  <text x="640" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#50C878">Synchronous Style</text>
+</svg>

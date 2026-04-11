@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="410" viewBox="0 0 700 410">
+  <rect width="700" height="410" fill="#F8F9FA"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">Event Loop: 6 Phases</text>
+
+  <!-- Center point: 350, 255 -->
+  <!-- Hexagonal layout: 6 phases arranged in a loop -->
+  <!-- Radius ~150 for centers -->
+
+  <!-- Phase boxes — arranged clockwise from top -->
+
+  <!-- 1. Timers (top) -->
+  <rect x="270" y="65" width="160" height="52" rx="6" fill="#E8744F" opacity="0.15" stroke="#E8744F" stroke-width="1.5"/>
+  <text x="350" y="86" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#E8744F">1. Timers</text>
+  <text x="350" y="104" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">setTimeout, setInterval</text>
+
+  <!-- 2. Pending Callbacks (top-right) -->
+  <rect x="490" y="140" width="170" height="52" rx="6" fill="#4A90D9" opacity="0.15" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="575" y="161" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#4A90D9">2. Pending Callbacks</text>
+  <text x="575" y="179" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">system I/O callbacks</text>
+
+  <!-- 3. idle, prepare (bottom-right) -->
+  <rect x="490" y="248" width="170" height="52" rx="6" fill="#999999" opacity="0.15" stroke="#999999" stroke-width="1.5"/>
+  <text x="575" y="269" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#999999">3. idle, prepare</text>
+  <text x="575" y="287" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">internal optimization</text>
+
+  <!-- 4. Poll (bottom) -->
+  <rect x="270" y="330" width="160" height="52" rx="6" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="2"/>
+  <text x="350" y="351" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#50C878">4. Poll</text>
+  <text x="350" y="369" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">I/O events</text>
+
+  <!-- 5. Check (bottom-left) -->
+  <rect x="40" y="248" width="170" height="52" rx="6" fill="#9B59B6" opacity="0.15" stroke="#9B59B6" stroke-width="1.5"/>
+  <text x="125" y="269" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#9B59B6">5. Check</text>
+  <text x="125" y="287" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">setImmediate</text>
+
+  <!-- 6. Close Callbacks (top-left) -->
+  <rect x="40" y="140" width="170" height="52" rx="6" fill="#CC5555" opacity="0.15" stroke="#CC5555" stroke-width="1.5"/>
+  <text x="125" y="161" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#CC5555">6. Close Callbacks</text>
+  <text x="125" y="179" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888888">socket.on('close')</text>
+
+  <!-- Arrows connecting phases (clockwise) -->
+  <!-- 1→2: Timers → Pending Callbacks -->
+  <path d="M 430 100 Q 470 120 490 150" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- 2→3: Pending Callbacks → idle, prepare -->
+  <path d="M 575 192 L 575 246" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- 3→4: idle, prepare → Poll -->
+  <path d="M 490 288 Q 460 310 430 342" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- 4→5: Poll → Check -->
+  <path d="M 270 368 Q 230 370 210 288" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- 5→6: Check → Close Callbacks -->
+  <path d="M 125 248 L 125 194" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- 6→1: Close Callbacks → Timers (loop back) -->
+  <path d="M 210 152 Q 240 120 270 100" fill="none" stroke="#BBBBBB" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- Center loop icon -->
+  <circle cx="350" cy="222" r="28" fill="none" stroke="#CCCCCC" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="350" y="218" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#AAAAAA">Event</text>
+  <text x="350" y="232" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#AAAAAA">Loop</text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#BBBBBB"/>
+    </marker>
+  </defs>
+</svg>

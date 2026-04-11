@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="220" viewBox="0 0 800 220">
+  <rect width="800" height="220" fill="#F8F9FA"/>
+
+  <text x="400" y="30" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#333333">V8 Engine Pipeline</text>
+
+  <defs>
+    <marker id="arr" markerWidth="6" markerHeight="5" refX="5.5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#999999"/>
+    </marker>
+    <marker id="arrOrange" markerWidth="6" markerHeight="5" refX="5.5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#E8744F"/>
+    </marker>
+  </defs>
+
+  <!-- Source Code -->
+  <rect x="20" y="75" width="110" height="50" rx="8" fill="#4A90D9" opacity="0.2" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="75" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#4A90D9">Source Code</text>
+
+  <!-- Arrow -->
+  <line x1="130" y1="100" x2="160" y2="100" stroke="#999999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Parser -->
+  <rect x="165" y="75" width="90" height="50" rx="8" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1.5"/>
+  <text x="210" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#50C878">Parser</text>
+
+  <!-- Arrow -->
+  <line x1="255" y1="100" x2="285" y2="100" stroke="#999999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- AST -->
+  <rect x="290" y="75" width="70" height="50" rx="8" fill="#50C878" opacity="0.2" stroke="#50C878" stroke-width="1.5"/>
+  <text x="325" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#50C878">AST</text>
+
+  <!-- Arrow -->
+  <line x1="360" y1="100" x2="390" y2="100" stroke="#999999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Ignition -->
+  <rect x="395" y="75" width="120" height="50" rx="8" fill="#E8744F" opacity="0.2" stroke="#E8744F" stroke-width="1.5"/>
+  <text x="455" y="95" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#E8744F">Ignition</text>
+  <text x="455" y="112" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">Interpreter</text>
+
+  <!-- Arrow to Bytecode -->
+  <line x1="515" y1="100" x2="545" y2="100" stroke="#999999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Bytecode -->
+  <rect x="550" y="75" width="100" height="50" rx="8" fill="#E8744F" opacity="0.15" stroke="#E8744F" stroke-width="1.5"/>
+  <text x="600" y="105" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#E8744F">Bytecode</text>
+
+  <!-- Arrow down to TurboFan -->
+  <line x1="600" y1="125" x2="600" y2="155" stroke="#E8744F" stroke-width="1.5" marker-end="url(#arrOrange)"/>
+  <text x="620" y="145" font-family="sans-serif" font-size="9" fill="#999999">hot code</text>
+
+  <!-- TurboFan -->
+  <rect x="660" y="150" width="120" height="50" rx="8" fill="#4A90D9" opacity="0.2" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="720" y="170" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#4A90D9">TurboFan</text>
+  <text x="720" y="187" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#666666">JIT Compiler</text>
+
+  <!-- Arrow from TurboFan back left -->
+  <path d="M 660 175 L 550 175" fill="none" stroke="#4A90D9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Optimized Code label -->
+  <rect x="430" y="150" width="120" height="50" rx="8" fill="#4A90D9" opacity="0.15" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="490" y="172" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#4A90D9">Optimized</text>
+  <text x="490" y="188" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#4A90D9">Machine Code</text>
+</svg>
