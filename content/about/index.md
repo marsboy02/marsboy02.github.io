@@ -11,8 +11,8 @@ As a software engineer, I strive to carry the same mindset. I dream of programmi
 
 Fun facts:
 
-- Top 10% support player in Overwatch
-- Top 5% jungle player in League of Legends
+- Diamond tier support player in Overwatch
+- Diamond tier jungle player in League of Legends
 - Donor to UNICEF Korea and Korean Red Cross
 - GopherCon Korea 2025 & PyCon Korea 2026 organizing committee member
 - Various experiences building things that help others in fun ways
