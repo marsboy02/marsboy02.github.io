@@ -149,7 +149,7 @@ With an MTU of 1500 bytes, subtracting the IP header (20B) and TCP header (20B) 
 
 This brings us to an important concept: **MSS (Maximum Segment Size)**. MSS is the maximum amount of application data that can fit in a single TCP segment — it's the MTU minus the IP header and TCP header.
 
-```
+```text
 MSS = MTU - IP Header - TCP Header
 MSS = 1500 - 20 - 20 = 1460 bytes
 ```
@@ -178,7 +178,7 @@ As the diagram shows, with normal PMTUD the router uses ICMP to inform the sende
 
 Here's the crux of the problem. WireGuard is an **L3 VPN** that encapsulates entire IP packets. This adds roughly 60 bytes of overhead.
 
-```
+```text
 WireGuard overhead: Outer IP (20B) + UDP (8B) + WG Header (32B) = 60B
 ```
 
@@ -188,7 +188,7 @@ Walking through the encapsulation step by step:
 
 The application has no knowledge of the tunnel. It sends data as it normally would.
 
-```
+```text
 [Inner IP 20B] [Inner TCP 20B] [Payload 1460B] = 1500B
 ```
 
@@ -196,7 +196,7 @@ The application has no knowledge of the tunnel. It sends data as it normally wou
 
 The original 1500B packet becomes the data payload, and new headers are wrapped around it.
 
-```
+```text
 [Outer IP 20B] [UDP 8B] [WG Header 32B] [Original packet 1500B] = 1560B
 ```
 
@@ -212,13 +212,16 @@ In a WireGuard-based VPN, packets travel through **two layers**. A 1500B packet 
 
 To summarize, a WireGuard-encapsulated packet exceeds the MTU like this:
 
-```
+```text
 Regular packet:
-[IP 20B] [TCP 20B] [Payload 1460B] = 1500B   ← within physical NIC MTU ✅
+  [IP 20B] [TCP 20B] [Payload 1460B] = 1500B
+  → within physical NIC MTU ✅
 
 After WireGuard encapsulation:
-[Outer IP 20B] [UDP 8B] [WG 32B] [Inner IP 20B] [TCP 20B] [Payload 1460B] = 1560B
-                                                                             ← exceeds MTU ❌
+  [Outer IP 20B] [UDP 8B] [WG 32B]
+    + [Inner IP 20B] [TCP 20B] [Payload 1460B]
+  = 1560B
+  → exceeds MTU ❌
 ```
 
 Think of it like trying to put a fully-packed box into an international shipping box — but the outer box has the same size limit as the inner one, so it just won't fit.
@@ -231,7 +234,7 @@ TCP negotiates MSS based on the MTU of its outgoing interface. If the tunnel int
 
 Tailscale in our environment had set its MTU to 1280. This is a conservative value Tailscale uses for IPv6 minimum MTU compatibility. The problem was that the TCP stack inside the Pods wasn't properly accounting for this value.
 
-```
+```text
 Redis PING (small packet):
   Inner: [IP+TCP+PING ≈ 50B] = 50B
   After encapsulation: 50 + 60 = 110B → ✅ passes through
@@ -380,7 +383,7 @@ flannel-conf: /etc/rancher/k3s/flannel.json
 
 The MTU of 1220 is calculated as follows:
 
-```
+```text
 Tailscale tunnel MTU:  1280
 - VXLAN overhead:        50
 - Buffer:                10

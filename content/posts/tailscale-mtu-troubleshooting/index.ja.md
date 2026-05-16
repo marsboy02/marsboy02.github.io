@@ -149,7 +149,7 @@ MTUが1500バイトで、IPヘッダー20B + TCPヘッダー20Bを引くと、�
 
 ここで重要な概念が**MSS（Maximum Segment Size）**だ。MSSは1つのTCPセグメントに載せられる最大アプリケーションデータサイズで、MTUからIPヘッダーとTCPヘッダーを引いた値だ。
 
-```
+```text
 MSS = MTU - IP Header - TCP Header
 MSS = 1500 - 20 - 20 = 1460 バイト
 ```
@@ -178,7 +178,7 @@ DFビットがオンになっている場合（最近のほとんどのTCPパケ
 
 ここが核心だ。WireGuardは**L3 VPN**で、IPパケットをまるごとカプセル化する。この過程で約60バイトのオーバーヘッドが追加される。
 
-```
+```text
 WireGuardオーバーヘッド: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 ```
 
@@ -188,7 +188,7 @@ WireGuardオーバーヘッド: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 
 アプリケーションはトンネルの存在を知らない。通常通りデータを送信する。
 
-```
+```text
 [Inner IP 20B] [Inner TCP 20B] [Payload 1460B] = 1500B
 ```
 
@@ -196,7 +196,7 @@ WireGuardオーバーヘッド: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 
 元の1500Bパケットを「データ」として扱い、外側に新しいヘッダーを被せる。
 
-```
+```text
 [Outer IP 20B] [UDP 8B] [WG Header 32B] [元のパケット 1500B] = 1560B
 ```
 
@@ -212,13 +212,16 @@ WireGuardベースのVPNでは、パケットが**2つのレイヤーを経由�
 
 まとめると、WireGuardでカプセル化されたパケットは次のようにMTUを超過する。
 
-```
+```text
 通常のパケット:
-[IP 20B] [TCP 20B] [Payload 1460B] = 1500B   ← 物理NIC MTU以内 ✅
+  [IP 20B] [TCP 20B] [Payload 1460B] = 1500B
+  → 物理NIC MTU以内 ✅
 
 WireGuardカプセル化後:
-[Outer IP 20B] [UDP 8B] [WG 32B] [Inner IP 20B] [TCP 20B] [Payload 1460B] = 1560B
-                                                                             ← MTU超過 ❌
+  [Outer IP 20B] [UDP 8B] [WG 32B]
+    + [Inner IP 20B] [TCP 20B] [Payload 1460B]
+  = 1560B
+  → MTU超過 ❌
 ```
 
 すでにぎっしり詰まった荷物を国際配送用の箱に入れ直さなければならないのに、外側の箱のサイズ制限も同じで入りきらない、という状況と同じだ。
@@ -231,7 +234,7 @@ TCPはMSSネゴシエーション時に、自分が出ていくインターフ�
 
 今回の環境のTailscaleはMTUを1280に設定していた。これはIPv6最小MTU互換のためにTailscaleが保守的に設定した値だ。ところが、Pod内部のTCPスタックがこの値を正しく反映できていなかったことが問題だった。
 
-```
+```text
 Redis PING（小さなパケット）:
   Inner: [IP+TCP+PING ≈ 50B] = 50B
   カプセル化後: 50 + 60 = 110B → ✅ 通過
@@ -380,7 +383,7 @@ flannel-conf: /etc/rancher/k3s/flannel.json
 
 MTU 1220の計算式は次の通りだ。
 
-```
+```text
 Tailscaleトンネル MTU:  1280
 - VXLANオーバーヘッド:    50
 - 余裕分:                10

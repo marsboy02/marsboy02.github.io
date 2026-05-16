@@ -149,7 +149,7 @@ MTU가 1500바이트이고, IP 헤더 20B + TCP 헤더 20B를 빼면 Payload는 
 
 여기서 중요한 개념이 **MSS(Maximum Segment Size)** 이다. MSS는 한 TCP 세그먼트에 담을 수 있는 최대 애플리케이션 데이터 크기로, MTU에서 IP 헤더와 TCP 헤더를 뺀 값이다.
 
-```
+```text
 MSS = MTU - IP Header - TCP Header
 MSS = 1500 - 20 - 20 = 1460 바이트
 ```
@@ -178,7 +178,7 @@ DF 비트가 켜져 있으면(요즘 대부분의 TCP 패킷), 라우터가 패�
 
 이제 핵심이다. WireGuard는 **L3 VPN**으로, IP 패킷을 통째로 캡슐화한다. 이 과정에서 약 60바이트의 오버헤드가 추가된다.
 
-```
+```text
 WireGuard 오버헤드: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 ```
 
@@ -188,7 +188,7 @@ WireGuard 오버헤드: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 
 애플리케이션은 터널의 존재를 모른다. 평소처럼 데이터를 전송한다.
 
-```
+```text
 [Inner IP 20B] [Inner TCP 20B] [Payload 1460B] = 1500B
 ```
 
@@ -196,7 +196,7 @@ WireGuard 오버헤드: Outer IP(20B) + UDP(8B) + WG Header(32B) = 60B
 
 원본 1500B 패킷을 "데이터"로 취급하고, 바깥에 새로운 헤더를 씌운다.
 
-```
+```text
 [Outer IP 20B] [UDP 8B] [WG Header 32B] [원래 패킷 1500B] = 1560B
 ```
 
@@ -212,13 +212,16 @@ WireGuard 기반 VPN에서는 패킷이 **두 번의 레이어를 거쳐** 전�
 
 정리하면, WireGuard를 통해 캡슐화된 패킷은 다음과 같이 MTU를 초과하게 된다.
 
-```
+```text
 일반 패킷:
-[IP 20B] [TCP 20B] [Payload 1460B] = 1500B   ← 물리 NIC MTU 이하 ✅
+  [IP 20B] [TCP 20B] [Payload 1460B] = 1500B
+  → 물리 NIC MTU 이하 ✅
 
 WireGuard 캡슐화 후:
-[Outer IP 20B] [UDP 8B] [WG 32B] [Inner IP 20B] [TCP 20B] [Payload 1460B] = 1560B
-                                                                             ← MTU 초과 ❌
+  [Outer IP 20B] [UDP 8B] [WG 32B]
+    + [Inner IP 20B] [TCP 20B] [Payload 1460B]
+  = 1560B
+  → MTU 초과 ❌
 ```
 
 이미 꽉 차게 포장된 택배를 국제배송용 박스에 다시 넣어야 하는데, 바깥 박스 크기 제한도 같아서 안 들어가는 상황과 같다.
@@ -231,7 +234,7 @@ TCP는 MSS 협상 시 자기가 나가는 인터페이스의 MTU를 참조한다
 
 우리 환경의 Tailscale은 MTU를 1280으로 설정하고 있었다. 이는 IPv6 최소 MTU 호환을 위해 Tailscale이 보수적으로 잡은 값이다. 그런데 Pod 내부의 TCP 스택이 이 값을 제대로 반영하지 못한 것이 문제였다.
 
-```
+```text
 Redis PING (작은 패킷):
   Inner: [IP+TCP+PING ≈ 50B] = 50B
   캡슐화 후: 50 + 60 = 110B → ✅ 통과
@@ -380,7 +383,7 @@ flannel-conf: /etc/rancher/k3s/flannel.json
 
 MTU 1220의 계산식은 다음과 같다.
 
-```
+```text
 Tailscale 터널 MTU:  1280
 - VXLAN 오버헤드:      50
 - 여유분:              10
