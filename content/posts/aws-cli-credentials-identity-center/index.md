@@ -227,5 +227,3 @@ Writing this piece reaffirmed something I already half-knew: **the structure of 
 Looking back on the day saml2aws died, it wasn't really just one tool dying. It was the simultaneous closing of two eras — the era when headless clients could automate IdP login screens, and the era when nobody flinched at long-term access keys sitting in plaintext on disk. Phishing-resistant authentication is becoming the standard, and short-term credentials with refresh tokens are becoming the default. That shift is already in motion.
 
 That's why moving to IAM Identity Center isn't really a tool swap. It comes bundled with structural improvements — the browser/CLI split, the refresh token model, `sso-session` sharing. If you work on top of AWS, getting on this train sooner rather than later is the right call.
-
-For a companion piece on the operational side, my [earlier post]({{< relref "/posts/aws-cost-optimization" >}}) on AWS cost optimization rounds out a more complete picture of what "using AWS well" actually looks like.
