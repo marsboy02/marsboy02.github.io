@@ -1,7 +1,7 @@
 ---
 title: "AWS CLI는 자격증명을 어떻게 관리하는가 — saml2aws의 종말까지"
 date: 2026-05-16
-draft: true
+draft: false
 tags: ["aws", "iam", "identity-center", "security"]
 translationKey: "aws-cli-credentials-identity-center"
 summary: "~/.aws/ 디렉토리 구조부터 임시 자격증명을 얻는 5가지 경로, 그리고 Passkey 도입으로 무너진 saml2aws의 마지막 풍경까지 — AWS CLI 자격증명의 원리를 한 번에 정리한다."

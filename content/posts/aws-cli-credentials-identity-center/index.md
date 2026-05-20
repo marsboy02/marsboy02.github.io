@@ -1,7 +1,7 @@
 ---
 title: "How the AWS CLI Manages Credentials — All the Way to the End of saml2aws"
 date: 2026-05-16
-draft: true
+draft: false
 tags: ["aws", "iam", "identity-center", "security"]
 translationKey: "aws-cli-credentials-identity-center"
 summary: "From the structure of the ~/.aws/ directory to the five paths for obtaining temporary credentials, and finally to the last scene of saml2aws collapsing under Passkey — a single tour through how AWS CLI credentials actually work."

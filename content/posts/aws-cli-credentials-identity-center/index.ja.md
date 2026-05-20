@@ -1,7 +1,7 @@
 ---
 title: "AWS CLIはどうやって認証情報を管理しているのか — saml2awsの終焉まで"
 date: 2026-05-16
-draft: true
+draft: false
 tags: ["aws", "iam", "identity-center", "security"]
 translationKey: "aws-cli-credentials-identity-center"
 summary: "~/.aws/ ディレクトリの構造から、一時認証情報を取得する5つの経路、そしてPasskey導入によって崩れ落ちたsaml2awsの最後の風景まで — AWS CLIの認証情報の仕組みを一気に整理する。"
