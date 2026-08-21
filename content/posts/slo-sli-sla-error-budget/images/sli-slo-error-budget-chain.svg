@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 230"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
+  </defs>
+
+  <rect width="860" height="230" fill="#f8fafc" rx="12"/>
+  <text x="430" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">From Measurement to Decision</text>
+
+  <!-- SLI -->
+  <rect x="20" y="52" width="182" height="150" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="111" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#2980b9">SLI</text>
+  <text x="111" y="97" text-anchor="middle" font-size="9.5" fill="#555">Service Level Indicator</text>
+  <line x1="36" y1="108" x2="186" y2="108" stroke="#a8cfe0" stroke-width="1"/>
+  <text x="111" y="132" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a2e">good events</text>
+  <line x1="59" y1="139" x2="163" y2="139" stroke="#1a1a2e" stroke-width="1.5"/>
+  <text x="111" y="156" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a2e">valid events</text>
+  <text x="111" y="184" text-anchor="middle" font-size="13" font-weight="700" fill="#2980b9">observed 99.95%</text>
+
+  <line x1="206" y1="127" x2="228" y2="127" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- SLO -->
+  <rect x="232" y="52" width="182" height="150" rx="10" fill="#eaf7ee" stroke="#27ae60" stroke-width="2.5" filter="url(#s)"/>
+  <text x="323" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#27ae60">SLO</text>
+  <text x="323" y="97" text-anchor="middle" font-size="9.5" fill="#555">Service Level Objective</text>
+  <line x1="248" y1="108" x2="398" y2="108" stroke="#a8dcbc" stroke-width="1"/>
+  <text x="323" y="134" text-anchor="middle" font-size="11" fill="#1a1a2e">agreed target</text>
+  <text x="323" y="164" text-anchor="middle" font-size="17" font-weight="700" fill="#27ae60">&#8805; 99.90%</text>
+  <text x="323" y="186" text-anchor="middle" font-size="9.5" fill="#555">over a 30-day window</text>
+
+  <line x1="418" y1="127" x2="440" y2="127" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- Error Budget -->
+  <rect x="444" y="52" width="182" height="150" rx="10" fill="#fff3e0" stroke="#f39c12" stroke-width="2.5" filter="url(#s)"/>
+  <text x="535" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#f39c12">Error Budget</text>
+  <text x="535" y="97" text-anchor="middle" font-size="9.5" fill="#555">what you may spend</text>
+  <line x1="460" y1="108" x2="610" y2="108" stroke="#f0cfa0" stroke-width="1"/>
+  <text x="535" y="132" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">100% &#8722; SLO = 0.10%</text>
+  <text x="535" y="162" text-anchor="middle" font-size="17" font-weight="700" fill="#f39c12">43m 12s</text>
+  <text x="535" y="186" text-anchor="middle" font-size="9.5" fill="#555">per 30 days</text>
+
+  <line x1="630" y1="127" x2="652" y2="127" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- Decision -->
+  <rect x="656" y="52" width="184" height="150" rx="10" fill="#f4e8f8" stroke="#8e44ad" stroke-width="2.5" filter="url(#s)"/>
+  <text x="748" y="80" text-anchor="middle" font-size="15" font-weight="700" fill="#8e44ad">Decision</text>
+  <text x="748" y="97" text-anchor="middle" font-size="9.5" fill="#555">agreed in advance</text>
+  <line x1="672" y1="108" x2="824" y2="108" stroke="#d8b8e4" stroke-width="1"/>
+  <text x="748" y="134" text-anchor="middle" font-size="11.5" font-weight="600" fill="#27ae60">budget left &#8594; ship</text>
+  <text x="748" y="160" text-anchor="middle" font-size="11.5" font-weight="600" fill="#e74c3c">budget spent &#8594; freeze</text>
+  <text x="748" y="186" text-anchor="middle" font-size="9.5" fill="#555">no debate required</text>
+</svg>

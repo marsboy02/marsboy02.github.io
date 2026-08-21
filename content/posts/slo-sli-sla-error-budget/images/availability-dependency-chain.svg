@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 328"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect width="860" height="328" fill="#f8fafc" rx="12"/>
+  <text x="430" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Availability Multiplies Along the Whole Request Path</text>
+
+  <!-- Panel A: User Side -->
+  <rect x="20" y="50" width="248" height="200" rx="10" fill="#f0f0f0" stroke="#888" stroke-width="2"/>
+  <text x="144" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#555">User Side — Not Yours</text>
+
+  <rect x="32" y="80" width="224" height="30" rx="6" fill="#ffffff" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="44" y="100" font-size="12" font-weight="600" fill="#1a1a2e">Home power</text>
+  <text x="244" y="100" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.9%</text>
+
+  <rect x="32" y="116" width="224" height="30" rx="6" fill="#ffffff" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="44" y="136" font-size="12" font-weight="600" fill="#1a1a2e">Wi-Fi router</text>
+  <text x="244" y="136" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.9%</text>
+
+  <rect x="32" y="152" width="224" height="30" rx="6" fill="#fff3e0" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="44" y="172" font-size="12" font-weight="600" fill="#1a1a2e">ISP link</text>
+  <text x="244" y="172" text-anchor="end" font-size="12" font-weight="700" fill="#f39c12">99.5%</text>
+
+  <line x1="32" y1="200" x2="256" y2="200" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="44" y="228" font-size="11" fill="#888">subtotal</text>
+  <text x="244" y="228" text-anchor="end" font-size="15" font-weight="700" fill="#555">99.30%</text>
+
+  <text x="284" y="152" text-anchor="middle" font-size="20" font-weight="700" fill="#888">&#215;</text>
+
+  <!-- Panel B: Public Internet -->
+  <rect x="300" y="50" width="188" height="200" rx="10" fill="#f0f0f0" stroke="#888" stroke-width="2"/>
+  <text x="394" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#555">Internet — Not Yours</text>
+
+  <rect x="312" y="80" width="164" height="30" rx="6" fill="#ffffff" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="324" y="100" font-size="12" font-weight="600" fill="#1a1a2e">DNS</text>
+  <text x="464" y="100" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.99%</text>
+
+  <rect x="312" y="116" width="164" height="30" rx="6" fill="#ffffff" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="324" y="136" font-size="12" font-weight="600" fill="#1a1a2e">Backbone</text>
+  <text x="464" y="136" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.95%</text>
+
+  <line x1="312" y1="200" x2="476" y2="200" stroke="#c8c8c8" stroke-width="1"/>
+  <text x="324" y="228" font-size="11" fill="#888">subtotal</text>
+  <text x="464" y="228" text-anchor="end" font-size="15" font-weight="700" fill="#555">99.94%</text>
+
+  <text x="504" y="152" text-anchor="middle" font-size="20" font-weight="700" fill="#888">&#215;</text>
+
+  <!-- Panel C: Your Infrastructure -->
+  <rect x="520" y="50" width="320" height="200" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="680" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#2980b9">Your Infrastructure</text>
+
+  <rect x="532" y="80" width="296" height="30" rx="6" fill="#ffffff" stroke="#a8cfe0" stroke-width="1"/>
+  <text x="544" y="100" font-size="12" font-weight="600" fill="#1a1a2e">CDN edge</text>
+  <text x="816" y="100" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.99%</text>
+
+  <rect x="532" y="116" width="296" height="30" rx="6" fill="#ffffff" stroke="#a8cfe0" stroke-width="1"/>
+  <text x="544" y="136" font-size="12" font-weight="600" fill="#1a1a2e">Load balancer</text>
+  <text x="816" y="136" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.99%</text>
+
+  <rect x="532" y="152" width="296" height="30" rx="6" fill="#ffffff" stroke="#a8cfe0" stroke-width="1"/>
+  <text x="544" y="172" font-size="12" font-weight="600" fill="#1a1a2e">Application</text>
+  <text x="816" y="172" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.95%</text>
+
+  <rect x="532" y="188" width="296" height="30" rx="6" fill="#ffffff" stroke="#a8cfe0" stroke-width="1"/>
+  <text x="544" y="208" font-size="12" font-weight="600" fill="#1a1a2e">Database</text>
+  <text x="816" y="208" text-anchor="end" font-size="12" font-weight="700" fill="#1a1a2e">99.95%</text>
+
+  <text x="544" y="240" font-size="11" fill="#2980b9">subtotal</text>
+  <text x="816" y="240" text-anchor="end" font-size="15" font-weight="700" fill="#2980b9">99.88%</text>
+
+  <!-- End-to-End result -->
+  <rect x="20" y="264" width="820" height="44" rx="8" fill="#fff3e0" stroke="#f39c12" stroke-width="2.5" filter="url(#s)"/>
+  <text x="44" y="292" font-size="14" font-weight="700" fill="#1a1a2e">End-to-End experienced availability</text>
+  <text x="560" y="292" text-anchor="end" font-size="12" fill="#555">99.30% &#215; 99.94% &#215; 99.88% =</text>
+  <text x="816" y="292" text-anchor="end" font-size="20" font-weight="700" fill="#f39c12">99.12%</text>
+</svg>

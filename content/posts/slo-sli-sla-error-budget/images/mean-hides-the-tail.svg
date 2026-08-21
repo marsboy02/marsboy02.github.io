@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 250"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <rect width="860" height="250" fill="#f8fafc" rx="12"/>
+  <text x="430" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">The Mean Nobody Experiences</text>
+
+  <!-- mean marker (196ms lies between the 80ms and 300ms bands) -->
+  <line x1="330" y1="72" x2="330" y2="200" stroke="#8e44ad" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="330" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#8e44ad">mean 196ms</text>
+  <text x="330" y="65" text-anchor="middle" font-size="9.5" fill="#8e44ad">no requests land here</text>
+
+  <!-- band 1 : 80ms / 90% -->
+  <rect x="181" y="80" width="64" height="120" rx="3" fill="#eaf7ee" stroke="#27ae60" stroke-width="2"/>
+  <text x="213" y="72" text-anchor="middle" font-size="12.5" font-weight="700" fill="#27ae60">80ms &#183; 90%</text>
+
+  <!-- band 2 : 300ms / 8% -->
+  <rect x="408" y="189" width="64" height="11" rx="2" fill="#fff3e0" stroke="#f39c12" stroke-width="2"/>
+  <text x="440" y="181" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f39c12">300ms &#183; 8%</text>
+
+  <!-- band 3 : 5s / 2% -->
+  <rect x="635" y="196" width="64" height="4" rx="1" fill="#fde8e8" stroke="#e74c3c" stroke-width="2"/>
+  <text x="667" y="188" text-anchor="middle" font-size="12.5" font-weight="700" fill="#e74c3c">5s &#183; 2%</text>
+
+  <!-- baseline -->
+  <line x1="90" y1="200" x2="780" y2="200" stroke="#555" stroke-width="2"/>
+  <text x="790" y="204" font-size="9.5" fill="#888">latency</text>
+
+  <!-- percentiles -->
+  <g stroke="#1a1a2e" stroke-width="1.5">
+    <line x1="213" y1="200" x2="213" y2="208"/>
+    <line x1="440" y1="200" x2="440" y2="208"/>
+    <line x1="667" y1="200" x2="667" y2="208"/>
+  </g>
+  <g font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">
+    <text x="213" y="226">p50</text>
+    <text x="440" y="226">p95</text>
+    <text x="667" y="226">p99</text>
+  </g>
+</svg>
