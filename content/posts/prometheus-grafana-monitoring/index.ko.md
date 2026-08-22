@@ -1,48 +1,56 @@
 ---
 title: "Prometheus & Grafana로 모니터링 시스템 구축하기"
 date: 2025-09-06
-draft: true
+draft: false
 tags: ["monitoring", "prometheus", "grafana", "observability"]
 translationKey: "prometheus-grafana-monitoring"
-summary: "관측성의 세 가지 축부터 Prometheus 아키텍처, node-exporter와 Redis 모니터링, HPC 클러스터 대시보드까지 — 모니터링 시스템 구축의 A to Z를 다룹니다."
+summary: "관측성의 세 가지 축에서 출발해 Prometheus 아키텍처와 exporter의 역할을 짚고, node-exporter와 Redis 모니터링을 docker-compose로 직접 구축해본다."
 ---
 
-모니터링 시스템은 서비스 운영의 근간이다. 서비스가 정상적으로 동작하고 있는지, 어떤 문제가 발생하고 있는지를 실시간으로 파악할 수 있어야 한다. 이 글에서는 관측성(Observability)의 세 가지 축에서 출발하여, Prometheus와 Grafana를 활용한 모니터링 시스템 구축 방법을 단계별로 다룬다. node-exporter를 이용한 리눅스 시스템 모니터링, Redis 모니터링, 그리고 100대 이상의 노드가 있는 HPC 클러스터 환경에서의 대시보드 구축까지 실무 경험을 바탕으로 정리한다.
+모니터링 시스템은 서비스 운영의 근간이다. 서비스가 정상적으로 동작하고 있는지, 어떤 문제가 발생하고 있는지를 실시간으로 파악할 수 있어야 한다. 이 글에서는 관측성(Observability)의 세 가지 축에서 출발하여, Prometheus와 Grafana를 활용한 모니터링 시스템 구축 방법을 단계별로 다룬다. node-exporter를 이용한 리눅스 시스템 모니터링과 Redis 모니터링까지 실무 경험을 바탕으로 정리한다.
 
----
+순서는 다음과 같다. 먼저 관측성이라는 개념을 이론적으로 정리하고, 메트릭을 수집하는 Prometheus의 구조와 exporter의 역할을 살펴본다. 그 다음 node-exporter와 Redis를 대상으로 모니터링 환경을 직접 구축해보고, 마지막으로 지금까지의 내용을 하나의 docker-compose로 묶는다.
 
 ## 1. 관측성의 세 가지 축 (Three Pillars of Observability)
 
-<!-- TODO: 세 가지 축(Metrics, Logs, Traces) 관계를 보여주는 다이어그램 추가 -->
-
 ![Observability 3 pillars](images/three-pillars.png "Grafana Blog - What's next for observability?")
 
-관측성의 세 가지 축이란 **메트릭(Metrics)**, **로그(Logs)**, **트레이스(Traces)**를 말한다. AWS, IBM, Elastic 등 다양한 벤더의 공식 문서에서도 이 세 가지 지표의 중요성을 꾸준히 강조한다.
+관측성의 세 가지 축이란 **메트릭**(Metrics), **로그**(Logs), **트레이스**(Traces)를 말한다. AWS, IBM, Elastic 등 다양한 벤더의 공식 문서에서도 이 세 가지 지표의 중요성을 꾸준히 강조한다.
 
 요약하면 다음과 같다.
 
-| 구분 | 정의 | 예시 |
-|------|------|------|
-| **메트릭** | 시스템 상태를 시간에 따라 숫자 시계열로 표현 | CPU 사용률, 메모리 사용량, 네트워크 I/O |
-| **로그** | 특정 이벤트와 관련된 타임스탬프가 지정된 정형/비정형 데이터 | HTTP 요청 기록, 에러 메시지, crontab 실행 결과 |
-| **트레이스** | 하나의 요청이 시스템을 통과하는 전체 여정 | API 호출 경로, 서비스 간 호출 시간 |
+| 구분         | 정의                                                        | 예시                                           |
+| ------------ | ----------------------------------------------------------- | ---------------------------------------------- |
+| **메트릭**   | 시스템 상태를 시간에 따라 숫자 시계열로 표현                | CPU 사용률, 메모리 사용량, 네트워크 I/O        |
+| **로그**     | 특정 이벤트와 관련된 타임스탬프가 지정된 정형/비정형 데이터 | HTTP 요청 기록, 에러 메시지, crontab 실행 결과 |
+| **트레이스** | 하나의 요청이 시스템을 통과하는 전체 여정                   | API 호출 경로, 서비스 간 호출 시간             |
 
 ### 1.1 메트릭 (Metrics)
 
-메트릭은 **시스템 상태를 시간에 따라 숫자 시계열**로 표현한 것이다. 주로 CPU 사용률, 메모리 사용량, 네트워크 입출력 등의 지표를 다루며, 각각의 지표는 `cpu_utilization`, `memory_utilization`, `network_io` 등의 이름으로 매초, 매분 숫자를 남긴다.
+메트릭은 **시스템 상태를 시간에 따라 숫자 시계열**로 표현한 것이다. 주로 CPU 사용률, 메모리 사용량, 네트워크 입출력 같은 지표를 다루며, 각 지표는 `cpu_utilization`, `memory_utilization`, `network_io` 같은 이름으로 매초, 매분 숫자를 남긴다.
 
 ![iStat Menus로 확인하는 시스템 메트릭](images/istat-menus.png "iStat Menus")
 
-CPU와 메모리 관리는 서비스 안정성의 핵심이다. 간단히 정리하면 다음과 같다.
+위 사진은 iStat Menus라는 애플리케이션을 설치해서 메뉴바에서 내 컴퓨터의 CPU 사용량을 확인해본 것이다. 개인 컴퓨터든 서버든, CPU와 메모리를 잘 관리해야 한다는 점은 다르지 않다.
+
+다만 둘 다 중요하다고 해서 100%에 도달했을 때의 결과가 같은 것은 아니다. CPU가 100%를 찍으면 서비스가 곧바로 다운된다고 알고 있는 경우가 많은데, 실제로는 시스템이 매우 느려질 뿐 메모리만큼 치명적이지는 않다.
+
+메모리는 사정이 다르다. 메모리는 물리적으로 정해진 주소 공간에 데이터를 쓰도록 되어 있고, 한 프로세스가 다른 프로세스의 영역을 침범해서 데이터를 덮어쓰면 시스템 전체가 무너질 수 있다. 그래서 메모리가 100%에 도달하면 운영체제는 속도를 희생하는 대신 프로세스를 아예 제거하는 쪽을 선택한다.
+
+![프로세스별로 나뉜 RAM의 주소 공간 — 자기 영역 밖으로는 쓸 수 없다](images/memory-address-isolation.svg)
 
 - **CPU 100%** : 대기열이 폭증하면서 타임아웃과 에러가 증가하고, 심하면 서버가 다운된다.
-- **Memory 100%** : OS 레벨의 **OOM(Out-of-Memory) Killer**가 프로세스를 SIGKILL로 강제 종료한다. K8s 환경에서 Pod가 뜨지 않는 문제의 원인이 되기도 한다.
+- **Memory 100%** : OS 레벨의 **OOM Killer**(Out-of-Memory Killer)가 프로세스를 SIGKILL로 강제 종료한다.
 
 ![AWS Cloudwatch 메트릭 대시보드](images/aws-cloudwatch.png "AWS Cloudwatch")
 
-AWS에서는 EC2, Fargate 같은 컴퓨팅 서비스를 띄울 때 CloudWatch를 통해 메트릭을 자동으로 수집해준다. 온프레미스 환경에서는 **Prometheus**가 이 역할을 수행한다. exporter가 메트릭을 노출하고, Prometheus가 이를 수집하며, Grafana가 시각화하는 구조이다.
+AWS에서는 EC2, Fargate 같은 컴퓨팅 서비스를 띄우면 CloudWatch가 이런 메트릭을 자동으로 수집해준다. 온프레미스 환경에서 같은 역할을 하는 것이 **Prometheus**다. Prometheus는 시계열 데이터를 모아두는 저장소이자 데이터 소스이며, 설정 파일에 "어디로 가서 어떤 값을 읽어와라"를 적어두면 그 주소들을 주기적으로 돌면서 값을 가져온다. 자세한 설정은 뒤에서 다룬다.
+
+정리하면 exporter가 메트릭을 노출하고, Prometheus가 이를 수집하고, Grafana가 시각화하는 구조다. 메트릭 저장소가 Prometheus라면, 로그 저장소로는 Loki가 짝을 이루어 함께 언급된다.
 
 ![exporter - Prometheus - Grafana 아키텍처](images/redis-exporter-architecture.png "exporter-Prometheus-Grafana 아키텍처")
+
+여기서 눈여겨볼 것은 화살표의 방향이다. 메트릭은 Prometheus가 exporter를 직접 순회하면서 값을 가져오는 **Pull** 방식이다. 반대로 로그는 데이터를 들고 있는 쪽이 저장소로 밀어 넣는 **Push** 방식이다. 같은 관측 데이터인데 수집 방향이 반대라는 점은 아래에서 다시 짚는다.
 
 ### 1.2 로그 (Logs)
 
@@ -54,13 +62,23 @@ AWS에서는 EC2, Fargate 같은 컴퓨팅 서비스를 띄울 때 CloudWatch를
 - **배치 작업 기록**: crontab 수행 결과, 정상 처리 여부 확인
 - **도메인별 감사 로그**: 특정 도메인(예: users)에 접근할 때 반드시 기록
 
-![Latency 그래프](images/latency-graph.png "로그 데이터 기반 Latency 시각화")
+![로그 데이터로 구성한 대시보드](images/log-dashboard.png "상태 코드별 요청량과 엔드포인트별 요청 순위")
 
-위 그래프는 HTTP Request의 응답 시간(`@responseTime`)을 모아 서버 레이턴시를 시각화한 것이다. 이처럼 로그 데이터도 관측성을 위해 적극 활용할 수 있다.
+위 그래프는 로그를 기반으로 만든 대시보드의 일부를 가져온 것이다. 로그를 남길 때에는 보통 OpenTelemetry라는 관측성 표준에 따라 요청한 IP, 접근한 엔드포인트, 응답 상태 코드 등을 함께 기록한다.
 
-### 1.3 트레이스 (Traces)
+이렇게 모인 정보로 상태 코드의 분포는 어떤지, 어떤 엔드포인트에 요청이 몰리는지를 파악할 수 있다. 나아가 모든 시스템의 로그 형식을 일관되게 맞춰두면 대시보드 하나에서 서비스만 바꿔가며 상태를 확인할 수 있고, 알림도 동일한 기준으로 설정할 수 있다. 로그 시스템의 가치는 개별 로그 한 줄보다 이 일관성에서 나온다.
 
-트레이스는 **하나의 요청이 시스템을 통과하는 전체 여정**을 기록한다. 사용자가 `/orders`를 호출했다면, 프론트 -> API -> DB/캐시 -> 외부 결제 API -> 메시지 큐 같은 모든 구간의 시간과 인과관계를 한눈에 보여준다.
+### 1.3 메트릭과 로그의 수집 방식 차이
+
+앞서 메트릭은 Prometheus가 직접 값을 가져오는 Pull 방식이라고 했는데, 로그는 반대다. 데이터를 가진 쪽이 중앙 저장소로 밀어 넣는 Push 방식을 사용한다.
+
+![Loki의 로그 수집 구조](images/loki-push-architecture.png "https://grafana.com/oss/loki/")
+
+Prometheus는 설정 파일에 "어디에 가서 값을 읽어와라"를 적어두는 반면, 로그는 서버와 함께 뜬 Agent가 로그를 읽어 중앙 저장소로 전송한다. 위 그림에서도 각 노드에 상주하는 Promtail이 로그를 Loki로 보내고, Grafana와 AlertManager는 Loki에 쌓인 로그를 조회하는 구조를 볼 수 있다. 로그의 저장과 보관은 이런 식으로 이루어진다. (참고로 최근에는 Promtail이 아닌 Alloy를 사용한다.)
+
+### 1.4 트레이스 (Traces)
+
+트레이스는 **하나의 요청이 시스템을 통과하는 전체 여정**을 기록한다. 사용자가 `/orders`를 호출했다면, 프론트 → API → DB/캐시 → 외부 결제 API → 메시지 큐 같은 모든 구간의 시간과 인과관계를 한눈에 보여준다.
 
 트레이스의 핵심 용어를 정리하면 다음과 같다.
 
@@ -73,9 +91,9 @@ Span에 들어가는 정보(Anatomy)에는 이름, 시작/종료 시각(duration
 
 ![Trace Waterfall 시각화](images/trace-waterfall.png "Honeycomb - Trace Explorer")
 
-위와 같이 스팬의 부모-자식 관계를 워터폴 구조로 시각화하여, 각 구간에서 소요된 시간을 한눈에 확인할 수 있다. 이를 통해 병목 구간을 빠르게 파악하고 원인을 추적할 수 있다.
+위와 같이 스팬의 부모-자식 관계를 워터폴 구조로 시각화하면, 각 구간에서 소요된 시간을 한눈에 확인할 수 있다. 이를 통해 병목 구간을 빠르게 파악하고 원인을 추적할 수 있다.
 
-### 1.4 세 지표의 상호 보완 관계
+### 1.5 세 지표의 상호 보완 관계
 
 세 지표를 함께 활용하면 높은 수준의 관측성을 유지할 수 있다.
 
@@ -83,7 +101,7 @@ Span에 들어가는 정보(Anatomy)에는 이름, 시작/종료 시각(duration
 - **로그**로 "어떤 이벤트가 발생했는지"를 파악하고
 - **트레이스**로 "어느 구간에서 문제가 생겼는지"를 추적한다
 
-참고로, CNCF에서 관리하는 **OpenTelemetry(OTel)**는 이 세 가지 신호를 벤더 중립적으로 계측, 수집, 전송할 수 있게 해주는 표준(API/SDK + Collector + OTLP)이다. Datadog, AWS 등의 모니터링 도구들은 이 OTel 표준을 기반으로 써드파티를 개발하고 있다.
+참고로, CNCF에서 관리하는 **OpenTelemetry**(OTel)는 이 세 가지 신호를 벤더 중립적으로 계측, 수집, 전송할 수 있게 해주는 표준(API/SDK + Collector + OTLP)이다. Datadog, AWS 등의 모니터링 도구들도 이 OTel 표준을 기반으로 자사 제품을 붙이고 있다.
 
 > **주의**: 민감 정보(PII 등)가 메트릭, 로그, 트레이스에 포함되지 않도록 마스킹하거나 삭제해야 한다.
 
@@ -91,28 +109,26 @@ Span에 들어가는 정보(Anatomy)에는 이름, 시작/종료 시각(duration
 
 ## 2. Prometheus 아키텍처
 
-<!-- TODO: Prometheus Pull 모델 흐름도 다이어그램 추가 -->
-
-Prometheus는 오픈 소스 시스템 모니터링 도구로, **시계열 데이터(time-series data)**를 수집하고 저장하며, 쿼리하는 데 중점을 둔다. 주로 단독으로 쓰이지 않고, exporter 및 Grafana와 함께 사용한다.
+관측성의 개념을 정리했으니, 이제 세 축 중 메트릭을 담당하는 Prometheus를 살펴본다. Prometheus는 오픈 소스 모니터링 도구로, **시계열 데이터**(time-series data)를 수집하고 저장하고 쿼리하는 데 집중한다. 단독으로 쓰이는 경우는 드물고, 메트릭을 노출하는 exporter와 이를 시각화하는 Grafana와 함께 하나의 스택으로 묶인다. exporter가 아직 생소하다면 2.4에서 따로 다루니 그대로 읽어 내려가도 된다.
 
 ### 2.1 메트릭 유형 (Metric Types)
 
 Prometheus에서 다루는 메트릭 유형은 네 가지이다.
 
-| 유형 | 설명 | 예시 |
-|------|------|------|
-| **Counter** | 증가만 가능한 값 | 요청 횟수 (`http_requests_total`) |
-| **Gauge** | 증가/감소 모두 가능 | 현재 메모리 사용량 (`node_memory_Active_bytes`) |
-| **Histogram** | 관찰값을 버킷으로 나눠 집계 | 응답 시간 분포 (`http_request_duration_seconds`) |
-| **Summary** | 특정 기간 동안 관찰값의 요약 통계 | 요청 시간의 백분위 수 |
+| 유형          | 설명                              | 예시                                             |
+| ------------- | --------------------------------- | ------------------------------------------------ |
+| **Counter**   | 증가만 가능한 값                  | 요청 횟수 (`http_requests_total`)                |
+| **Gauge**     | 증가/감소 모두 가능               | 현재 메모리 사용량 (`node_memory_Active_bytes`)  |
+| **Histogram** | 관찰값을 버킷으로 나눠 집계       | 응답 시간 분포 (`http_request_duration_seconds`) |
+| **Summary**   | 특정 기간 동안 관찰값의 요약 통계 | 요청 시간의 백분위 수                            |
 
-exporter는 이러한 메트릭을 HTTP 엔드포인트(`/metrics`)로 노출하고, Prometheus가 주기적으로 이를 가져간다(Pull).
+네 유형 모두 exporter가 HTTP 엔드포인트(`/metrics`)로 노출하고, Prometheus가 주기적으로 가져간다(Pull). 유형은 값의 의미를 알려주는 표시이기도 하다. Counter는 누적값이므로 그 자체보다 증가율이 의미가 있고, Gauge는 지금 이 순간의 값을 그대로 읽으면 된다.
 
 ### 2.2 아키텍처 개요
 
-![Prometheus Architecture](images/prometheus-architecture.png "https://prometheus.io/docs/introduction/overview/")
+![Prometheus 아키텍처](images/prometheus-architecture.png "https://prometheus.io/docs/introduction/overview/")
 
-Prometheus의 아키텍처를 정리하면 다음과 같다.
+공식 문서의 아키텍처 그림을 기준으로 데이터의 흐름을 정리하면 다음과 같다.
 
 1. **Exporter**가 대상 시스템의 메트릭을 `/metrics` 엔드포인트로 노출
 2. **Prometheus Server**가 `prometheus.yml`에 설정된 targets를 주기적으로 스크래핑하여 시계열 DB(TSDB)에 저장
@@ -120,50 +136,80 @@ Prometheus의 아키텍처를 정리하면 다음과 같다.
 4. **Grafana** 등의 시각화 도구가 PromQL을 활용하여 대시보드를 구성
 5. **Alertmanager**를 통해 특정 조건에 대한 알림 전송
 
-핵심은 **Pull 모델**이다. Prometheus가 직접 타겟을 찾아가서 데이터를 가져오는 구조이기 때문에, 모니터링 대상을 쉽게 추가하거나 제거할 수 있다.
+핵심은 계속 이야기한 **Pull 모델**이다. Prometheus가 타겟을 직접 찾아가서 데이터를 가져오기 때문에, 모니터링 대상을 추가하거나 제거하는 일이 설정 파일 몇 줄을 고치는 일로 끝난다. 대신 Prometheus가 타겟에 네트워크로 접근할 수 있어야 한다는 제약이 생긴다.
+
+그림 왼쪽의 **Pushgateway**는 이 제약을 우회하기 위한 장치다. 배치 작업처럼 수명이 너무 짧아서 스크래핑당할 시간조차 없는 프로세스는 종료 직전에 메트릭을 Pushgateway로 밀어 넣고, Prometheus는 Pushgateway를 대신 스크래핑한다.
 
 ### 2.3 서비스 디스커버리와 Exporter 생태계
 
-Prometheus의 또 다른 강점은 다양한 exporter 생태계이다. DockerHub에서 `exporter`로 검색하면 redis, node, mongodb, nginx 등 다양한 서버용 exporter를 확인할 수 있다.
+타겟을 설정 파일에 하나씩 적어두는 방식은 대상이 고정되어 있을 때에는 편하지만, 오토스케일링으로 인스턴스가 계속 바뀌는 환경에서는 유지하기 어렵다. 그래서 Prometheus는 위 그림의 **Service discovery**처럼 Kubernetes API나 파일(`file_sd`)에서 타겟 목록을 동적으로 읽어오는 기능을 제공한다. 이 글에서는 노드가 고정된 환경을 다루기 때문에 `static_configs`를 사용하지만, 쿠버네티스 환경이라면 서비스 디스커버리를 쓰는 것이 사실상 기본이다.
+
+Prometheus의 또 다른 강점은 넓은 exporter 생태계다. DockerHub에서 `exporter`로 검색하면 redis, node, mongodb, nginx 등 대부분의 서버에 대한 exporter를 찾을 수 있다.
 
 ![DockerHub Exporters](images/dockerhub-exporters.png "DockerHub에서 제공하는 다양한 exporter")
 
+그리고 Grafana Labs에는 exporter별로 커뮤니티가 만들어둔 대시보드 프리셋이 공개되어 있다.
+
 ![Grafana Labs Dashboards](images/grafana-labs-dashboards.png "Grafana Labs에서 제공하는 exporter별 대시보드 프리셋")
 
-이처럼 `exporter - Prometheus - Grafana` 조합은 시계열 데이터 기반 모니터링의 표준 스택이라 할 수 있다. 로그 수집이 주 목적이라면 ELK 스택(Elasticsearch, Logstash, Kibana)도 좋은 선택이다.
+대시보드를 처음부터 만들지 않고 ID만 입력해서 가져올 수 있기 때문에, exporter를 띄우는 순간 쓸 만한 대시보드까지 거의 공짜로 얻는 셈이다. 이런 이유로 `exporter → Prometheus → Grafana` 조합은 시계열 데이터 기반 모니터링의 표준 스택으로 자리 잡았다. 다만 목적이 로그 수집이라면 ELK 스택(Elasticsearch, Logstash, Kibana)이나 앞서 언급한 Loki 쪽이 더 알맞다.
 
-### 2.4 PromQL 기초
+### 2.4 Exporter란 무엇인가
 
-Prometheus에 저장된 데이터를 조회할 때는 PromQL을 사용한다. 기본적인 쿼리 예시는 다음과 같다.
+exporter 생태계를 훑어보았지만, 정작 exporter가 무엇인지는 아직 제대로 설명하지 않았다. exporter는 **모니터링 대상의 상태를 Prometheus가 읽을 수 있는 형식으로 번역해서 HTTP로 노출하는 작은 서버**다.
 
-```promql
-# 현재 CPU 사용률 (1분 평균)
-100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)
+번역이 필요한 이유는 단순하다. Redis는 `INFO` 명령으로, 리눅스 커널은 `/proc` 파일 시스템으로, nginx는 자체 status 페이지로 자기 상태를 알려준다. 전부 형식이 다르고, Prometheus는 이 방식들을 하나하나 알지 못한다. 그래서 각 시스템 옆에 exporter를 두어 그 시스템만의 방식으로 상태를 읽어낸 뒤, Prometheus의 표준 형식으로 바꿔 `/metrics` 엔드포인트에 올려둔다. Prometheus는 형식이 통일된 이 엔드포인트만 알면 된다.
 
-# 메모리 사용률
-(1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
+#### 노출 형식 (Exposition Format)
 
-# 특정 job의 up 상태 확인
-up{job="monitoring-item"}
+`/metrics`가 돌려주는 것은 특별한 프로토콜이 아니라 그냥 평문 텍스트다. `curl`로 열어보면 다음과 같은 내용이 나온다.
+
+```
+# HELP node_memory_MemAvailable_bytes Memory information field MemAvailable_bytes.
+# TYPE node_memory_MemAvailable_bytes gauge
+node_memory_MemAvailable_bytes 5.98016e+09
+# HELP node_cpu_seconds_total Seconds the CPUs spent in each mode.
+# TYPE node_cpu_seconds_total counter
+node_cpu_seconds_total{cpu="0",mode="idle"} 20385.53
+node_cpu_seconds_total{cpu="0",mode="system"} 512.44
+node_cpu_seconds_total{cpu="1",mode="idle"} 20401.17
 ```
 
-Docker로 Prometheus를 간단히 실행하여 PromQL을 테스트해볼 수 있다.
+한 줄이 하나의 시계열이고, 구조는 `메트릭_이름{라벨="값"} 숫자`로 단순하다.
 
-```bash
-docker run -p 9090:9090 prom/prometheus
-```
+- `# HELP` : 이 메트릭이 무엇인지 설명하는 주석
+- `# TYPE` : 2.1에서 본 네 가지 유형 중 어디에 속하는지 명시
+- `{cpu="0",mode="idle"}` : **라벨**(label). 같은 이름의 메트릭을 여러 차원으로 쪼개는 키-값 쌍이다. 위 예시처럼 CPU 코어별, 모드별로 값이 따로 존재한다.
 
-![Prometheus Web UI](images/prometheus-dashboard.png "localhost:9090 Prometheus 대시보드")
+여기서 중요한 것은 이 응답에 **시간 정보가 없다**는 점이다. exporter는 요청을 받은 시점의 현재 값만 계산해서 돌려주고, 아무것도 저장하지 않는다. 언제 측정된 값인지 기록하고 과거 이력을 쌓는 일은 스크래핑한 Prometheus가 담당한다. 그래서 exporter는 상태를 가지지 않는 가벼운 프로세스이며, 재시작해도 잃을 데이터가 없다.
+
+#### exporter를 쓸 때와 직접 계측할 때
+
+exporter가 필요한 것은 대상의 코드를 내가 고칠 수 없을 때다. Redis나 nginx에 Prometheus용 코드를 넣을 수는 없으니 옆에 exporter를 붙인다. 반대로 내가 만든 애플리케이션이라면 exporter를 따로 띄울 이유가 없다. 각 언어의 클라이언트 라이브러리를 붙여서 애플리케이션이 스스로 `/metrics`를 노출하게 만드는 편이 자연스럽고, 이 경우 "주문 생성 수", "결제 실패율" 같은 비즈니스 메트릭까지 함께 내보낼 수 있다.
+
+정리하면 다음과 같은 선택지가 있다.
+
+| 상황                          | 방법                            | 예시                                     |
+| ----------------------------- | ------------------------------- | ---------------------------------------- |
+| 수정할 수 없는 서드파티 시스템 | 전용 exporter를 옆에 띄운다     | redis-exporter, mysqld-exporter          |
+| 호스트와 OS 자체              | 노드마다 exporter를 상주시킨다  | node-exporter                            |
+| 내가 만든 애플리케이션        | 클라이언트 라이브러리로 직접 계측 | prometheus-client(Python), Micrometer(JVM) |
+| 외부에서의 응답 여부만 확인    | 대상 없이 프로브만 수행          | blackbox-exporter                        |
+| 수명이 짧은 배치 작업         | 종료 직전에 Push                | Pushgateway                              |
+
+결국 Prometheus로 무언가를 모니터링하려는 순간 가장 먼저 할 질문은 "이 대상에 맞는 exporter가 이미 있는가"이다. 대부분의 경우 이미 있고, 없다면 클라이언트 라이브러리로 직접 만들면 된다. 다음 장에서는 가장 널리 쓰이는 exporter인 node-exporter로 리눅스 서버의 메트릭을 실제로 수집해본다.
 
 ---
 
 ## 3. node-exporter로 시스템 모니터링
 
+node-exporter는 리눅스 호스트의 CPU, 메모리, 디스크, 네트워크 상태를 `/metrics`로 노출하는 exporter다. 대상이 호스트 자체이므로 모니터링하려는 서버마다 하나씩 상주시키는 것이 원칙이다.
+
 ### 3.1 아키텍처
 
-![node-exporter 아키텍처](images/node-exporter-architecture.png "exporter -> Prometheus -> Grafana")
+![node-exporter 아키텍처](images/node-exporter-architecture.svg "node-exporter → Prometheus → Grafana")
 
-`exporter -> Prometheus -> Grafana` 순서로 데이터가 흘러가는 구조이다. docker-compose를 사용하여 세 서비스를 함께 띄운다.
+`exporter → Prometheus → Grafana` 순서로 데이터가 흘러가는 구조이다. docker-compose를 사용하여 세 서비스를 함께 띄운다.
 
 ### 3.2 docker-compose.yml 구성
 
@@ -338,9 +384,13 @@ systemctl status node_exporter.service
 
 ## 4. Redis 모니터링
 
+node-exporter로 호스트를 들여다봤다면, 이제 그 위에서 돌아가는 미들웨어를 볼 차례다. 앞 장과 비교하면 바뀌는 것은 exporter 하나뿐이고, Prometheus와 Grafana를 다루는 방식은 그대로다.
+
 ### 4.1 아키텍처
 
-Redis 모니터링의 구성은 `redis -> redis-exporter -> Prometheus -> Grafana`이다. redis-exporter가 Redis의 상태 정보를 메트릭으로 변환하여 노출하고, Prometheus가 이를 수집한다.
+![Redis 모니터링 아키텍처](images/redis-monitoring-architecture.svg "Redis → redis-exporter → Prometheus → Grafana")
+
+Redis 모니터링의 구성은 `redis → redis-exporter → Prometheus → Grafana`이다. redis-exporter가 `INFO` 명령으로 Redis의 상태를 읽어 메트릭으로 변환해 `/metrics`에 노출하고, Prometheus가 이를 수집한다. 3장의 node-exporter와 비교하면 모니터링 대상이 호스트에서 Redis로 바뀌었을 뿐, 뒷단의 구조는 그대로다.
 
 - Github Example: https://github.com/marsboy02/redis-exporter-monitoring
 
@@ -484,132 +534,11 @@ python3 annoying-redis.py
 
 ---
 
-## 5. HPC 클러스터 대시보드
-
-### 5.1 배경
-
-![HPC Cluster](images/hpc-cluster-photo.jpg "HPC Cluster 서버실")
-
-마스터 노드 3대, 워커 노드 약 100대로 구성된 HPC(High Performance Computer) 클러스터 환경에서 모니터링 시스템을 구축한 사례이다. Slurm을 사용하여 클러스터를 관리하고 있었는데, 다음과 같은 문제가 있었다.
-
-- Slurm의 `pestat` 명령으로 확인하는 CPU Loads는 **직관적이지 않았다**
-- Anaconda 가상환경을 사용하는 경우 Slurm이 CPU 사용량을 정확하게 측정하지 못해, **작업이 한 노드에 몰려 CPU 100%를 찍고 다운**되는 상황이 발생
-
-이 문제를 해결하기 위해 node-exporter 기반의 Grafana 대시보드를 구축했다.
-
-### 5.2 네트워크 토폴로지
-
-![HPC 네트워크 토폴로지](images/hpc-network-topology.png "마스터 노드와 워커 노드의 네트워크 구조")
-
-약 100개의 워커 노드가 3대의 마스터 노드에 물리적으로 연결되어 있다. 마스터 노드에서 Prometheus와 Grafana를 docker-compose로 띄우고, 모든 워커 노드에서 node-exporter의 메트릭을 수집하는 구조이다.
-
-### 5.3 워커 노드 설정 전파
-
-모든 워커 노드에 node-exporter를 설치하기 위해 `pdsh`를 사용한다. pdsh는 SSH 프로토콜을 사용하여 원격 호스트에 동시에 명령을 실행하는 도구이다.
-
-```bash
-pdsh -w n[001-101] 'curl -O https://raw.githubusercontent.com/marsboy02/node-exporter-monitoring/main/node-exporter-init.sh | ./node-exporter-init.sh'
-```
-
-> **주의**: pdsh가 호스트명을 인식할 수 있도록 `/etc/hosts` 등에 각 호스트명이 IP 주소로 올바르게 변환될 수 있도록 사전 설정이 필요하다.
-
-### 5.4 마스터 노드 prometheus.yml
-
-마스터 노드에서는 prometheus.yml의 targets에 워커 노드의 **IP 주소**를 직접 지정해야 한다. Docker 환경에서는 호스트 파일이 격리되어 있기 때문에, 호스트명이 아닌 IP를 사용해야 한다.
-
-```yaml
-global:
-  scrape_interval: 15s
-  scrape_timeout: 15s
-  evaluation_interval: 2m
-
-  external_labels:
-    monitor: "codelab-monitor"
-    query_log_file: query_log_file.log
-
-scrape_configs:
-  - job_name: "monitoring-item"
-    scrape_interval: 10s
-    scrape_timeout: 10s
-    metrics_path: "/metrics"
-    scheme: "http"
-
-    static_configs:
-      # 워커 노드를 원하는 만큼 추가
-      - targets: ["prometheus:9090", "192.168.100.1:9100", "192.168.100.2:9100", "..."]
-        labels:
-          service: "monitor"
-```
-
-### 5.5 docker-compose.yml (마스터 노드)
-
-마스터 노드에서는 node_exporter 서비스를 제외하고 Prometheus와 Grafana만 띄운다.
-
-```yaml
-version: "3"
-
-networks:
-  monitoring:
-    driver: bridge
-
-services:
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus-data:/prometheus
-    ports:
-      - 9090:9090
-    command:
-      - "--storage.tsdb.path=/prometheus"
-      - "--config.file=/etc/prometheus/prometheus.yml"
-    restart: always
-    networks:
-      - monitoring
-
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    ports:
-      - 3000:3000
-    volumes:
-      - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-    restart: always
-    depends_on:
-      - prometheus
-    networks:
-      - monitoring
-
-volumes:
-  grafana-data:
-  prometheus-data:
-```
-
-### 5.6 결과 및 인사이트
-
-![HPC Grafana Dashboard](images/hpc-grafana-dashboard.png "HPC 클러스터 모니터링 대시보드")
-
-이 모니터링 시스템을 통해 다음과 같은 인사이트를 얻을 수 있었다.
-
-- **Slurm CPU Loads vs 실제 CPU 사용량 비교**: Slurm에서 낮은 수치를 보이지만, 실제로는 CPU가 100%에 가깝게 사용되는 노드를 발견
-- **원인 추적**: 대부분 Anaconda 환경에서 Slurm이 리소스를 정확히 추적하지 못하여 발생
-- **해결책**: 사용자들을 Anaconda에서 Miniconda로 전환 유도 -> Slurm과 Grafana의 CPU 사용량이 일치하는 것을 확인
-
-대규모 클러스터 대시보드 설계 시 고려할 점은 다음과 같다.
-
-1. **변수(Variables) 활용**: Grafana의 템플릿 변수로 노드를 드롭다운으로 선택할 수 있게 구성
-2. **집계 쿼리 우선**: 100대 이상의 노드를 개별로 보기보다는 `avg`, `max`, `quantile` 등으로 집계
-3. **알림 규칙 설정**: CPU 사용률이 임계치를 넘으면 Slack/Email로 알림
-
----
-
-## 6. Lab: docker-compose 전체 스택 구성
+## 5. Lab: docker-compose 전체 스택 구성
 
 지금까지 다룬 내용을 종합하여, Prometheus + Grafana + node-exporter + redis-exporter를 하나의 docker-compose로 구성하는 전체 스택 예제이다.
 
-### 6.1 디렉토리 구조
+### 5.1 디렉토리 구조
 
 ```
 monitoring-lab/
@@ -622,7 +551,7 @@ monitoring-lab/
 └── annoying-redis.py
 ```
 
-### 6.2 docker-compose.yml
+### 5.2 docker-compose.yml
 
 ```yaml
 version: "3"
@@ -710,7 +639,7 @@ volumes:
   prometheus-data:
 ```
 
-### 6.3 prometheus.yml
+### 5.3 prometheus.yml
 
 ```yaml
 global:
@@ -739,7 +668,7 @@ scrape_configs:
       - targets: ["prometheus:9090"]
 ```
 
-### 6.4 Grafana 데이터소스 자동 프로비저닝
+### 5.4 Grafana 데이터소스 자동 프로비저닝
 
 `grafana/provisioning/datasources/prometheus.yml` 파일을 작성하면 Grafana가 시작될 때 Prometheus 데이터소스를 자동으로 연결한다.
 
@@ -755,7 +684,7 @@ datasources:
     editable: true
 ```
 
-### 6.5 실행
+### 5.5 실행
 
 ```bash
 # 전체 스택 실행
@@ -770,18 +699,56 @@ docker-compose logs -f prometheus
 
 실행 후 확인할 수 있는 엔드포인트는 다음과 같다.
 
-| 서비스 | URL | 설명 |
-|--------|-----|------|
-| Prometheus | `http://localhost:9090` | PromQL 쿼리, 타겟 상태 확인 |
-| Grafana | `http://localhost:3000` | 대시보드 (admin/admin) |
-| Node Exporter | `http://localhost:9100/metrics` | 시스템 메트릭 |
-| Redis Exporter | `http://localhost:9121/metrics` | Redis 메트릭 |
+| 서비스         | URL                             | 설명                        |
+| -------------- | ------------------------------- | --------------------------- |
+| Prometheus     | `http://localhost:9090`         | PromQL 쿼리, 타겟 상태 확인 |
+| Grafana        | `http://localhost:3000`         | 대시보드 (admin/admin)      |
+| Node Exporter  | `http://localhost:9100/metrics` | 시스템 메트릭               |
+| Redis Exporter | `http://localhost:9121/metrics` | Redis 메트릭                |
 
 Grafana에 접속한 뒤, Dashboard Import에서 **1860**(node-exporter)과 **11835**(Redis)를 각각 import하면 모니터링 환경 구축이 완료된다.
 
 ---
 
-## 참고 자료
+## 마치며
+
+지금까지 관측성의 세 가지 축에서 출발해 exporter와 Prometheus, Grafana를 직접 띄워보며 모니터링 스택을 구성했다. 정리하면 구조 자체는 단순하다. 대상의 상태를 표준 형식으로 번역하는 exporter를 띄우고, Prometheus에게 그 주소를 알려주고, Grafana에서 대시보드를 불러오는 것으로 대부분이 끝난다.
+
+다만 이 글에서 사용한 방식, 즉 `prometheus.yml`의 `static_configs`에 대상을 하나씩 적어두는 방식은 대상이 고정된 환경에서만 유효하다. 쿠버네티스처럼 Pod가 수시로 뜨고 지는 환경에서는 IP를 적어두는 일 자체가 의미가 없다. 그래서 실제 운영 환경에서는 2.3에서 언급한 서비스 디스커버리를 사용하고, 모니터링 대상이 스스로를 어노테이션으로 알리게 만든다.
+
+특히 GitOps로 클러스터를 관리한다면 애플리케이션 매니페스트에 어노테이션 세 줄을 선언해두는 것으로 끝난다.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-api
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: order-api
+          image: registry.example.com/order-api:1.4.2
+          ports:
+            - containerPort: 8080
+```
+
+Prometheus는 쿠버네티스 API로 Pod 목록을 조회하다가 `prometheus.io/scrape: "true"`가 붙은 Pod만 골라 타겟에 추가한다. 어노테이션을 읽어 실제 타겟으로 바꿔주는 것은 Prometheus 설정의 `kubernetes_sd_config`와 relabel 규칙이며, kube-prometheus-stack처럼 Prometheus Operator를 사용한다면 `ServiceMonitor`나 `PodMonitor` 같은 CRD가 같은 역할을 한다.
+
+여기서 얻는 것은 편의성보다 일관성이다. 새 서비스를 배포하는 PR에 어노테이션이 함께 들어 있으므로 머지되는 순간 배포와 모니터링 등록이 동시에 일어나고, 서비스를 내리면 타겟도 함께 사라진다. 모니터링 설정을 사람이 따로 기억하고 맞춰줄 필요가 없어지는 것이다.
+
+모니터링 시스템을 구축하면서 가장 크게 느낀 점은, 관측성은 도구를 붙이는 문제가 아니라 무엇을 볼지 정하는 문제라는 것이다. exporter를 띄우고 대시보드 프리셋을 import하는 데까지는 반나절이면 충분하지만, 그렇게 얻은 수십 개의 그래프 중 어떤 값이 임계치를 넘었을 때 실제로 사람을 깨워야 하는지를 정하는 일은 전혀 다른 문제다. 이 질문은 [SLO와 SLI 그리고 SLA]({{< ref "/posts/slo-sli-sla-error-budget" >}})에서 다룬 신뢰성 지표와 곧바로 이어진다.
+
+다음으로는 메트릭만 다룬 이 글의 범위를 로그와 트레이스까지 넓혀보려고 한다. 1장에서 살펴본 세 축을 Loki와 Tempo로 Grafana 한 곳에 모으면, 대시보드에서 이상을 감지하고 같은 화면에서 로그와 트레이스로 내려가는 흐름을 만들 수 있다. 이 부분은 별도의 글로 정리할 예정이다.
+
+---
+
+### References
 
 - [Elastic] The 3 pillars of observability: https://www.elastic.co/blog/3-pillars-of-observability
 - [Grafana] What's next for observability: https://grafana.com/blog/2019/10/21/whats-next-for-observability/
@@ -789,6 +756,7 @@ Grafana에 접속한 뒤, Dashboard Import에서 **1860**(node-exporter)과 **11
 - [Honeycomb] Explore Traces: https://docs.honeycomb.io/investigate/analyze/explore-traces/
 - [Prometheus] Metric Types: https://prometheus.io/docs/concepts/metric_types/
 - [Prometheus] Architecture Overview: https://prometheus.io/docs/introduction/overview/
+- [Prometheus] Kubernetes service discovery: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config
 - [Grafana Labs] Dashboards: https://grafana.com/grafana/dashboards/
 - [GitHub] node-exporter-monitoring: https://github.com/marsboy02/node-exporter-monitoring
 - [GitHub] redis-exporter-monitoring: https://github.com/marsboy02/redis-exporter-monitoring

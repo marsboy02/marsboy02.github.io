@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 200"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="200" fill="#f8fafc" rx="12"/>
+
+  <!-- node-exporter -->
+  <rect x="48" y="50" width="200" height="100" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="148" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#2980b9">node-exporter</text>
+  <text x="148" y="110" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#1a1a2e">:9100/metrics</text>
+  <text x="148" y="132" text-anchor="middle" font-size="10.5" fill="#888">on every Linux host</text>
+
+  <path d="M 252 104 L 326 104" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+  <text x="289" y="90" text-anchor="middle" font-size="11" font-weight="600" fill="#555">scrape</text>
+
+  <!-- Prometheus -->
+  <rect x="330" y="50" width="200" height="100" rx="10" fill="#fdece8" stroke="#e6522c" stroke-width="2.5" filter="url(#s)"/>
+  <text x="430" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#e6522c">Prometheus</text>
+  <text x="430" y="110" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#1a1a2e">:9090</text>
+  <text x="430" y="132" text-anchor="middle" font-size="10.5" fill="#888">stores in TSDB</text>
+
+  <path d="M 534 104 L 608 104" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+  <text x="571" y="90" text-anchor="middle" font-size="11" font-weight="600" fill="#555">PromQL</text>
+
+  <!-- Grafana -->
+  <rect x="612" y="50" width="200" height="100" rx="10" fill="#fff3e0" stroke="#f39c12" stroke-width="2.5" filter="url(#s)"/>
+  <text x="712" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#f39c12">Grafana</text>
+  <text x="712" y="110" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#1a1a2e">:3000</text>
+  <text x="712" y="132" text-anchor="middle" font-size="10.5" fill="#888">dashboard</text>
+</svg>

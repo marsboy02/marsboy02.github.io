@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 206"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="deny" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e74c3c"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="206" fill="#f8fafc" rx="12"/>
+  <text x="430" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">RAM Is Split by Address — A Process Owns Only Its Own Range</text>
+
+  <!-- boundary violation attempt -->
+  <path d="M 200 96 C 200 62, 320 62, 320 96" fill="none" stroke="#e74c3c" stroke-width="2"
+        stroke-dasharray="5 4" marker-end="url(#deny)"/>
+  <circle cx="260" cy="69" r="11" fill="#e74c3c"/>
+  <path d="M 255 64 L 265 74 M 265 64 L 255 74" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="336" y="74" font-size="13.5" font-weight="700" fill="#e74c3c">Dangerous!</text>
+
+  <!-- RAM strip -->
+  <rect x="40" y="104" width="220" height="62" rx="8" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="150" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#2980b9">Process A</text>
+  <text x="150" y="152" text-anchor="middle" font-size="11" fill="#555">own region</text>
+
+  <rect x="260" y="104" width="220" height="62" rx="8" fill="#eaf6ec" stroke="#27ae60" stroke-width="2.5" filter="url(#s)"/>
+  <text x="370" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#27ae60">Process B</text>
+  <text x="370" y="152" text-anchor="middle" font-size="11" fill="#555">own region</text>
+
+  <rect x="480" y="104" width="160" height="62" rx="8" fill="#f3eefb" stroke="#8e6fc4" stroke-width="2.5" filter="url(#s)"/>
+  <text x="560" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#8e6fc4">Process C</text>
+  <text x="560" y="152" text-anchor="middle" font-size="11" fill="#555">own region</text>
+
+  <rect x="640" y="104" width="180" height="62" rx="8" fill="#f0f0f0" stroke="#bbbbbb" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="730" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#888">Free</text>
+  <text x="730" y="152" text-anchor="middle" font-size="11" fill="#888">unallocated</text>
+
+  <!-- address ranges -->
+  <text x="150" y="186" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#555">0x0000 &#8211; 0x3FFF</text>
+  <text x="370" y="186" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#555">0x4000 &#8211; 0x7FFF</text>
+  <text x="560" y="186" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#555">0x8000 &#8211; 0xAFFF</text>
+  <text x="730" y="186" text-anchor="middle" font-size="11.5" font-family="'SFMono-Regular', Menlo, monospace" fill="#555">0xB000 &#8211; 0xFFFF</text>
+</svg>
