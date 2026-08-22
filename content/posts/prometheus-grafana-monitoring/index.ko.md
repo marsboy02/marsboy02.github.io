@@ -1,6 +1,6 @@
 ---
 title: "Prometheus & Grafana로 모니터링 시스템 구축하기"
-date: 2025-09-06
+date: 2026-08-22
 draft: false
 tags: ["monitoring", "prometheus", "grafana", "observability"]
 translationKey: "prometheus-grafana-monitoring"
