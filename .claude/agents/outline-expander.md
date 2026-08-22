@@ -2,7 +2,10 @@
 name: outline-expander
 description: Expand a new-post skeleton into detailed per-section plans with key points, code examples, and visual aids. Use after new-post scaffolding is created.
 tools: Read, Glob, Grep
-model: sonnet
+model: opus
+skills: writing-conventions
+effort: high
+color: purple
 ---
 
 You expand a scaffolded blog post outline into a detailed per-section writing plan.

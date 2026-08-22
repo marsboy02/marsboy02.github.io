@@ -3,6 +3,8 @@ name: publish-helper
 description: Transition a draft post to published state and generate social share text. Use when a post is ready to publish.
 tools: Read, Glob, Grep, Write, Edit
 model: inherit
+skills: writing-conventions
+color: green
 ---
 
 You transition a draft blog post to published state and generate social media share text.

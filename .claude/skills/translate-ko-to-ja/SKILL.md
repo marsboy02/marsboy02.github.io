@@ -1,8 +1,9 @@
 ---
 name: translate-ko-to-ja
-description: Translate a Korean blog post (index.ko.md) to Japanese and save as index.ja.md, with Hugo config pre-flight check.
-user_invocable: true
-arguments: "<post-slug>"
+description: Translate a Korean blog post (index.ko.md) to Japanese and save as index.ja.md.
+argument-hint: "<post-slug>"
+disable-model-invocation: true
+allowed-tools: Read Glob Write Bash(grep *)
 ---
 
 # Korean to Japanese Translation Skill
@@ -17,41 +18,11 @@ You are translating a Hugo blog post from Korean to Japanese.
 
 ## Pre-flight Check
 
-Before translating, verify Hugo is configured for Japanese:
+Japanese is already a configured language: `languages.ja` exists in `hugo.yaml` (weight 3) and `i18n/ja.yaml` is present. Confirm both with a single check and move on:
 
-1. **Read `hugo.yaml`** and check if `languages.ja` exists.
-2. **Check if `i18n/ja.yaml`** exists using Glob.
+!`grep -A2 "^  ja:" hugo.yaml`
 
-If either is missing, output the following and ask the user before proceeding:
-
-```
-## Pre-flight: Japanese language not configured
-
-The following setup is needed before Japanese translation:
-
-### 1. Add to hugo.yaml under `languages`:
-languages:
-  ja:
-    languageName: JA
-    weight: 3
-    menus:
-      main:
-        - name: About
-          pageRef: /about
-          weight: 10
-        - name: Posts
-          pageRef: /posts
-          weight: 20
-
-### 2. Create i18n/ja.yaml:
-name: "your name in Japanese"
-role: "Software Engineer"
-tagline: "description in Japanese"
-posted_on: "投稿日"
-copyright: "All rights reserved."
-
-Shall I apply these changes and proceed with translation?
-```
+Only if that check comes back empty should you stop and report that the site config regressed — do not re-add the language block on your own.
 
 ## Translation Steps
 
@@ -68,7 +39,7 @@ Shall I apply these changes and proceed with translation?
 - `translationKey`: Keep as-is
 
 ### Body Content
-- Use polite form (です/ます体)
+- The Korean source is written in 평어체 (plain declarative). The Japanese target uses **です/ます体** — this is an intentional register change, not an inconsistency.
 - Follow Japanese IT industry conventions for technical terms:
   - Container = コンテナ, Deploy = デプロイ, Server = サーバー, etc.
   - Use katakana for established loanwords
@@ -81,9 +52,12 @@ Shall I apply these changes and proceed with translation?
 - Only translate Korean comments to Japanese
 - Do NOT modify any code logic
 
-### Links & Images
-- Keep all URLs and image references unchanged
-- Translate link text and image alt text
+### Markup That Must Survive Translation
+- Hugo shortcodes are copied verbatim, including the path inside them: `[text]({{< ref "/posts/slug" >}})` stays `{{< ref "/posts/slug" >}}` — `ref` resolves to the Japanese version automatically when one exists. Translate only the link text.
+- Image references are relative to the page bundle (`![alt](images/name.svg)`) and must not be rewritten. Translate the alt text only.
+- Diagram text inside SVG files stays English — never edit the SVGs.
+- The Korean source glosses terms as `**한글용어**(English)`. In Japanese, use the katakana or Japanese term followed by the English gloss only where it aids comprehension: `**コンテナ**(container)`. Keep the parentheses outside the `**` markers.
+- Em dash `—` stays `—`.
 
 3. **Write** the translated content to `content/posts/$ARGUMENTS/index.ja.md`.
 
@@ -94,7 +68,7 @@ Shall I apply these changes and proceed with translation?
 - Source: content/posts/{slug}/index.ko.md
 - Target: content/posts/{slug}/index.ja.md
 - Draft status: {true/false}
-- Hugo JA config: {already configured / newly added}
+- Hugo JA config: verified
 ```
 
 ## Rules
@@ -103,3 +77,5 @@ Shall I apply these changes and proceed with translation?
 - The output should read naturally to a Japanese software engineer.
 - Preserve paragraph breaks and formatting exactly.
 - Do not add or remove content — translate what exists.
+- Section headings translate to Japanese, including `마치며` → `おわりに` and `References` → `References` (kept as-is).
+- `draft` must match the Korean version. If the Korean version is published and this translation is new, ask before publishing it in the same commit.

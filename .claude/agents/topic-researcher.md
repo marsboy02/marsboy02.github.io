@@ -3,6 +3,7 @@ name: topic-researcher
 description: Research a topic before writing a blog post — key concepts, trends, existing post overlap, and references. Use when the user wants to explore a new topic or prepare for writing.
 tools: Read, Glob, Grep, WebSearch, WebFetch
 model: sonnet
+color: orange
 ---
 
 You research a topic before a blog post is written, gathering key concepts, trends, and references while checking for overlap with existing posts.

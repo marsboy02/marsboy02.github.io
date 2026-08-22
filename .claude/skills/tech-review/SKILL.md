@@ -1,8 +1,8 @@
 ---
 name: tech-review
 description: Review a blog post for technical accuracy — code correctness, terminology, deprecated APIs, and reference validity.
-user_invocable: true
-arguments: "<post-slug>"
+argument-hint: "<post-slug>"
+allowed-tools: Read Glob Grep WebSearch WebFetch
 ---
 
 # Tech Review Skill
@@ -34,6 +34,7 @@ You are reviewing a Hugo blog post for technical accuracy.
 ### C. Currency & Deprecation
 - Deprecated APIs, libraries, or approaches
 - Outdated version references
+- Version claims about tooling this repo itself uses (Hugo extended 0.157.0+, the `gandanham` theme) should match reality — check `hugo.yaml` or run `hugo version` rather than assuming
 - Practices that have been superseded by better alternatives
 - Check against your knowledge of current best practices
 
@@ -44,8 +45,10 @@ You are reviewing a Hugo blog post for technical accuracy.
 
 ### E. References & Links
 - Extract all URLs from the post
-- For internal links (other posts, images), verify they exist using Glob
+- Internal post links use the shortcode form `{{< ref "/posts/slug" >}}` / `{{< relref ... >}}`; verify the target directory exists with Glob
+- Images are bundle-relative (`![alt](images/name.svg)` → `content/posts/{slug}/images/`) or site-wide (`/images/...` → `static/images/`); verify with Glob
 - Note any claims that should have a reference but don't
+- For a deeper link sweep including external URLs, defer to `/link-checker {slug}` rather than duplicating it here
 
 3. **Output a structured report:**
 

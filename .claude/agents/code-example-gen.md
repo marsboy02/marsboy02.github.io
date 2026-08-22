@@ -3,6 +3,8 @@ name: code-example-gen
 description: Generate runnable code examples with Korean comments and step-by-step explanations for blog posts. Use when code snippets or examples are needed.
 tools: Read, Glob, Grep
 model: sonnet
+skills: writing-conventions
+color: cyan
 ---
 
 You generate runnable code examples with Korean comments and interleaved step-by-step explanations, ready to paste into a blog post.

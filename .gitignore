@@ -6,3 +6,6 @@ resources/_gen/
 temp/
 # oh-my-claudecode 세션 상태
 .omc/
+
+# Claude Code local permissions
+.claude/settings.local.json

@@ -1,8 +1,11 @@
 ---
 name: link-checker
 description: Verify all links in a post (internal, external, images) and report broken ones.
-user_invocable: true
-arguments: "<post-slug> | all"
+argument-hint: "<post-slug> | all"
+allowed-tools: Read Glob Grep Bash(curl -sI *)
+context: fork
+agent: Explore
+background: false
 ---
 
 # Link Checker Skill
@@ -17,35 +20,52 @@ You verify all links in blog posts and report broken or problematic ones.
 
 ### 1. Collect Posts
 
-- If `$ARGUMENTS` is a slug: read `content/posts/$ARGUMENTS/index.ko.md` (and `index.md` if exists)
-- If `$ARGUMENTS` is `all`: read all `content/posts/*/index.ko.md` files
+- If `$ARGUMENTS` is a slug: read `content/posts/$ARGUMENTS/index.ko.md`, plus `index.md` and `index.ja.md` if they exist
+- If `$ARGUMENTS` is `all`: read all `content/posts/*/index*.md` files
 
 ### 2. Extract Links
 
-From each post, extract all:
-- **Internal post links**: `](/posts/other-slug/)` or relative links
-- **Image references**: `![alt](image.png)` or `![alt](/images/...)`
+This blog links internally with Hugo shortcodes, not raw paths. Extract all of:
+
+- **Internal post links (shortcode form — the convention here)**:
+  - `[text]({{< ref "/posts/other-slug" >}})`
+  - `[text]({{< relref "/posts/other-slug" >}})`
+  - Both may carry a fragment: `{{< ref "/posts/other-slug#heading" >}}`
+- **Internal post links (raw path form)**: `](/posts/other-slug/)` — rare/legacy; flag it as a convention warning and suggest the shortcode form
+- **Post-bundle images**: `![alt](images/name.png)` — the standard form; files live in the post's own `images/` directory
+- **Site-wide images**: `![alt](/images/name.png)` — files live in `static/images/`
 - **External URLs**: `https://...`, `http://...`
 - **Anchor links**: `#section-heading`
+
+Useful starting sweep:
+
+```bash
+grep -o '{{< *relref\? *"[^"]*"' content/posts/*/index*.md
+grep -o '!\[[^]]*\]([^)]*)' content/posts/*/index*.md
+```
 
 ### 3. Verify Each Link Type
 
 #### Internal Post Links
-- Use Glob to verify the target post directory exists
-- Check: `content/posts/{linked-slug}/index.ko.md` exists
+- Extract the slug from the shortcode path (strip a leading `/posts/` and any `#fragment`)
+- Verify `content/posts/{slug}/` exists and contains at least one `index*.md`
+- Language note: `ref`/`relref` resolve within the current language first. If the linking file is `index.ja.md` but the target has no `index.ja.md`, note it as a warning — Hugo falls back, but the reader lands on another language
+- If a fragment is present, verify the heading exists in the target post
 
-#### Image References
-- For relative images (e.g., `image.png`): check file exists in `content/posts/{slug}/`
-- For absolute images (e.g., `/images/...`): check file exists in `static/images/`
-- Use Glob for verification
+#### Images
+- `](images/foo.png)`: verify `content/posts/{slug}/images/foo.png` exists
+- `](/images/foo.png)`: verify `static/images/foo.png` exists
+- For `.svg` files, also confirm the file is non-empty and well-formed XML
 
 #### External URLs
-- Use WebFetch to check each URL (HEAD request or fetch)
-- Note: rate-limit external checks, do max 10 external URLs per run
-- If more than 10 external URLs, check the first 10 and note the rest as unchecked
+- Check with `curl -sI -m 10 -o /dev/null -w '%{http_code}' <url>` (HEAD request)
+- If the HEAD request returns 405 or 403, retry once with `curl -sI -m 10 -L`
+- Cap at 20 external URLs per run; report the rest as unchecked
+- Space out requests to the same host
 
 #### Anchor Links
 - Verify the heading exists in the same document by checking markdown headings
+- Remember Hugo's anchor rules: lowercase, spaces to hyphens, punctuation dropped. Korean headings keep their characters
 
 ### 4. Output Report
 
@@ -55,15 +75,15 @@ From each post, extract all:
 ### Broken Links
 | Post | Link | Type | Issue |
 |------|------|------|-------|
-| {slug} | {url} | {internal/image/external} | {not found / 404 / timeout} |
+| {slug} | {url} | {shortcode/image/external/anchor} | {not found / 404 / timeout} |
 
 ### Warnings
 | Post | Link | Type | Issue |
 |------|------|------|-------|
-| {slug} | {url} | {type} | {redirect / slow / unchecked} |
+| {slug} | {url} | {type} | {redirect / raw path instead of shortcode / missing target language / unchecked} |
 
 ### OK
-- Internal links: N checked, N ok
+- Internal shortcode links: N checked, N ok
 - Images: N checked, N ok
 - External URLs: N checked, N ok, N unchecked
 - Anchors: N checked, N ok
@@ -79,6 +99,7 @@ From each post, extract all:
 
 - Do NOT modify any files. This is read-only.
 - For external URLs, be respectful: don't make excessive requests.
-- If WebFetch fails or times out, classify as "warning" not "broken".
+- If a request times out or the tool fails, classify as "warning" not "broken".
 - Group results by post when checking `all`.
 - Report the exact line or context where broken links appear.
+- A raw `](/posts/...)` link is not broken if the target exists, but it deviates from the blog's shortcode convention — report it as a warning.

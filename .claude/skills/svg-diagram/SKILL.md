@@ -1,8 +1,9 @@
 ---
 name: svg-diagram
 description: Generate SVG diagrams for blog posts — architecture, flow, comparison, layer, and sequence diagrams with consistent styling.
-user_invocable: true
-arguments: "<post-slug> [description]"
+argument-hint: "<post-slug> [description]"
+disable-model-invocation: true
+allowed-tools: Read Glob Grep Write Bash(xmllint *)
 ---
 
 # SVG Diagram Skill
@@ -126,6 +127,12 @@ font-family="'SF Mono', 'Fira Code', monospace"
   <!-- Main content -->
 </svg>
 ```
+
+## Theme Context
+
+The site has a light/dark toggle (`[data-theme="dark"]` in `assets/css/main.css`), and `.post-content img` gets no dark-mode treatment. An SVG loaded through `<img>` cannot see the page's theme attribute either.
+
+So diagrams are deliberately **light-mode cards**: the `#f8fafc` background rect with `rx="12"` is what keeps a diagram readable in dark mode — it reads as an intentional card rather than a bright rectangle of stray text. Never make the background transparent, and never rely on `currentColor` or `prefers-color-scheme` inside the SVG.
 
 ## Rules
 

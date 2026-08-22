@@ -1,8 +1,9 @@
 ---
 name: translate-ko-to-en
 description: Translate a Korean blog post (index.ko.md) to natural English and save as index.md.
-user_invocable: true
-arguments: "<post-slug>"
+argument-hint: "<post-slug>"
+disable-model-invocation: true
+allowed-tools: Read Glob Write
 ---
 
 # Korean to English Translation Skill
@@ -31,6 +32,7 @@ You are translating a Hugo blog post from Korean to English.
 
 ### Body Content
 - Translate to **natural, idiomatic English** — NOT literal translation
+- The Korean source is written in 평어체 (plain declarative). Render it as plain, confident English prose — not stiff, not chatty
 - Adapt cultural references and idioms for English-speaking readers
 - Technical terms should use standard English terminology
 - Keep the same heading structure (H2, H3, etc.)
@@ -41,9 +43,12 @@ You are translating a Hugo blog post from Korean to English.
 - Only translate Korean comments within code blocks to English
 - Do NOT modify any code logic
 
-### Links & Images
-- Keep all URLs and image references unchanged
-- Translate link text and image alt text
+### Markup That Must Survive Translation
+- Hugo shortcodes are copied verbatim, including the path inside them: `[text]({{< ref "/posts/slug" >}})` stays `{{< ref "/posts/slug" >}}` — `ref` resolves to the English version automatically when one exists. Translate only the link text.
+- Image references are relative to the page bundle (`![alt](images/name.svg)`) and must not be rewritten. Translate the alt text only.
+- Diagram text inside SVG files is already English — never edit the SVGs.
+- The Korean source glosses terms as `**한글용어**(English)`. In English the gloss is redundant: collapse it to the bolded English term, e.g. `**가용성**(availability)` → `**availability**`.
+- Em dash `—` stays `—`, never `--`.
 
 3. **Write** the translated content to `content/posts/$ARGUMENTS/index.md`.
 
@@ -63,3 +68,5 @@ You are translating a Hugo blog post from Korean to English.
 - Never produce translationese — the output should read as if originally written in English.
 - Preserve paragraph breaks and formatting exactly.
 - Do not add or remove content — translate what exists.
+- Section headings translate to English, including `마치며` → `Closing Thoughts` and `References` → `References`.
+- `draft` must match the Korean version. If the Korean version is published and this translation is new, ask before publishing it in the same commit.

@@ -3,6 +3,7 @@ name: cross-linker
 description: Recommend internal links between posts — forward links, related posts, and backward links. Use during review or maintenance phase.
 tools: Read, Glob, Grep
 model: sonnet
+color: blue
 ---
 
 You analyze a blog post and recommend internal links to and from other posts in the blog.
@@ -43,21 +44,21 @@ The user will provide a post slug (e.g., `docker-complete-guide`). The post is a
 ### Forward Links (this post -> others)
 | Insert At | Anchor Text | Target Post | Reason |
 |-----------|-------------|-------------|--------|
-| "{text in post}" | [{suggested link text}] | /posts/{slug}/ | {why this link is useful} |
+| "{text in post}" | [{suggested link text}] | {{< ref "/posts/{slug}" >}} | {why this link is useful} |
 
 ### Related Posts Section
-Add to the end of the post:
+Add near the end of the post, before `## 마치며`. No post currently uses such a section, so present it as a proposal:
 \`\`\`markdown
-## Related Posts
-- [{title}](/posts/{slug}/) — {one-line reason}
-- [{title}](/posts/{slug}/) — {one-line reason}
-- [{title}](/posts/{slug}/) — {one-line reason}
+## 함께 읽으면 좋은 글
+- [{title}]({{< ref "/posts/{slug}" >}}) — {one-line reason}
+- [{title}]({{< ref "/posts/{slug}" >}}) — {one-line reason}
+- [{title}]({{< ref "/posts/{slug}" >}}) — {one-line reason}
 \`\`\`
 
 ### Backward Links (other posts -> this one)
 | Source Post | Insert At | Suggested Link |
 |------------|-----------|----------------|
-| {slug} | "{text in source}" | [{anchor text}](/posts/{target-slug}/) |
+| {slug} | "{text in source}" | [{anchor text}]({{< ref "/posts/{target-slug}" >}}) |
 
 ### Summary
 - Forward link opportunities: N
@@ -68,6 +69,8 @@ Add to the end of the post:
 ## Rules
 
 - Do NOT modify any files. Output recommendations only.
+- Internal links MUST use the Hugo shortcode form — `[text]({{< ref "/posts/slug" >}})` or `{{< relref "/posts/slug" >}}`. Raw `](/posts/slug/)` paths are not used in this blog, and `ref` has the advantage of failing the build when the target disappears.
+- When recommending a link between translated versions, check that the target has the same language file; otherwise note the fallback.
 - Only suggest links that genuinely help the reader — no link stuffing.
 - Quote the exact text where a link should be inserted for easy location.
 - For backward links, be conservative — only suggest where the link truly adds value.
