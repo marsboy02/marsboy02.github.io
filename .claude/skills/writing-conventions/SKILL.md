@@ -32,7 +32,7 @@ These are settled conventions, not open questions. When a post deviates, the pos
 - Each chapter opens with 1-2 transition sentences connecting it to the previous chapter.
 - Series posts reference the previous entry in the intro: `[이전 글]({{< ref "/posts/previous-slug" >}})`, then state what this post covers.
 - The closing section is `## 마치며`, and follows: summary → personal insight → future direction.
-- References go last, under `### References`, as a link list.
+- When a post cites sources, they go last under `### References` as a link list. This is an emerging pattern rather than a settled rule — only the two most recent long-form posts (`computer-architecture-story`, `slo-sli-sla-error-budget`) currently have one, so treat a missing References section as a suggestion, not a violation.
 
 ## Front matter
 
