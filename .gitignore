@@ -9,3 +9,6 @@ temp/
 
 # Claude Code local permissions
 .claude/settings.local.json
+
+# 실제 업무 이메일이 포함된 작업 노트
+docs/aws-credentials.md
