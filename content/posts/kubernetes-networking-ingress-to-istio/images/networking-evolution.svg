@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 196"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888888"/>
+    </marker>
+  </defs>
+  <rect width="860" height="196" fill="#f8fafc" rx="12"/>
+  <text x="430" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#1a1a2e">Each Layer Answers the Limit of the One Before It</text>
+
+  <rect x="25" y="58" width="140" height="94" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="95" y="86" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2980b9">ClusterIP</text>
+  <text x="95" y="110" text-anchor="middle" font-size="10.5" fill="#555">stable endpoint</text>
+  <text x="95" y="126" text-anchor="middle" font-size="10.5" fill="#555">inside the cluster</text>
+  <text x="95" y="144" text-anchor="middle" font-size="10" fill="#aaa">no way in</text>
+  <path d="M 168 105 L 189 105" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="192" y="58" width="140" height="94" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="262" y="86" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2980b9">NodePort</text>
+  <text x="262" y="110" text-anchor="middle" font-size="10.5" fill="#555">opens a port</text>
+  <text x="262" y="126" text-anchor="middle" font-size="10.5" fill="#555">on every node</text>
+  <text x="262" y="144" text-anchor="middle" font-size="10" fill="#aaa">ugly :30000+ URLs</text>
+  <path d="M 335 105 L 356 105" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="359" y="58" width="140" height="94" rx="10" fill="#eaf6ec" stroke="#27ae60" stroke-width="2.5" filter="url(#s)"/>
+  <text x="429" y="86" text-anchor="middle" font-size="13.5" font-weight="700" fill="#27ae60">Ingress</text>
+  <text x="429" y="110" text-anchor="middle" font-size="10.5" fill="#555">host / path routing</text>
+  <text x="429" y="126" text-anchor="middle" font-size="10.5" fill="#555">TLS termination</text>
+  <text x="429" y="144" text-anchor="middle" font-size="10" fill="#aaa">needs a real LB</text>
+  <path d="M 502 105 L 523 105" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="526" y="58" width="140" height="94" rx="10" fill="#fff3e0" stroke="#f39c12" stroke-width="2.5" filter="url(#s)"/>
+  <text x="596" y="86" text-anchor="middle" font-size="13.5" font-weight="700" fill="#f39c12">MetalLB</text>
+  <text x="596" y="110" text-anchor="middle" font-size="10.5" fill="#555">LoadBalancer type</text>
+  <text x="596" y="126" text-anchor="middle" font-size="10.5" fill="#555">on bare metal</text>
+  <text x="596" y="144" text-anchor="middle" font-size="10" fill="#aaa">L4 only</text>
+  <path d="M 669 105 L 690 105" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="693" y="58" width="140" height="94" rx="10" fill="#f3eefb" stroke="#8e6fc4" stroke-width="2.5" filter="url(#s)"/>
+  <text x="763" y="86" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8e6fc4">Istio Gateway</text>
+  <text x="763" y="110" text-anchor="middle" font-size="10.5" fill="#555">mesh edge, mTLS</text>
+  <text x="763" y="126" text-anchor="middle" font-size="10.5" fill="#555">observability</text>
+  <text x="763" y="144" text-anchor="middle" font-size="10" fill="#aaa">more moving parts</text>
+</svg>

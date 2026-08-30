@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 236"
+     font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888888"/>
+    </marker>
+    <marker id="d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8e6fc4"/>
+    </marker>
+  </defs>
+  <rect width="860" height="236" fill="#f8fafc" rx="12"/>
+
+  <rect x="300" y="34" width="260" height="46" rx="10" fill="#f3eefb" stroke="#8e6fc4" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="430" y="53" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8e6fc4">Ingress resource</text>
+  <text x="430" y="70" text-anchor="middle" font-size="10.5" fill="#888">rules only — routes no traffic itself</text>
+  <path d="M 430 84 L 430 122" fill="none" stroke="#8e6fc4" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#d)"/>
+  <text x="442" y="108" font-size="10.5" font-weight="600" fill="#8e6fc4">watch &amp; apply</text>
+
+  <rect x="25" y="128" width="150" height="76" rx="10" fill="#f0f0f0" stroke="#888888" stroke-width="2.5" filter="url(#s)"/>
+  <text x="100" y="160" text-anchor="middle" font-size="13.5" font-weight="700" fill="#555">Client</text>
+  <text x="100" y="180" text-anchor="middle" font-size="10.5" fill="#888">book.example.com</text>
+  <path d="M 178 166 L 216 166" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="219" y="128" width="200" height="76" rx="10" fill="#eaf6ec" stroke="#27ae60" stroke-width="2.5" filter="url(#s)"/>
+  <text x="319" y="156" text-anchor="middle" font-size="13.5" font-weight="700" fill="#27ae60">Ingress Controller</text>
+  <text x="319" y="176" text-anchor="middle" font-size="10.5" fill="#555">nginx / Envoy — the actual proxy</text>
+  <path d="M 422 166 L 460 166" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="463" y="128" width="150" height="76" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="538" y="160" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2980b9">Service</text>
+  <text x="538" y="180" text-anchor="middle" font-size="10.5" fill="#888">ClusterIP</text>
+  <path d="M 616 166 L 654 166" fill="none" stroke="#888888" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="657" y="128" width="178" height="76" rx="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="2.5" filter="url(#s)"/>
+  <text x="746" y="160" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2980b9">Pod</text>
+  <text x="746" y="180" text-anchor="middle" font-size="10.5" fill="#888">selected by label</text>
+</svg>

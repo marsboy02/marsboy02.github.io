@@ -1,17 +1,19 @@
 ---
 title: "K8s 네트워킹 심화: Ingress에서 Istio Gateway까지"
 date: 2025-12-15
-draft: true
+draft: false
 tags: ["kubernetes", "networking", "istio", "devops"]
 translationKey: "kubernetes-networking-ingress-to-istio"
-summary: "Kubernetes의 Service 타입부터 Ingress, MetalLB, 그리고 Istio Gateway까지 — 네트워킹 계층의 발전 과정을 실전 경험과 함께 다룹니다."
+summary: "Service 타입에서 출발해 Ingress, 온프레미스의 MetalLB, 그리고 Istio Gateway까지 — 트래픽이 클러스터로 들어오는 경로가 어떤 한계를 만나며 발전해왔는지 따라간다."
 ---
 
-쿠버네티스를 운영하다 보면, 가장 먼저 부딪히는 문제 중 하나가 "트래픽을 어떻게 제어할 것인가"이다. 단순한 클러스터 내부 통신부터 시작해서, 외부에서의 접근, 도메인 기반 라우팅, 그리고 서비스 메시까지 -- 쿠버네티스 네트워킹은 점점 더 정교한 방향으로 발전해 왔다.
+쿠버네티스를 운영하다 보면 가장 먼저 부딪히는 문제 중 하나가 "트래픽을 어떻게 클러스터 안으로 들여보낼 것인가"이다. 내부 통신에서 시작해 외부 접근, 도메인 기반 라우팅, 그리고 서비스 메시까지 — 이 영역의 기술들은 하나가 다른 하나를 대체한 것이 아니라, 앞선 계층이 만난 한계를 다음 계층이 메우면서 쌓여왔다.
 
-이 글에서는 쿠버네티스의 네트워킹 계층이 어떻게 진화하는지를 하나의 흐름으로 정리한다. **Service** 리소스의 기본 개념에서 출발하여, **Ingress**를 통한 L7 라우팅, 온프레미스 환경에서의 **MetalLB**, 그리고 최종적으로 **Istio Gateway**까지의 여정을 실전 YAML 설정과 함께 다룬다.
+![쿠버네티스 네트워킹 계층의 진화](images/networking-evolution.svg "각 계층은 이전 계층의 한계에 대한 답이다")
 
-<!-- TODO: 다이어그램 필요 - 네트워킹 진화 흐름도 (ClusterIP -> NodePort -> Ingress -> MetalLB + Istio Gateway) -->
+이 글에서는 그 순서를 따라간다. **Service** 리소스의 기본 개념에서 출발해 **Ingress**를 통한 L7 라우팅, 온프레미스 환경을 위한 **MetalLB**, 그리고 **Istio Gateway**까지를 실제 YAML과 함께 다룬다.
+
+같은 클러스터 네트워크를 다른 층위에서 다룬 글이 두 편 있다. Pod와 Pod 사이의 통신이 어떻게 이루어지는지는 [CNI와 쿠버네티스 네트워킹]({{< ref "/posts/kubernetes-cni-networking" >}})에서, Istio가 사이드카를 주입하고 트래픽을 가로채는 내부 동작은 [Istio 딥다이브]({{< ref "/posts/istio-deep-dive" >}})에서 정리했다. 이 글은 그 사이, **외부 트래픽이 클러스터의 경계를 넘어 들어오는 경로**를 담당한다.
 
 ---
 
@@ -31,7 +33,7 @@ Service를 단순하게 이해하면, 특정 Pod의 포트를 뚫어주는 역�
 
 Service 워크로드를 배포하면 각 노드에 라우팅 테이블이 만들어지고, **Kube-Proxy**가 이 설정을 각 노드에 전파한다. 덕분에 다른 노드에 있는 Pod에서도 대상 Pod의 포트에 접근할 수 있게 된다.
 
-기본적인 Service 매니페스트는 다음과 같다:
+기본적인 Service 매니페스트는 다음과 같다.
 
 ```yaml
 apiVersion: v1
@@ -59,16 +61,16 @@ nginx-pod를 기준으로 생각하면, 같은 노드의 다른 Pod, 다른 노�
 
 ### Cluster DNS
 
-Service를 배포하면 쿠버네티스의 **CoreDNS**를 통해 DNS 이름으로 접근할 수 있다. 예를 들어 spring pod에서 redis에 접근하려면:
+Service를 배포하면 쿠버네티스의 **CoreDNS**를 통해 DNS 이름으로 접근할 수 있다. 예를 들어 spring pod에서 redis 네임스페이스의 redis Service에 접근하려면 다음 주소를 사용한다.
 
 ```bash
 host: redis.redis.svc.cluster.local
 ```
 
-`POD_NAME.NAMESPACE.svc.cluster.local` 형식으로 접근하면 된다. 같은 네임스페이스에 있는 경우에는 더 간단하게 접근할 수도 있다:
+여기서 주의할 점은 이 이름이 Pod가 아니라 **Service**를 가리킨다는 것이다. 형식은 `SERVICE_NAME.NAMESPACE.svc.cluster.local`이고, 앞의 `redis`가 Service 이름, 뒤의 `redis`가 네임스페이스다. 같은 네임스페이스 안이라면 Service 이름만으로도 충분하다.
 
 ```bash
-curl http://nginx-pod
+curl http://nginx-service
 ```
 
 ![Kube DNS 테이블 구조](images/kube-dns-table.png)
@@ -77,7 +79,7 @@ curl http://nginx-pod
 
 ### ServiceTypes 비교
 
-Service는 세 가지 타입을 제공한다:
+Service는 세 가지 타입을 제공한다.
 
 | 타입 | 접근 범위 | 특징 |
 |------|----------|------|
@@ -122,18 +124,22 @@ spec:
 
 ## 2. Ingress: L7 레이어의 트래픽 라우팅
 
+포트 번호를 URL에 달고 다녀야 한다는 NodePort의 불편함은, 결국 "도메인으로 접근하고 싶다"는 요구로 이어진다. 그 자리를 채우는 것이 Ingress다.
+
 **Ingress**는 클러스터 외부에서 내부 서비스로 들어오는 HTTP(S) 트래픽에 대한 **규칙 기반 라우팅을 정의**하는 리소스이다. NodePort의 단점을 해결하면서, 도메인 기반 라우팅, SSL 종료, L7 로드밸런싱 등의 기능을 제공한다.
 
-Ingress를 사용하기 위해서는 두 가지를 설정해야 한다:
+Ingress를 사용하기 위해서는 두 가지를 설정해야 한다.
 
 1. **Ingress Resource**: 라우팅 규칙을 정의하는 쿠버네티스 매니페스트
 2. **Ingress Controller**: 실제 트래픽 처리를 담당하는 서드파티 구현체 (Nginx, HAProxy, Traefik, Istio 등)
 
-<!-- TODO: 다이어그램 필요 - Ingress의 트래픽 흐름 (외부 요청 -> Ingress Controller -> Service -> Pod) -->
+![Ingress의 트래픽 흐름](images/ingress-traffic-flow.svg "Ingress 리소스는 규칙일 뿐, 트래픽을 처리하는 것은 Controller다")
+
+여기서 헷갈리기 쉬운 부분이 있다. Ingress 리소스는 **규칙을 적어둔 선언일 뿐이고, 실제로 패킷을 받아 넘기는 것은 Controller로 떠 있는 프록시**다. Ingress 매니페스트만 만들고 Controller를 배포하지 않으면 아무 일도 일어나지 않는 이유가 여기에 있다.
 
 ### Path 기반 라우팅
 
-같은 도메인에서 경로에 따라 다른 서비스로 라우팅할 수 있다:
+같은 도메인에서 경로에 따라 다른 서비스로 라우팅할 수 있다.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -197,22 +203,21 @@ spec:
 
 Ingress Controller로 가장 널리 사용되는 nginx를 설정하는 방법은 다음과 같다.
 
-먼저, ingress-nginx를 설치한다:
+먼저, ingress-nginx를 설치한다.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
 
-그 후, Ingress 매니페스트에 어떤 컨트롤러를 사용할지 annotation으로 명시한다:
+그 후, Ingress 매니페스트에 어떤 컨트롤러를 사용할지 명시한다.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
-  annotations:
-    kubernetes.io/ingress.class: "nginx"  # Nginx Ingress Controller 사용을 명시
 spec:
+  ingressClassName: nginx # 어떤 Ingress Controller가 처리할지 지정
   rules:
   - host: book.example.com
     http:
@@ -226,11 +231,15 @@ spec:
               number: 80
 ```
 
+오래된 예제에서는 `kubernetes.io/ingress.class` 어노테이션을 쓰는 경우가 많은데, 이 방식은 쿠버네티스 1.18에서 deprecated 되었고 지금은 위와 같이 `spec.ingressClassName` 필드를 사용한다.
+
 Helm을 사용하고 있다면 더 간편하게 설치할 수도 있다. 핵심은 Ingress 리소스만으로는 동작하지 않고, 반드시 Ingress Controller가 함께 배포되어야 한다는 점이다.
 
 ---
 
 ## 3. 온프레미스를 위한 MetalLB
+
+Ingress로 L7 라우팅까지 해결했다면 남은 문제는 하나다. Ingress Controller 자체를 외부에 어떻게 노출할 것인가. 클라우드에서는 `type: LoadBalancer` 한 줄로 끝나지만, 온프레미스에서는 그렇지 않다.
 
 ### 왜 베어메탈에서 MetalLB가 필요한가?
 
@@ -238,7 +247,7 @@ Helm을 사용하고 있다면 더 간편하게 설치할 수도 있다. 핵심�
 
 **MetalLB**는 이 빈자리를 채워주는 소프트웨어 로드밸런서다. Controller + Speaker로 구성되어, **외부에서 접근 가능한 VIP(Virtual IP)를 쿠버네티스 서비스에 할당**하고 네트워크에 광고하는 역할을 한다.
 
-쿠버네티스 공식 문서에서도 다음과 같이 설명한다:
+쿠버네티스 공식 문서에서도 다음과 같이 설명한다.
 
 > On cloud providers which support external load balancers, setting the type field to LoadBalancer provisions a load balancer for your Service.
 
@@ -246,7 +255,7 @@ Helm을 사용하고 있다면 더 간편하게 설치할 수도 있다. 핵심�
 
 ### NodePort vs LoadBalancer 매니페스트 비교
 
-NodePort는 30000번대 포트를 사용하므로 실서비스에 부적합하다:
+NodePort는 30000번대 포트를 사용하므로 실서비스에 부적합하다.
 
 ```yaml
 apiVersion: v1
@@ -263,7 +272,7 @@ spec:
       nodePort: 30007
 ```
 
-반면 LoadBalancer는 정식 IP를 노출시킬 수 있다:
+반면 LoadBalancer는 정식 IP를 노출시킬 수 있다.
 
 ```yaml
 apiVersion: v1
@@ -289,7 +298,7 @@ status:
 
 #### 1단계: 사전 설정
 
-먼저 kube-proxy의 strictARP를 활성화한다:
+먼저 kube-proxy의 strictARP를 활성화한다.
 
 ```bash
 kubectl edit configmap -n kube-system kube-proxy
@@ -309,7 +318,7 @@ ipvs:
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.15.2/config/manifests/metallb-native.yaml
 ```
 
-설치 후 확인하면 Controller와 Speaker가 정상적으로 동작하는 것을 볼 수 있다:
+설치 후 확인하면 Controller와 Speaker가 정상적으로 동작하는 것을 볼 수 있다.
 
 ```
 $ kubectl get all -n metallb-system
@@ -351,7 +360,7 @@ spec:
   - first-pool
 ```
 
-두 파일을 `kubectl apply`로 적용하면 EXTERNAL-IP가 할당된다:
+두 파일을 `kubectl apply`로 적용하면 EXTERNAL-IP가 할당된다.
 
 ```
 $ kubectl get svc metallb-demo -o wide
@@ -361,7 +370,7 @@ metallb-demo   LoadBalancer   10.96.17.184   192.168.1.240   80:32399/TCP   18m 
 
 ### MetalLB의 구성 요소: Controller와 Speaker
 
-MetalLB는 크게 두 가지 컴포넌트로 구성된다:
+MetalLB는 크게 두 가지 컴포넌트로 구성된다.
 
 - **Controller (Deployment)**: 쿠버네티스 API를 watch하면서 `type: LoadBalancer` 서비스가 생성/변경될 때 `IPAddressPool`에서 사용 가능한 IP를 선택하여 할당한다.
 - **Speaker (DaemonSet)**: 각 노드마다 하나씩 실행되며, Controller가 결정한 할당 정보를 기반으로 L2 모드에서는 ARP/NDP, BGP 모드에서는 라우터와 BGP 세션을 통해 VIP를 네트워크에 광고한다.
@@ -380,7 +389,7 @@ L2 모드에서는 리더로 선출된 Speaker가 ARP를 통해 VIP의 소유를
 
 BGP 모드는 L2 모드와 달리, VIP를 한 노드가 독점하지 않는다. **각 노드의 Speaker가 라우터와 BGP 세션을 맺고 VIP 경로를 직접 광고**한다.
 
-라우터 입장에서는 "이 VIP로 가는 경로가 node1, node2, node3에 모두 있다"고 보이게 되어, **ECMP(Equal-Cost Multi-Path)**로 트래픽을 여러 노드에 분산할 수 있다. L2 모드에서 발생할 수 있는 "한 노드에만 트래픽이 몰리는 병목"을 피할 수 있고, 노드 장애 시에도 BGP 세션 종료를 통해 비교적 빠르게 라우트를 갱신할 수 있다.
+라우터 입장에서는 "이 VIP로 가는 경로가 node1, node2, node3에 모두 있다"고 보이게 되어, **ECMP**(Equal-Cost Multi-Path)로 트래픽을 여러 노드에 분산할 수 있다. L2 모드에서 발생할 수 있는 "한 노드에만 트래픽이 몰리는 병목"을 피할 수 있고, 노드 장애 시에도 BGP 세션 종료를 통해 비교적 빠르게 라우트를 갱신할 수 있다.
 
 | 비교 항목 | L2 모드 | BGP 모드 |
 |----------|---------|---------|
@@ -395,17 +404,19 @@ BGP 모드는 L2 모드와 달리, VIP를 한 노드가 독점하지 않는다. 
 
 ## 4. Istio Gateway: 서비스 메시로의 진화
 
+여기까지 오면 외부 트래픽을 받아 서비스로 흘려보내는 경로는 완성된다. 그런데 실제로 운영해보면 이 구성으로 충분하지 않은 상황이 생기고, 그 지점에서 서비스 메시가 등장한다.
+
 ### nginx-ingress에서 Istio로 전환하는 이유
 
-기존에 nginx-ingress를 사용하고 있던 온프레미스 환경에서 Istio Gateway로 전환하게 된 핵심 이유는 다음과 같다:
+기존에 nginx-ingress를 사용하고 있던 온프레미스 환경에서 Istio Gateway로 전환하게 된 핵심 이유는 다음과 같다.
 
-1. **ingress-NGINX의 지원 종료**: ingress-NGINX가 2026년 3월까지 best-effort 유지보수 후 리타이어 예정으로, 이후 릴리즈/버그픽스/보안패치가 제공되지 않는다.
+1. **ingress-NGINX의 지원 종료**: 커뮤니티가 관리하던 `kubernetes/ingress-nginx`는 2026년 3월을 끝으로 리타이어되었다. 마지막 릴리즈는 2026년 3월 19일이고 저장소는 읽기 전용으로 아카이브되었으며, 이후로는 버그픽스도 보안 패치도 제공되지 않는다. (F5가 관리하는 별개 프로젝트인 `nginxinc/kubernetes-ingress`는 계속 유지된다.)
 2. **Kubernetes Gateway API 지원**: Istio가 Kubernetes Gateway API를 지원하며, 장기적으로 트래픽 매니지먼트의 표준 API로 자리잡는 방향성이 명확하다.
 3. **서비스 메시의 이점**: 트래픽 관찰, 보안 정책, 세밀한 라우팅 등 부가 기능이 풍부하다.
 
 ### 서비스 메시란?
 
-Istio는 **서비스 메시(Service Mesh)** 플랫폼이다. 서비스 메시란, 마이크로서비스 간의 네트워크 통신을 인프라 레벨에서 관리하는 전용 계층을 말한다. 각 서비스 옆에 사이드카 프록시(Envoy)를 배치하여, 애플리케이션 코드 수정 없이 트래픽 제어, 보안, 관찰 가능성(Observability)을 확보할 수 있다.
+Istio는 **서비스 메시**(Service Mesh) 플랫폼이다. 서비스 메시란, 마이크로서비스 간의 네트워크 통신을 인프라 레벨에서 관리하는 전용 계층을 말한다. 각 서비스 옆에 사이드카 프록시(Envoy)를 배치하여, 애플리케이션 코드 수정 없이 트래픽 제어, 보안, 관찰 가능성(Observability)을 확보할 수 있다.
 
 ### Ingress의 한계: 왜 Istio Gateway가 필요한가?
 
@@ -413,7 +424,7 @@ Istio는 **서비스 메시(Service Mesh)** 플랫폼이다. 서비스 메시란
 
 ![온프레미스에 노드가 두 대 있는 경우](images/onpremise-nodes-diagram.png)
 
-쿠버네티스 클러스터를 구축하고 같은 네트워크에 노드를 추가하면 다음과 같은 구조가 된다:
+쿠버네티스 클러스터를 구축하고 같은 네트워크에 노드를 추가하면 다음과 같은 구조가 된다.
 
 ![쿠버네티스 클러스터 구축 상태](images/kubernetes-cluster-setup.png)
 
@@ -429,7 +440,7 @@ Istio는 **서비스 메시(Service Mesh)** 플랫폼이다. 서비스 메시란
 
 ### 기존 구조 vs Istio 구조 비교
 
-기존의 **Service + Ingress + ingress-nginx** 조합과 Istio 기반 구조는 다음과 같이 대응된다:
+기존의 **Service + Ingress + ingress-nginx** 조합과 Istio 기반 구조는 다음과 같이 대응된다.
 
 | 기존 구조 | Istio 구조 | 역할 |
 |----------|-----------|------|
@@ -494,7 +505,7 @@ spec:
 
 #### HTTPS 리다이렉트 설정
 
-실무에서 자주 사용하는 HTTP -> HTTPS 리다이렉트 설정은 다음과 같다:
+실무에서 자주 사용하는 HTTP -> HTTPS 리다이렉트 설정은 다음과 같다.
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -570,14 +581,14 @@ istioctl install -y
 
 #### 3단계: 샘플 앱 배포
 
-네임스페이스를 생성하고 istio-injection을 활성화한다:
+네임스페이스를 생성하고 istio-injection을 활성화한다.
 
 ```bash
 kubectl create ns demo
 kubectl label ns demo istio-injection=enabled
 ```
 
-샘플 앱을 배포한다:
+샘플 앱을 배포한다.
 
 ```bash
 # httpbin
@@ -587,7 +598,7 @@ kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1
 kubectl -n demo apply -f https://raw.githubusercontent.com/istio/istio/release-1.24/samples/sleep/sleep.yaml
 ```
 
-MetalLB에 의해 istio-ingressgateway에 EXTERNAL-IP가 할당되었는지 확인한다:
+MetalLB에 의해 istio-ingressgateway에 EXTERNAL-IP가 할당되었는지 확인한다.
 
 ```bash
 $ kubectl -n istio-system get svc istio-ingressgateway -o wide
@@ -597,7 +608,7 @@ istio-ingressgateway   LoadBalancer   10.102.207.200   192.168.49.100   15021:30
 
 #### 4단계: Gateway 및 VirtualService 적용
 
-Gateway를 설정한다:
+Gateway를 설정한다.
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -617,7 +628,7 @@ spec:
     - "httpbin.demo.local"
 ```
 
-VirtualService를 설정한다:
+VirtualService를 설정한다.
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -643,7 +654,7 @@ spec:
 
 #### 5단계: 검증
 
-minikube 환경에서는 `minikube tunnel`을 사용하여 LoadBalancer 서비스에 대한 접근 경로를 연다:
+minikube 환경에서는 `minikube tunnel`을 사용하여 LoadBalancer 서비스에 대한 접근 경로를 연다.
 
 ```bash
 minikube tunnel
@@ -656,17 +667,17 @@ $ minikube tunnel
   Starting tunnel for service istio-ingressgateway.
 ```
 
-Host 헤더를 지정하여 라우팅을 검증한다:
+Host 헤더를 지정하여 라우팅을 검증한다.
 
 ```bash
 curl -H "Host: httpbin.demo.local" http://127.0.0.1/headers
 ```
 
-클러스터 내부에서 검증하고 싶다면, sleep Pod에 exec로 접속하여 테스트할 수도 있다:
+클러스터 내부에서 검증하고 싶다면, sleep Pod에 exec로 접속하여 테스트할 수도 있다.
 
 ```bash
 SLEEP_POD=$(kubectl -n demo get pod -l app=sleep -o jsonpath='{.items[0].metadata.name}')
-kubectl -n demo exec -it $SLEEP_POD -c sleep -- \
+kubectl -n demo exec -it $SLEEP_POD -c sleep — \
   curl -H "Host: httpbin.demo.local" http://192.168.49.100/headers
 ```
 
@@ -674,25 +685,31 @@ kubectl -n demo exec -it $SLEEP_POD -c sleep -- \
 
 ---
 
-## 정리: 네트워킹 계층의 발전 흐름
+## 마치며
 
-쿠버네티스 네트워킹은 요구사항의 복잡도에 따라 점진적으로 발전한다:
-
-<!-- TODO: 다이어그램 필요 - 전체 트래픽 흐름 요약 (외부 클라이언트 -> MetalLB VIP -> Istio Gateway (Envoy) -> VirtualService -> Service -> Pod) -->
+지금까지 다룬 계층을 한 줄씩 정리하면 다음과 같다.
 
 | 단계 | 기술 | 해결하는 문제 |
 |------|------|-------------|
 | 1 | ClusterIP | 클러스터 내부 서비스 간 통신 |
 | 2 | NodePort | 외부에서의 접근 (포트 제약 존재) |
-| 3 | Ingress + nginx | L7 라우팅, 도메인 기반 분기, SSL |
+| 3 | Ingress + Controller | L7 라우팅, 도메인 기반 분기, TLS 종료 |
 | 4 | MetalLB | 온프레미스에서 LoadBalancer 타입 사용 |
 | 5 | Istio Gateway | 서비스 메시, 고급 트래픽 관리, 관찰 가능성 |
 
-각 단계가 이전 단계의 한계를 보완하면서 발전하는 구조이며, 반드시 모든 단계를 거칠 필요는 없다. 클라우드 환경에서는 MetalLB가 불필요하고, 단순한 서비스라면 Ingress만으로 충분할 수 있다. 중요한 것은 각 기술이 **어떤 문제를 해결하는지**를 이해하고, 자신의 환경에 맞는 선택을 하는 것이다.
+그리고 마지막 구성에서 요청 하나가 지나가는 전체 경로는 이렇게 된다.
+
+![외부 요청이 Pod에 도달하기까지의 전체 경로](images/istio-full-traffic-path.svg "Client → MetalLB VIP → Envoy → Service → Pod")
+
+이 글을 정리하면서 분명해진 것은, 이 다섯 가지가 서로를 대체하는 선택지가 아니라는 점이다. Istio Gateway를 쓴다고 해서 Service가 사라지지 않고, MetalLB가 VIP를 잡아주지 않으면 Envoy는 트래픽을 받을 기회조차 얻지 못한다. 위 그림에서 상자 하나를 빼면 그 뒤가 전부 멈춘다. 새 계층은 아래 계층을 감추는 것이 아니라 그 위에 얹히는 것이고, 그래서 장애가 났을 때 "어느 상자에서 끊겼는지"를 묻는 것이 가장 빠른 진단이 된다.
+
+반대로 모든 단계를 다 거칠 필요도 없다. 클라우드 환경에서는 MetalLB가 필요 없고, 서비스가 단순하다면 Ingress만으로 충분하다. 각 기술이 **어떤 한계에 대한 답인지**를 알고 있으면, 지금 내 환경에 그 한계가 존재하는지로 도입 여부를 판단할 수 있다.
+
+다음으로는 Ingress의 후속인 **Gateway API**를 정리해보려고 한다. ingress-NGINX가 리타이어되면서 사실상의 이주 경로가 되었고, Istio도 자체 Gateway 리소스와 Gateway API를 함께 지원하고 있어서 지금 새로 구축한다면 어느 쪽을 골라야 하는지가 실제 고민거리가 되었기 때문이다.
 
 ---
 
-## 참고 자료
+### References
 
 - [Kubernetes 공식 문서 - Service](https://kubernetes.io/ko/docs/concepts/services-networking/service/)
 - [Kubernetes 공식 문서 - Ingress](https://kubernetes.io/ko/docs/concepts/services-networking/ingress/)
@@ -701,3 +718,5 @@ kubectl -n demo exec -it $SLEEP_POD -c sleep -- \
 - [Istio 공식 문서 - Gateway](https://istio.io/latest/docs/reference/config/networking/gateway/)
 - [Istio 공식 문서 - Ingress Gateways](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/)
 - [Coursera - Ephemeral Ports](https://www.coursera.org/articles/ephemeral-ports)
+- [Kubernetes Blog — Ingress NGINX: Statement from the Steering and Security Response Committees](https://www.kubernetes.io/blog/2026/01/29/ingress-nginx-statement/)
+- [Kubernetes 공식 문서 - Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
