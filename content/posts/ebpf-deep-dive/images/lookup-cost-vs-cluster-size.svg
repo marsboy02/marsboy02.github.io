@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif">
+  <defs>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/></marker>
+  </defs>
+  <rect width="820" height="300" fill="#f8fafc" rx="12"/>
+  <text x="410" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Per-packet Lookup Cost vs. Cluster Size</text>
+
+  <!-- axes -->
+  <line x1="110" y1="236" x2="110" y2="66" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ag)"/>
+  <line x1="110" y1="236" x2="700" y2="236" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="100" y="64" text-anchor="end" font-size="11" fill="#64748b">cost</text>
+  <text x="700" y="276" text-anchor="end" font-size="11" fill="#64748b">Services × Endpoints</text>
+
+  <!-- x ticks -->
+  <line x1="230" y1="236" x2="230" y2="242" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="230" y="257" text-anchor="middle" font-size="10" fill="#64748b">tens</text>
+  <line x1="420" y1="236" x2="420" y2="242" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="420" y="257" text-anchor="middle" font-size="10" fill="#64748b">hundreds</text>
+  <line x1="610" y1="236" x2="610" y2="242" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="610" y="257" text-anchor="middle" font-size="10" fill="#64748b">thousands</text>
+
+  <!-- iptables: linear -->
+  <line x1="110" y1="222" x2="600" y2="86" stroke="#e74c3c" stroke-width="2.5"/>
+  <text x="608" y="84" font-size="12" font-weight="700" fill="#e74c3c">iptables chain  O(N)</text>
+
+  <!-- eBPF: flat -->
+  <line x1="110" y1="214" x2="600" y2="214" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="608" y="218" font-size="12" font-weight="700" fill="#27ae60">eBPF map  O(1)</text>
+</svg>
