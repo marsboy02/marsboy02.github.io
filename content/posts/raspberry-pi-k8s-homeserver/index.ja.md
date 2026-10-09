@@ -320,7 +320,7 @@ disable:
 - `node-name`: クラスタに表示されるノード名です。ホスト名と揃えておくと混乱がありません。
 - `write-kubeconfig-mode`: デフォルト値はrootだけが読める `0600` なので、一般ユーザーで `kubectl` を使えません。個人のクラスタなので `0644` に緩めました。
 - `tls-san`: APIサーバー証明書に含める追加のアドレスです。ノートPCからどのアドレスでAPIサーバーに接続するにせよ、そのアドレスがここに入っていないと証明書の検証を通りません。あとでVPNのIPやドメインで接続する予定があるなら、そのときに追加してK3sを再起動すればよいです。
-- `disable: servicelb`: ServiceLBは `LoadBalancer` タイプのServiceを作るときに **ノードの実ポートを占有する** かたちで動作します。最初は「なぜ80番ポートがすでに使用中なんだ」という混乱を招きやすいので切りました。あとでIstio Gatewayを載せる際にMetalLBへ置き換えたのですが、その話は [IngressからIstio Gatewayまで]({{< ref "/posts/kubernetes-networking-ingress-to-istio" >}}) で扱います。単純にNodePortから始める計画なら有効のままでも差し支えありません。
+- `disable: servicelb`: ServiceLBは `LoadBalancer` タイプのServiceを作るときに **ノードの実ポートを占有する** かたちで動作します。最初は「なぜ80番ポートがすでに使用中なんだ」という混乱を招きやすいので切りました。あとでIstio Gatewayを載せる際にMetalLBへ置き換えたのですが、その話は [IngressからIstio Gatewayまで]({{< ref path="/posts/kubernetes-networking-ingress-to-istio" lang="en" >}}) で扱います。単純にNodePortから始める計画なら有効のままでも差し支えありません。
 
 設定ファイルを作ったら、インストールスクリプトを実行します。
 
