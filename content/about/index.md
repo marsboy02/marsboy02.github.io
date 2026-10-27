@@ -9,10 +9,17 @@ This is a quote from Kishibe Rohan, a mangaka character from one of my favorite 
 
 As a software engineer, I strive to carry the same mindset. I dream of programming to help others. I have a deep interest in DevOps Engineering — helping teammates work more efficiently.
 
-Fun facts:
+## Second jobs
 
-- Diamond tier support player in Overwatch
-- Diamond tier jungle player in League of Legends
-- Donor to UNICEF Korea and Korean Red Cross
-- GopherCon Korea 2025 & PyCon Korea 2026 organizing committee member
-- Various experiences building things that help others in fun ways
+**Pro gamer** — I like owning a role on a team.
+- Master tier mid laner in League of Legends
+- Diamond tier in Overwatch across tank, damage, and support
+
+**Photographer** — I shoot people and streets as they are.
+- Street photographer
+- Conference media team: GopherCon Korea 2025, PyCon Korea 2026
+
+**Volunteer** — small things, done regularly.
+- Regular blood donor with the Korean Red Cross
+- Monthly donor to UNICEF Korea and the Korean Red Cross
+- Occasional Salvation Army kettle volunteer in winter
