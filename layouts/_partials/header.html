@@ -23,9 +23,9 @@
             {{- end -}}
           {{- end -}}
           {{- if $targetURL -}}
-            <a href="{{ $targetURL }}">{{ $langName }}</a>
+            <a href="{{ $targetURL }}" data-lang="{{ $langCode }}">{{ $langName }}</a>
           {{- else -}}
-            <a href="{{ cond (eq $langCode "en") "/" (printf "/%s/" $langCode) }}">{{ $langName }}</a>
+            <a href="{{ cond (eq $langCode "en") "/" (printf "/%s/" $langCode) }}" data-lang="{{ $langCode }}">{{ $langName }}</a>
           {{- end -}}
         {{- end -}}
       {{- end }}

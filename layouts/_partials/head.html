@@ -1,10 +1,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{ partialCached "head/lang-redirect.html" . }}
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {{ with site.Params.faviconPng32 }}<link rel="icon" type="image/png" sizes="32x32" href="{{ . }}">{{ end }}
 {{ with site.Params.faviconPng16 }}<link rel="icon" type="image/png" sizes="16x16" href="{{ . }}">{{ end }}
 {{ with site.Params.appleTouchIcon }}<link rel="apple-touch-icon" href="{{ . }}">{{ end }}
+{{ partial "head/alternate.html" . }}
 {{ partial "head/og.html" . }}
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}

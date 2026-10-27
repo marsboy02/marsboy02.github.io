@@ -1,0 +1,33 @@
+{{- /*
+  Language auto-routing (client-side).
+  - Runs only on the root "/" (English home). Deep links are never redirected.
+  - Uses the browser language list, not geo-IP, so expats get their own language.
+  - An explicit pick in the header switcher is stored in localStorage and wins forever after.
+  - Crawlers without a ko/ja Accept-Language never match, so SEO is unaffected; hreflang handles the rest.
+*/ -}}
+<script>
+(function () {
+  var KEY = 'lang';
+  var SUPPORTED = { ko: '/ko/', ja: '/ja/' };
+  var langOf = function (tag) { return String(tag || '').toLowerCase().split('-')[0]; };
+
+  // Remember explicit choices made via the header switcher.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('.gnb-lang a[data-lang]') : null;
+    if (!a) return;
+    try { localStorage.setItem(KEY, a.getAttribute('data-lang')); } catch (_) {}
+  });
+
+  if (location.pathname !== '/') return;
+
+  var pref = null;
+  try { pref = localStorage.getItem(KEY); } catch (_) {}
+
+  var candidates = pref ? [pref] : (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]);
+  for (var i = 0; i < candidates.length; i++) {
+    var l = langOf(candidates[i]);
+    if (l === 'en') return;                       // English outranks ko/ja in the user's list: stay.
+    if (SUPPORTED[l]) { location.replace(SUPPORTED[l] + location.search + location.hash); return; }
+  }
+})();
+</script>
