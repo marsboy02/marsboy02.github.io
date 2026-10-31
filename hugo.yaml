@@ -61,7 +61,6 @@ params:
   social:
     github: "https://github.com/marsboy02"
     linkedin: "https://www.linkedin.com/in/hyeongjun-kang/"
-    x: "https://x.com/marsboy02"
     instagram: "https://www.instagram.com/marsboy_photo"
   giscus:
     repo: "marsboy02/marsboy02.github.io"
