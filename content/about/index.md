@@ -19,6 +19,9 @@ As a software engineer, I strive to carry the same mindset. I dream of programmi
 - Street photographer {{< instagram "marsboy_photo" >}}
 - Conference media team: GopherCon Korea 2025, PyCon Korea 2026
 
+**Translator**
+- Japanese song lyrics into Korean, mostly Vocaloid {{< naver "marsboy0619" >}}
+
 **Volunteer**
 - Regular blood donor with the Korean Red Cross
 - Monthly donor to UNICEF Korea and the Korean Red Cross

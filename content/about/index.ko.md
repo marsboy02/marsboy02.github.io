@@ -19,6 +19,9 @@ layout: "about"
 - 스트릿 포토그래퍼 {{< instagram "marsboy_photo" >}}
 - 컨퍼런스 미디어 팀: GopherCon Korea 2025, PyCon Korea 2026
 
+**번역가**
+- 일본 노래 가사 번역, 주로 보컬로이드 곡 {{< naver "marsboy0619" >}}
+
 **자원봉사자**
 - 대한적십자사 정기 헌혈
 - 한국 유니세프 · 대한적십자사 정기 후원

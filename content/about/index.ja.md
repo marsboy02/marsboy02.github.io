@@ -19,6 +19,9 @@ layout: "about"
 - ストリートフォトグラファー {{< instagram "marsboy_photo" >}}
 - カンファレンスのメディアチーム: GopherCon Korea 2025、PyCon Korea 2026
 
+**翻訳者**
+- 日本語の歌詞を韓国語に翻訳、主にボカロ曲 {{< naver "marsboy0619" >}}
+
 **ボランティア**
 - 大韓赤十字社での定期的な献血
 - ユニセフ韓国・大韓赤十字社への定期寄付
