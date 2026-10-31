@@ -11,15 +11,15 @@ As a software engineer, I strive to carry the same mindset. I dream of programmi
 
 ## Second jobs
 
-**Pro gamer** — I like owning a role on a team.
+**Pro gamer**
 - Master tier mid laner in League of Legends
 - Diamond tier in Overwatch across tank, damage, and support
 
-**Photographer** — I shoot people and streets as they are.
+**Photographer**
 - Street photographer
 - Conference media team: GopherCon Korea 2025, PyCon Korea 2026
 
-**Volunteer** — small things, done regularly.
+**Volunteer**
 - Regular blood donor with the Korean Red Cross
 - Monthly donor to UNICEF Korea and the Korean Red Cross
 - Occasional Salvation Army kettle volunteer in winter
