@@ -16,7 +16,7 @@ layout: "about"
 - 오버워치 돌격 · 공격 · 지원 전 포지션 다이아몬드 티어
 
 **사진작가**
-- 스트릿 포토그래퍼
+- 스트릿 포토그래퍼 {{< instagram "marsboy_photo" >}}
 - 컨퍼런스 미디어 팀: GopherCon Korea 2025, PyCon Korea 2026
 
 **자원봉사자**

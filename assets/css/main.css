@@ -275,6 +275,28 @@ header {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Inline social link (e.g. Instagram handle next to a list item) */
+.inline-ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-left: 0.6em;
+  color: var(--color-text-secondary);
+  font-size: 0.9em;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.inline-ig:hover {
+  color: var(--color-text);
+}
+
+.inline-ig svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
 /* Posts List */
 .posts-list {
   list-style: none;

@@ -16,7 +16,7 @@ As a software engineer, I strive to carry the same mindset. I dream of programmi
 - Diamond tier in Overwatch across tank, damage, and support
 
 **Photographer**
-- Street photographer
+- Street photographer {{< instagram "marsboy_photo" >}}
 - Conference media team: GopherCon Korea 2025, PyCon Korea 2026
 
 **Volunteer**
