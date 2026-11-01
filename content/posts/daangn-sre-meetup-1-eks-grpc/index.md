@@ -1,7 +1,7 @@
 ---
 title: "Daangn SRE Meetup #1 — Zero-Downtime EKS Upgrades and gRPC Operations Know-How"
 date: 2026-11-01
-draft: true
+draft: false
 tags: ["sre", "kubernetes", "eks", "grpc", "meetup-notes"]
 translationKey: "daangn-sre-meetup-1-eks-grpc"
 summary: "Notes from watching the two talks at Daangn's first SRE meetup in 2021."

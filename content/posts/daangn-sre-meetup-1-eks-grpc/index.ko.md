@@ -1,7 +1,7 @@
 ---
 title: "당근 SRE 밋업 1회 — EKS 무중단 업그레이드, gRPC 서비스 운영 노하우"
 date: 2026-11-01
-draft: true
+draft: false
 tags: ["sre", "kubernetes", "eks", "grpc", "meetup-notes"]
 translationKey: "daangn-sre-meetup-1-eks-grpc"
 summary: "2021년 당근 SRE 밋업 1회의 두 발표를 보고 남기는 기록이다."

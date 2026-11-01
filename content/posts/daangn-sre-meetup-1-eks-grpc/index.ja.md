@@ -1,7 +1,7 @@
 ---
 title: "Daangn SRE ミートアップ 第1回 — EKS 無停止アップグレード、gRPC サービス運用ノウハウ"
 date: 2026-11-01
-draft: true
+draft: false
 tags: ["sre", "kubernetes", "eks", "grpc", "meetup-notes"]
 translationKey: "daangn-sre-meetup-1-eks-grpc"
 summary: "2021年の Daangn SRE ミートアップ第1回の2つの発表を見て残す記録。"
