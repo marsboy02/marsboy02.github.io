@@ -1,7 +1,7 @@
 ---
 title: "Why gRPC Runs on HTTP/2 — Streams, Messages, and Internal Communication"
 date: 2026-11-04
-draft: true
+draft: false
 tags: ["grpc", "http2", "protobuf", "network", "msa"]
 translationKey: "grpc-http2-fundamentals"
 summary: "Walks through gRPC's streams and messages starting from the structure of HTTP/2, and looks at why gRPC is used for internal service-to-service communication."

@@ -1,7 +1,7 @@
 ---
 title: "gRPC는 왜 HTTP/2 위에서 동작할까 — 스트림, 메시지, 그리고 내부 통신"
 date: 2026-11-04
-draft: true
+draft: false
 tags: ["grpc", "http2", "protobuf", "network", "msa"]
 translationKey: "grpc-http2-fundamentals"
 summary: "gRPC의 스트림과 메시지 개념을 HTTP/2 구조에서부터 정리하고, 내부 서비스 통신에서 gRPC를 쓰는 이유를 살펴본다."
