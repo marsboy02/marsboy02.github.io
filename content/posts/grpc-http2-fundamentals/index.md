@@ -15,7 +15,7 @@ For example, gRPC uses its own status codes, so even when the HTTP status code i
 
 ### Getting Started
 
-First, gRPC is RPC — short for Remote Procedure Call — with a "g" in front because Google developed it. If you study modern HTTP, you'll know that HTTP/1.1, HTTP/2, and HTTP/3 are all in wide use, and the ordinary RESTful API servers we usually think of use HTTP/1.1.
+First, gRPC is RPC — short for Remote Procedure Call — with a "g" in front because Google developed it. If you study modern HTTP, you'll know that HTTP/1.1, HTTP/2, and HTTP/3 are all in wide use, and while RESTful APIs are often associated with HTTP/1.1, REST/JSON is independent of the HTTP version and works just as well over HTTP/2 or HTTP/3.
 
 HTTP/2 added many features, and because gRPC makes active use of them, it gains a lot of advantages in communication. It is mostly used for internal service-to-service communication in MSA. This post goes in order from HTTP/2 to gRPC.
 

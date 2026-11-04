@@ -15,7 +15,7 @@ summary: "gRPCのストリームとメッセージの概念をHTTP/2の構造か
 
 ### はじめに
 
-まず、gRPCはRemote Procedure Callの略であるRPCの前に、Googleが開発したという意味でgを付けてgRPCと呼ぶ。現代のHTTPプロトコルを勉強してみるとわかるが、HTTP/1.1、HTTP/2、HTTP/3がさまざまに使われており、その中で私たちがよく知る一般的なRESTful APIサーバーはHTTP/1.1方式を使っている。
+まず、gRPCはRemote Procedure Callの略であるRPCの前に、Googleが開発したという意味でgを付けてgRPCと呼ぶ。現代のHTTPプロトコルを勉強してみるとわかるが、HTTP/1.1、HTTP/2、HTTP/3がさまざまに使われている。RESTful APIというとHTTP/1.1を思い浮かべがちだが、REST/JSONはHTTPのバージョンとは独立しているため、HTTP/2やHTTP/3の上でもそのまま動く。
 
 HTTP/2になってさまざまな機能が追加されたが、gRPCはこれらの機能を積極的に活用するため、通信において多くの利点を得られる。主にMSAで内部サービス間の通信によく使われる。記事はHTTP/2から始めて、gRPCの順に説明していく。
 

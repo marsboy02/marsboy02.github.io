@@ -15,7 +15,7 @@ summary: "gRPC의 스트림과 메시지 개념을 HTTP/2 구조에서부터 정
 
 ### 들어가며
 
-먼저, gRPC는 Remote Procedure Call의 약자인 RPC 앞에 Google이 개발했다는 의미로 g를 붙여 gRPC라고 부른다. 현대 HTTP 프로토콜을 공부해 보면 알겠지만 HTTP/1.1, HTTP/2, HTTP/3가 다양하게 사용되고 있는데, 그중 우리가 흔히 아는 일반적인 RESTful API 서버는 HTTP/1.1 방식을 사용한다.
+먼저, gRPC는 Remote Procedure Call의 약자인 RPC 앞에 Google이 개발했다는 의미로 g를 붙여 gRPC라고 부른다. 현대 HTTP 프로토콜을 공부해 보면 알겠지만 HTTP/1.1, HTTP/2, HTTP/3가 다양하게 사용되고 있다. 흔히 RESTful API라고 하면 HTTP/1.1을 떠올리지만, REST/JSON은 HTTP 버전과 독립적이라 HTTP/2나 HTTP/3 위에서도 그대로 동작한다.
 
 HTTP/2로 넘어오면서 다양한 기능이 추가되었는데, gRPC는 이 기능들을 적극적으로 활용하기 때문에 통신에서 많은 이점을 누릴 수 있으며, 주로 MSA에서 내부 서비스 간 통신에 많이 사용된다. 글은 HTTP/2부터 시작해서 gRPC 순서로 설명하려고 한다.
 
