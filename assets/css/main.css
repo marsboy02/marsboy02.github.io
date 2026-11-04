@@ -418,13 +418,18 @@ header {
 }
 
 /* Tables */
+/* Wrapper (from render-table.html) scrolls wide tables, so the table itself can fill the width */
+.post-content .table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
 .post-content table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
   font-size: 0.95rem;
-  overflow-x: auto;
-  display: block;
+  /* Keep Korean words intact instead of breaking mid-syllable (e.g. 커넥/션) */
+  word-break: keep-all;
 }
 
 .post-content thead {
