@@ -14,6 +14,11 @@ These are settled conventions, not open questions. When a post deviates, the pos
 
 - Body text uses **평어체**: `~이다`, `~한다`. Never 경어체 (`~합니다`, `~해요`).
 - The `summary` front matter field also uses 평어체.
+- **Exception — company-blog posts.** A post with `tone: "polite"` in front matter is written for a company tech blog and uses friendly 경어체 for body and summary:
+  - Base ending is 합니다체 (`~입니다`, `~했습니다`); soften with connectors like `~인데요`, `~는데요`. Avoid full 해요체 and never fall back to 평어체 mid-post.
+  - Open with a greeting and self-introduction (`안녕하세요. 팀스파르타 ...에서 일하고 있는 ...입니다.`); close `## 마치며` with a short thanks to the reader.
+  - Rhetorical questions to the reader (`~할까요?`) and `말씀드리면`-style phrasing are welcome. Bullet and numbered list items also end in 합니다체.
+  - Code comments, ASCII diagrams, and image text are unaffected. Every other convention below still applies.
 - First-person reflection is welcome in the intro and in `## 마치며`; the technical body stays declarative.
 
 ## Terminology formatting

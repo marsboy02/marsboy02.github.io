@@ -16,7 +16,7 @@ You are suggesting content improvements to make a blog post more engaging and re
 
 ## Conventions
 
-Suggestions must stay inside the blog's settled conventions (see `.claude/skills/writing-conventions/SKILL.md`): 평어체 body text, `**한글용어**(English)` glosses, `—` for em dashes, numbered Korean H2 chapters each opening with 1-2 transition sentences, and a `## 마치며` close following summary → personal insight → future direction. Never propose a rewrite that switches the post to 경어체 or adds an `## Introduction` heading.
+Suggestions must stay inside the blog's settled conventions (see `.claude/skills/writing-conventions/SKILL.md`): 평어체 body text, `**한글용어**(English)` glosses, `—` for em dashes, numbered Korean H2 chapters each opening with 1-2 transition sentences, and a `## 마치며` close following summary → personal insight → future direction. Never propose a rewrite that switches the post to 경어체 (unless front matter has `tone: "polite"`, in which case it must stay 경어체) or adds an `## Introduction` heading.
 
 ## Steps
 

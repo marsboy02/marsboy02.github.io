@@ -24,6 +24,7 @@ The user will provide a post slug (e.g., `docker-complete-guide`). The post is a
 ### A. Tone (settled — flag every deviation)
 - Body text MUST use **평어체**: `~이다`, `~한다`. Any 경어체 (`~합니다`, `~해요`) is a defect, not a preference.
 - The `summary` front matter field MUST also be 평어체.
+- Exception: if front matter has `tone: "polite"` (company-blog post), invert the rule — body and summary MUST be 경어체 (합니다체 with ~인데요 softeners), and any 평어체 sentence is a defect.
 - Exception: quoted material and code comments keep their own voice.
 
 ### B. Terminology formatting (settled — flag every deviation)

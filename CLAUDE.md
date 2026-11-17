@@ -46,6 +46,7 @@ summary: "한 줄 요약"
 
 - **평어체** (~이다/~한다) for body text — not 경어체 (~합니다)
 - summary in frontmatter also uses 평어체
+- **Exception — company-blog posts** (front matter `tone: "polite"`, e.g. the TeamSparta retrospectives): body and summary use friendly 경어체 instead. Base ending is 합니다체 (~입니다, ~했습니다), softened with ~인데요/~는데요 connectors; avoid full 해요체 and never mix in 평어체. Open with a greeting + self-introduction (`안녕하세요. 팀스파르타 ... 강형준입니다.`), and end 마치며 with a thank-you. Code comments and diagram text keep their own style. All other conventions (bold gloss, em dash, numbered chapters) still apply.
 - Bold formatting with parenthetical English: `**한글용어**(English)` not `**한글용어(English)**` — parentheses inside `**` break rendering in Korean markdown
 - Em dash: use `—` not `--`
 - Each chapter starts with 1-2 transition sentences connecting to previous chapter
