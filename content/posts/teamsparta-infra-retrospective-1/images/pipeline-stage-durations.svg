@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif">
+<style>
+svg{--bg:#fff;--fg:#1a1a1a;--mut:#6b7280;--grid:#e5e7eb;--c1:#334155;--c2:#60a5fa;--c3:#34d399;--ref:#cbd5e1}
+@media (prefers-color-scheme:dark){svg{--bg:#0f1115;--fg:#e8eaed;--mut:#9aa0a6;--grid:#2a2f37;--c1:#94a3b8;--c2:#60a5fa;--c3:#34d399;--ref:#3f4651}}
+.t{font-size:15px;font-weight:600;fill:var(--fg)}.s{font-size:11.5px;fill:var(--mut)}
+.ax{font-size:11px;fill:var(--mut)}.vl{font-size:10.5px;fill:var(--fg)}.lg{font-size:12px;fill:var(--fg)}
+</style>
+<rect width="760" height="420" fill="var(--bg)"/>
+<text class="t" x="62" y="24">표준 파이프라인 구간별 소요시간 (중앙값)</text>
+<text class="s" x="62" y="42">platform-workflows · 빌드 1 + 배포 1 구성 · 성공 배포 638건</text>
+<line x1="62" x2="742" y1="356.0" y2="356.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="360.0" text-anchor="end">0:00</text>
+<line x1="62" x2="742" y1="306.3" y2="306.3" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="310.3" text-anchor="end">1:30</text>
+<line x1="62" x2="742" y1="256.7" y2="256.7" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="260.7" text-anchor="end">3:00</text>
+<line x1="62" x2="742" y1="207.0" y2="207.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="211.0" text-anchor="end">4:30</text>
+<line x1="62" x2="742" y1="157.3" y2="157.3" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="161.3" text-anchor="end">6:00</text>
+<line x1="62" x2="742" y1="107.7" y2="107.7" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="111.7" text-anchor="end">7:30</text>
+<line x1="62" x2="742" y1="58.0" y2="58.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="ax" x="54" y="62.0" text-anchor="end">9:00</text>
+<line x1="334.0" x2="334.0" y1="58" y2="356" stroke="var(--ref)" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="s" x="340.0" y="71">9/3 폴링 고정 · 9/7 캐시·어테스테이션</text>
+<rect x="87.0" y="112.1" width="26.0" height="243.9" rx="3" fill="var(--c1)"/>
+<text class="vl" x="100.0" y="108.1" text-anchor="middle">7:22</text>
+<rect x="117.0" y="274.9" width="26.0" height="81.1" rx="3" fill="var(--c2)"/>
+<text class="vl" x="130.0" y="270.9" text-anchor="middle">2:27</text>
+<rect x="147.0" y="209.8" width="26.0" height="146.2" rx="3" fill="var(--c3)"/>
+<text class="vl" x="160.0" y="205.8" text-anchor="middle">4:25</text>
+<text class="ax" x="130.0" y="374" text-anchor="middle">7월</text>
+<text class="s" x="130.0" y="388" text-anchor="middle">n=19</text>
+<rect x="223.0" y="96.9" width="26.0" height="259.1" rx="3" fill="var(--c1)"/>
+<text class="vl" x="236.0" y="92.9" text-anchor="middle">7:50</text>
+<rect x="253.0" y="276.3" width="26.0" height="79.7" rx="3" fill="var(--c2)"/>
+<text class="vl" x="266.0" y="272.3" text-anchor="middle">2:24</text>
+<rect x="283.0" y="205.3" width="26.0" height="150.7" rx="3" fill="var(--c3)"/>
+<text class="vl" x="296.0" y="201.3" text-anchor="middle">4:33</text>
+<text class="ax" x="266.0" y="374" text-anchor="middle">8월</text>
+<text class="s" x="266.0" y="388" text-anchor="middle">n=82</text>
+<rect x="359.0" y="163.7" width="26.0" height="192.3" rx="3" fill="var(--c1)"/>
+<text class="vl" x="372.0" y="159.7" text-anchor="middle">5:48</text>
+<rect x="389.0" y="291.7" width="26.0" height="64.3" rx="3" fill="var(--c2)"/>
+<text class="vl" x="402.0" y="287.7" text-anchor="middle">1:56</text>
+<rect x="419.0" y="235.1" width="26.0" height="120.9" rx="3" fill="var(--c3)"/>
+<text class="vl" x="432.0" y="231.1" text-anchor="middle">3:39</text>
+<text class="ax" x="402.0" y="374" text-anchor="middle">9월</text>
+<text class="s" x="402.0" y="388" text-anchor="middle">n=184</text>
+<rect x="495.0" y="150.7" width="26.0" height="205.3" rx="3" fill="var(--c1)"/>
+<text class="vl" x="508.0" y="146.7" text-anchor="middle">6:12</text>
+<rect x="525.0" y="284.5" width="26.0" height="71.5" rx="3" fill="var(--c2)"/>
+<text class="vl" x="538.0" y="280.5" text-anchor="middle">2:10</text>
+<rect x="555.0" y="234.6" width="26.0" height="121.4" rx="3" fill="var(--c3)"/>
+<text class="vl" x="568.0" y="230.6" text-anchor="middle">3:40</text>
+<text class="ax" x="538.0" y="374" text-anchor="middle">10월</text>
+<text class="s" x="538.0" y="388" text-anchor="middle">n=206</text>
+<rect x="631.0" y="164.0" width="26.0" height="192.0" rx="3" fill="var(--c1)"/>
+<text class="vl" x="644.0" y="160.0" text-anchor="middle">5:48</text>
+<rect x="661.0" y="295.8" width="26.0" height="60.2" rx="3" fill="var(--c2)"/>
+<text class="vl" x="674.0" y="291.8" text-anchor="middle">1:49</text>
+<rect x="691.0" y="241.8" width="26.0" height="114.2" rx="3" fill="var(--c3)"/>
+<text class="vl" x="704.0" y="237.8" text-anchor="middle">3:27</text>
+<text class="ax" x="674.0" y="374" text-anchor="middle">11월</text>
+<text class="s" x="674.0" y="388" text-anchor="middle">n=147</text>
+<line x1="62" x2="742" y1="356" y2="356" stroke="var(--grid)"/>
+<rect x="62" y="394" width="10" height="10" rx="2" fill="var(--c1)"/>
+<text class="lg" x="77" y="403">총시간</text>
+<rect x="135" y="394" width="10" height="10" rx="2" fill="var(--c2)"/>
+<text class="lg" x="150" y="403">빌드</text>
+<rect x="195" y="394" width="10" height="10" rx="2" fill="var(--c3)"/>
+<text class="lg" x="210" y="403">배포</text>
+<text class="s" x="742" y="403" text-anchor="end">중앙값이라 빌드+배포가 총시간과 정확히 합산되지는 않습니다</text>
+</svg>
